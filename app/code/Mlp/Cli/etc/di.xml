@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="check_active_status_command" xsi:type="object">Mlp\Cli\Console\Command\CheckActiveModulesCommand</item>
+                <item name="attributeSet" xsi:type="object">Mlp\Cli\Console\Command\MlpAttributeSet</item>
+                <item name="productAttributes" xsi:type="object">Mlp\Cli\Console\Command\ProductAttributes</item>
+                <item name="products" xsi:type="object">Mlp\Cli\Console\Command\Products</item>
+                <item name="auferma" xsi:type="object">Mlp\Cli\Console\Command\Auferma</item>
+                <item name="orima" xsi:type="object">Mlp\Cli\Console\Command\Orima</item>
+                <item name="sorefoz" xsi:type="object">Mlp\Cli\Console\Command\Sorefoz</item>
+                <item name="expert" xsi:type="object">Mlp\Cli\Console\Command\Expert</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
