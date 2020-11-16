@@ -135,6 +135,11 @@ class Expert extends Command
                 }else {
                     //Add Product
                     print_r("Not found - Set data new product - ");
+                    //notValidProduct
+                    if ($this->notValidProduct($data)) {
+                        print_r(" not valid product\n");
+                        continue;
+                    }
                     if (!$this->setData($data,$logger)){
                         print_r(" - ERROR WITH DATA\n");
                         continue;
@@ -214,6 +219,11 @@ class Expert extends Command
             return trim($data);
         };
 
+        if(preg_match("/Expert/i",$data[2])){
+            print_r(" - gama: expert - ");
+            return 0;
+        }
+
         $data = array_map($functionTim,$data);
         
         
@@ -273,19 +283,115 @@ class Expert extends Command
         $this->produtoInterno->classeEnergetica = $data[18];
         $this->produtoInterno->imageEnergetica = $data[19];
 
-        if(preg_match("/Expert/i",$data[2])){
-            print_r(" - gama: expert - ");
-            return 0;
-        }
+        
         
         
         [$this->produtoInterno->gama,$this->produtoInterno->familia,
             $this->produtoInterno->subFamilia] = ExpertCategories::setExpertCategories($data[2],$logger,
                                                                                 $this->produtoInterno->sku);
-    
+        
         return 1;
     }
 
+    private function notValidProduct($categories) {
+        $pieces = explode("->",$categories);
+            $gama = $pieces[0];
+            $familia = $pieces[1];
+            $subFamilia = $pieces[2];
+        switch ($gama) {
+            case "Audiovisual":
+                if(strcmp($familia,"TV")!=0){ return true; }
+                else { return false; }
+            case "Climatização":
+                switch ($subFamilia) {
+                    case 'Acessórios':
+                    case 'Consumíveis':
+                        return true;
+                    default:
+                        return false;
+                }
+            case "Comunicações":
+                switch ($subFamilia) {
+                    case 'Telemóveis':
+                    case 'Smartwatches':
+                        return false;
+                    default:
+                        return true;
+                }
+            case 'Energia':
+                case 'Expert':
+                case 'Foto e Vídeo':
+                case 'Impressoras':
+                    return true;
+
+            case "Eletrodomésticos":
+                switch ($familia) {
+                    case 'Encastre':
+                        switch ($subFamilia) {
+                            case 'Acessórios':
+                            case 'Consumíveis':
+                            case 'Torneiras':
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case 'Fogão':
+                        return false;
+                    case 'Frio':
+                        switch ($subFamilia) {
+                            case 'Acessórios':
+                            case 'Câmara de Maturação':
+                            case 'Consumíveis':
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case 'Máquina Lavar Loiça':
+                        switch ($subFamilia) {
+                            case 'Acessórios':
+                            case 'Consumíveis':
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case 'Máquinas de Roupa':
+                        switch ($subFamilia) {
+                            case 'Acessórios':
+                            case 'Consumíveis':
+                                return true;
+                            default:
+                                return false;
+                        }
+                    default:
+                        return false;
+                }
+
+            case 'Informática':
+                switch ($subFamilia) {
+                    case 'Notebooks':
+                    case 'Tablets':
+                        return false;
+                    default:
+                        return true;
+                }
+            case 'Pequenos Domésticos':
+                switch ($subFamilia) {
+                    case 'Acessórios e Peças':
+                    case 'Consumíveis':
+                    case 'Fun Cooking e Diversos':
+                    case 'Puericultura':
+                    case 'Acessórios':
+                    case 'Outros':
+                    case 'Sacos':
+                        return true;
+                    default:
+                        return false;
+                }
+            default:
+                return false;
+                
+            }
+    }
     private function addImages($categoriesFilter) 
     {
 
