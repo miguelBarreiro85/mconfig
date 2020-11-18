@@ -281,7 +281,7 @@ class ProdutoInterno
                 }
             }catch(\Exception $e){
                 print_r(" - Erro ao atribuir categoria: ".$e->getMessage());
-                $logger(Cat::VERIFICAR_CATEGORIAS.$product->getSku().$e->getMessage());
+                $logger->info(Cat::VERIFICAR_CATEGORIAS.$product->getSku().$e->getMessage());
             }
 
         }

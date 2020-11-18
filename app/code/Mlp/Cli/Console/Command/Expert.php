@@ -108,7 +108,7 @@ class Expert extends Command
 
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        $this->downloadCsv($logger);
+        //$this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -136,7 +136,7 @@ class Expert extends Command
                     //Add Product
                     print_r("Not found - Set data new product - ");
                     //notValidProduct
-                    if ($this->notValidProduct($data)) {
+                    if ($this->notValidProduct($data[2])) {
                         print_r(" not valid product\n");
                         continue;
                     }
@@ -300,8 +300,8 @@ class Expert extends Command
             $subFamilia = $pieces[2];
         switch ($gama) {
             case "Audiovisual":
-                if(strcmp($familia,"TV")!=0){ return true; }
-                else { return false; }
+                if(strcmp($familia,"TV")==0){ return false; }
+                else { return true; }
             case "Climatização":
                 switch ($subFamilia) {
                     case 'Acessórios':
@@ -319,10 +319,10 @@ class Expert extends Command
                         return true;
                 }
             case 'Energia':
-                case 'Expert':
-                case 'Foto e Vídeo':
-                case 'Impressoras':
-                    return true;
+            case 'Expert':
+            case 'Foto e Vídeo':
+            case 'Impressoras':
+                return true;
 
             case "Eletrodomésticos":
                 switch ($familia) {
@@ -335,8 +335,6 @@ class Expert extends Command
                             default:
                                 return false;
                         }
-                    case 'Fogão':
-                        return false;
                     case 'Frio':
                         switch ($subFamilia) {
                             case 'Acessórios':
@@ -362,6 +360,7 @@ class Expert extends Command
                             default:
                                 return false;
                         }
+                    case 'Fogão':
                     default:
                         return false;
                 }
