@@ -238,7 +238,7 @@ class Sorefoz extends Command
         
         $this->produtoInterno->status = Status::STATUS_ENABLED;
         $this->produtoInterno->stock = $stock;
-        $this->produtoInterno->price = (int)trim($data[11]);
+        $this->produtoInterno->price = ceil((float)trim($data[11]));
 
         print_r(" - setting stock ");
         $this->produtoInterno->setStock($logger,"sorefoz");
@@ -361,16 +361,23 @@ class Sorefoz extends Command
             return true;
         }
         switch(trim($data[5])){
+            case 'TELEFONES E TELEMÓVEIS':
+                switch (trim($data[9])) {
+                    case 'TELEFONES DOMÉSTICOS':
+                    case 'TELEMÓVEIS':
+                        return false;
+                    default:
+                        return true;
+                }
             case 'ACESSÓRIOS E BATERIAS':
                 return true;
             case 'INFORMÁTICA':
-                switch (trim($data[6])) {
+                switch (trim($data[7])) {
                     case 'ACESSÓRIOS':
-                        return true;
                     case 'CONSUMÍVEIS':
                         return true;
                     case "COMPUTADORES E TABLET'S":
-                        switch (trim($data[7])) {
+                        switch (trim($data[9])) {
                             case 'CALCULADORAS':
                                 return true;
                             default:
@@ -384,14 +391,33 @@ class Sorefoz extends Command
                     return true;
                 }
             case 'IMAGEM E SOM':
-                switch (trim($data[6])) {
+                switch (trim($data[7])) {
                     case 'DVD /BLURAY /TDT':
                         return true;
                     case 'CÂMARAS':
                         return true;
+                    case 'TELEVISÃO':
+                        switch (trim($data[9])){
+                            case 'TV LCD 32"':
+                            case 'TV 4x3 DE 29" STEREO':
+                            case 'TV 16x9 DE 32"':
+                            case 'TV LCD 37"':
+                            case 'TV LCD 32"':
+                                return true;
+                            default:
+                                return false;
+                        }
                     default:
                         return false;
                 }
+            case 'ENCASTRE':
+                switch ($data[7]) {
+                    case 'OUTROS EQUIPAMENTOS ENC':
+                        return true;
+                    default:
+                        return false;
+                }
+                
             default:
                 return false;
         }

@@ -51,8 +51,12 @@ class SorefozCategories {
                         $familia = Cat::SERVICOS_COMUNICACOES;
                         return [$gama,$familia,$subFamilia];
                     case 'TELEFONES FIXOS':
-                        $familia = Cat::COMUNICACOES_FIXAS;
-                        $subFamilia = Cat::TELEFONES_FIXOS;
+                        $familia = Cat::TELEFONES_FIXOS;
+                        $subFamilia = null;
+                        return [$gama,$familia,$subFamilia];
+                    case 'TELEMÓVEIS / CARTÕES':
+                        $familia = Cat::TELEMOVEIS;
+                        $subFamilia = null;
                         return [$gama,$familia,$subFamilia];
                     default:
                         return [$gama,$familia,$subFamilia];
@@ -288,12 +292,29 @@ class SorefozCategories {
                             case 'TV LED 24"':
                             case 'TV LED 20"':
                             case 'TV LED 22"':
+                            case 'TV LED 37"':
                                 $subFamilia = Cat::TVS_PEQUENAS;
                                 return [$gama,$familia,$subFamilia];
                             case 'TV LED 40"':
                             case 'TV LED 42"':
+                            case 'TVS MEDIAS 40" A 46"':
                                 $subFamilia = Cat::TVS_MEDIAS;
                                 return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                            }
+                    case 'EQUIPAMENTOS AUDIO':
+                        switch ($subFamilia) {
+                            case 'OUTRO HI-FI':
+                                if (preg_match('/^AURIC/', $name) == 1
+                                    || preg_match('/^AUSCULT/', $name) == 1) {
+                                    $gama = Cat::IMAGEM_E_SOM;
+                                    $familia = Cat::AUSCULTADORES;
+                                    $subFamilia = null;
+                                    return [$gama,$familia,$subFamilia];        
+                                } else {
+                                    return [$gama,$familia,$subFamilia];        
+                                }
                             default:
                                 return [$gama,$familia,$subFamilia];
                             }
@@ -324,7 +345,7 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                         }
                         
-                    case "COMPUTADORES E TABLET'S ":
+                    case "COMPUTADORES E TABLET'S":
                         switch ($subFamilia) {
                             case 'DE SECRETÁRIA':
                                 $subFamilia = Cat::DESKTOPS;
