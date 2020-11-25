@@ -206,7 +206,6 @@ class SorefozCategories {
                             case 'GARRAFEIRA':
                                 $subFamilia = Cat::GARRAFEIRAS;
                                 return [$gama,$familia,$subFamilia];
-                                break;
                             case 'FRIGORIF.2 PORTAS':
                                 $subFamilia = Cat::FRIGORIF_2_PORTAS;
                                 return [$gama,$familia,$subFamilia];
@@ -297,6 +296,7 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                             case 'TV LED 40"':
                             case 'TV LED 42"':
+                            case 'TV LED 46"':
                             case 'TVS MEDIAS 40" A 46"':
                                 $subFamilia = Cat::TVS_MEDIAS;
                                 return [$gama,$familia,$subFamilia];
@@ -312,7 +312,9 @@ class SorefozCategories {
                                     $familia = Cat::AUSCULTADORES;
                                     $subFamilia = null;
                                     return [$gama,$familia,$subFamilia];        
-                                } else {
+                                } else if(preg_match('/^COLUNA/', $name) == 1){
+                                    $gama = Cat::IMAGEM_E_SOM;
+                                    $familia = Cat::COLUNAS;
                                     return [$gama,$familia,$subFamilia];        
                                 }
                             default:

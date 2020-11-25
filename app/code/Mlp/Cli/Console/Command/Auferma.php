@@ -320,7 +320,15 @@ class Auferma extends Command
         $data = array_map($functionTrim,$data);
 
 
-        $this->setStock($data[11]);
+        try{
+            $this->setStock($data[11]);
+        }catch(\Exception $e) {
+            print_r("- stock error - ");
+            $logger->info(Cat::ERROR_SET_PRODUCT_DATA.$this->produtoInterno->sku.": erro ao por stock...");
+            $this->produtoInterno->stock = 0;
+            $this->produtoInterno->status = 2;
+        }
+            
         
 
         $this->produtoInterno->sku = $data[0];
