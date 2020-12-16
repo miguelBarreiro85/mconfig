@@ -277,7 +277,7 @@ class SorefozCategories {
                             default:
                                 return [$gama,$familia,$subFamilia];
                         }                
-                    case 'TELEVISÃO':
+                    case 'TELEVISÃO':   
                         $familia = Cat::TELEVISAO;
                         switch ($subFamilia) {
                             case 'TV LED+46"':
@@ -306,23 +306,36 @@ class SorefozCategories {
                     case 'EQUIPAMENTOS AUDIO':
                         switch ($subFamilia) {
                             case 'OUTRO HI-FI':
-                                if (preg_match('/^AURIC/', $name) == 1
+                                if (preg_match('/AURIC/', $name) == 1
                                     || preg_match('/^AUSCULT/', $name) == 1) {
                                     $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::AUSCULTADORES;
-                                    $subFamilia = null;
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::AUSCULTADORES;
                                     return [$gama,$familia,$subFamilia];        
-                                } else if(preg_match('/^COLUNA/', $name) == 1){
+                                } else if(preg_match('/^COLUNA/', $name) == 1
+                                    ||preg_match('/^SIST.AUDIO/', $name) == 1){
                                     $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::COLUNAS;
-                                    return [$gama,$familia,$subFamilia];        
+                                    $familia = Cat::EQUIPAMENTOS_AUDIO;
+                                    $subFamilia = Cat::SOUND_BARS;
+                                    return [$gama,$familia,$subFamilia];
+                                } else if(preg_match('/^SOUND BAR/', $name) == 1) {
+                                    $gama = Cat::IMAGEM_E_SOM;
+                                    $familia = Cat::EQUIPAMENTOS_AUDIO;
+                                    $subFamilia = Cat::SOUND_BARS;
+                                    return [$gama,$familia,$subFamilia];
                                 }
                             default:
                                 return [$gama,$familia,$subFamilia];
                             }
-                    default:
+                    case 'SIST.HOME CINEMA':
+                        $gama = Cat::IMAGEM_E_SOM;
+                        $familia = Cat::EQUIPAMENTOS_AUDIO;
+                        $subFamilia = Cat::SIST_HOME_CINEMA;
                         return [$gama,$familia,$subFamilia];
-                }
+                    default:
+                        return [$gama,$familia,$subFamilia];    
+                    }
+                            
             case 'INFORMÁTICA':
                 $gama = Cat::INFORMATICA;
                 switch ($familia) {
@@ -331,14 +344,14 @@ class SorefozCategories {
                             case 'ACESSÓRIOS DE SOM':
                                 if (preg_match('/^COLUNA/', $name) == 1) {
                                     $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::COLUNAS;
-                                    $subFamilia = null;
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::COLUNAS;
                                     return [$gama,$familia,$subFamilia];
                                 }
                                 if (preg_match('/^AUSC/', $name) == 1) {
                                     $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::AUSCULTADORES;
-                                    $subFamilia = null;
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::COLUNAS;
                                     return [$gama,$familia,$subFamilia];
                                 }
                             default:
@@ -391,6 +404,24 @@ class SorefozCategories {
                             default:
                                 return [$gama,$familia,$subFamilia];
                         }
+                    case 'APARELHOS DE LIMPEZA':
+                        switch ($subFamilia) {
+                            case 'MAQ.LAVAR VIDROS':
+                                $subFamilia = Cat::MAQ_LAVAR_VIDROS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MAQ.LIMPEZA A VAPOR':
+                                $subFamilia = Cat::MAQ_LIMPEZA_VAPOR;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MAQ.LAVAR ALTA PRESSÃO':
+                                $subFamilia = Cat::MAQ_LAVAR_PRESSAO;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
+                    case 'MAQUINAS DE COSTURA':
+                        $familia = Cat::MAQ_COSTURA;    
+                        $subFamilia = null;
+                        return [$gama,$familia,$subFamilia];
                     default:
                         return [$gama,$familia,$subFamilia];
                 }

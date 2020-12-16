@@ -185,7 +185,7 @@ class ProdutoInterno
         $product->setCustomAttribute('news_from_date', date("Y/m/d"));
 
         $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
-        $this->imagesHelper->getImages($this->sku,$this->image,$this->imageEnergetica);
+        $this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
         $this->imagesHelper->setImages($product, $logger, $imgName . "_e.jpeg");
         $this->imagesHelper->setImages($product, $logger, $imgName . ".jpeg");
 
@@ -403,6 +403,16 @@ class ProdutoInterno
             print_r("Preco error: ".$precoCusto);
         }
         
+    }
+
+    public function add_description($logger,$description) {
+        try {
+            $product = $this->productRepositoryInterface->get($this->sku);
+            $product->setCustomAttribute('description', $description);
+            $this->productRepositoryInterface->save($product);
+        }catch(\Exception $e){
+            print_r($e->getMessage());
+        }        
     }
 }
 

@@ -212,10 +212,10 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];  
                             }
                         case 'Home Cinema':
-                            $familia = Cat::SIST_HOME_CINEMA;
+                            $familia = Cat::EQUIPAMENTOS_AUDIO;
                             switch ($subFamilia) {
                                 case 'Kit Colunas':
-                                    $subFamilia = Cat::KIT_COLUNAS;
+                                    $subFamilia = Cat::SIST_HOME_CINEMA;
                                     return [$gama, $familia, $subFamilia];
                                     
                                 case 'Sound Bars':
@@ -715,6 +715,10 @@ class ExpertCategories {
                                 case 'Ventilação':
                                     $familia = Cat::VENTILACAO;
                                     $subFamilia = null;
+                                    return [$gama,$familia,$subFamilia];
+                                case 'Ar Condicionado Portátil':
+                                    $familia = Cat::AR_CONDICIONADO;
+                                    $subFamilia = Cat::AC_PORTATIL;
                                     return [$gama,$familia,$subFamilia];
                                 default:
                                     $logger->info(Cat::VERIFICAR_CATEGORIAS.$sku);

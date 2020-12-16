@@ -356,10 +356,6 @@ class Sorefoz extends Command
     }
 
     private function notValidProduct($data) {
-        //fora de gama
-        if(strcmp(trim($data[16]),"sim")){
-            return true;
-        }
         switch(trim($data[5])){
             case 'TELEFONES E TELEMÓVEIS':
                 switch (trim($data[9])) {

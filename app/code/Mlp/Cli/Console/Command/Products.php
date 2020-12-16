@@ -224,7 +224,7 @@ class Products extends Command
         }
         $disableProductsWithoutStock = $input->getOption(self::DISABLE_PRODUCTS);
         if ($disableProductsWithoutStock) {
-            print_r("Disabling products without stock");
+            print_r("Disabling products");
             $this->disableAllProductsSql();
             return true;
         }

@@ -172,7 +172,11 @@ class Auferma extends Command
                     $this->produtoInterno->height, $this->produtoInterno->width, $this->produtoInterno->length, 
                     $this->produtoInterno->weight, $this->produtoInterno->classeEnergetica] = $this->getProductInfo($logger,trim($data[1]));                
                 
-                $this->produtoInterno -> add_product($logger, $this->produtoInterno->sku);
+                $image = null;
+                if ($this->produtoInterno->image == null) {
+                    $image = trim($data[0]);
+                }
+                $this->produtoInterno -> add_product($logger, trim($data[0]));
                 $this->produtoInterno->setStock($logger, 'auferma');
                 print_r("\n");
             }        

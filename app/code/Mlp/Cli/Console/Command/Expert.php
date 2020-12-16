@@ -28,6 +28,7 @@ class Expert extends Command
      */
     const UPDATE_PRODUCTS = 'update-products';
     const ADD_IMAGES = 'add-images';
+    const ADD_DESCRIPTION = 'add-description';
     
 
     private $directory;
@@ -74,6 +75,12 @@ class Expert extends Command
                     '-i',
                     InputOption::VALUE_NONE,
                     'Add Images'
+                ),
+                new InputOption(
+                    self::ADD_DESCRIPTION,
+                    '-I',
+                    InputOption::VALUE_NONE,
+                    'Add Description'
                 )
             ])->addArgument('categories', InputArgument::OPTIONAL, 'Categories?');
         parent::configure();
@@ -98,6 +105,10 @@ class Expert extends Command
         if ($addImages) {
             $this->addImages($categories);
         }
+        $addDescription = $input->getOption(self::ADD_DESCRIPTION);
+        if ($addDescription) {
+            $this->addDescription($logger, $categories);
+        }
         
         else {
             throw new \InvalidArgumentException('Option is missing.');
@@ -105,7 +116,19 @@ class Expert extends Command
     }
 
 
-
+    protected function addDescription($logger, $categoriesFilter = null) {
+        $row = 0;
+        foreach ($this -> loadCsv -> loadCsv('/Expert/Expert.csv', ";") as $data) {
+            //Update status sql
+            $sku = trim($data[1]);
+            print_r($row++." - ".$sku." - ");
+            if (strlen($sku) == 12 || strlen($sku) == 13) {
+                $this->produtoInterno->sku = $sku;
+                $this->produtoInterno->add_description($logger,$data[6]);
+            }
+            print_r("\n");
+        }
+    }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
         //$this->downloadCsv($logger);
@@ -226,37 +249,8 @@ class Expert extends Command
 
         $data = array_map($functionTim,$data);
         
-        
-    
         $this->produtoInterno->sku = $data[1];
-        
         $this->produtoInterno->manufacturer = $data[4];
-        
-        /*
-        if (
-            !preg_match("/MAXELL/i", $data[4]) &&
-            !preg_match("/SAMSUNG/i", $data[4]) &&
-            !preg_match("/PURO/i", $data[4]) &&
-            !preg_match("/VIVANCO/i", $data[4]) &&
-            !preg_match("/HISENSE/i", $data[4]) && 
-            !preg_match("/TECNOGAS/i", $data[4]) &&
-            !preg_match("/CASO/i", $data[4]) &&
-            !preg_match("/FULLWAT/i", $data[4]) &&
-            !preg_match("/CANON/i", $data[4]) &&
-            !preg_match("/KEF/i", $data[4]) &&
-            !preg_match("/G3 FERRARI/i", $data[4]) &&
-            !preg_match("/R. HOBBS/i", $data[4]) &&
-            !preg_match("/LE CREUSET/i", $data[4]) &&
-            !preg_match("/KENWOOD/i", $data[4]) &&
-            !preg_match("/ONE FOR ALL/i", $data[4]) &&
-            !preg_match("/PLAYSTATION/i", $data[4]) &&
-            !preg_match("/FLECK/i", $data[4])
-            
-        ) {
-            return 0;
-        }*/
-        
-        
         $this->produtoInterno->price = $this->produtoInterno->getPrice((int)trim($data[7]));
 
         
@@ -272,8 +266,8 @@ class Expert extends Command
         }
 
         $this->produtoInterno->name = $data[5];
-        $this->produtoInterno->description = $data[10];
-        $this->produtoInterno->meta_description = $data[10];
+        $this->produtoInterno->description = $data[6];
+        $this->produtoInterno->meta_description = $data[6];
         
         $this->produtoInterno->length = null;
         $this->produtoInterno->width = null;
