@@ -1,0 +1,12 @@
+{
+    "mlp_stock_management": {
+        "column": {
+            "mlp_stock_id": true,
+            "sku": true,
+            "quantity": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

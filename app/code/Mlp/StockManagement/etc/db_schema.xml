@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mlp_stock_management" resource="default" engine="innodb">
+        <column xsi:type="int" name="mlp_stock_id" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="varchar" name="sku" nullable="false" length="64"/>
+        <column xsi:type="decimal" name="quantity" scale="4" precision="10" unsigned="false" nullable="false"
+                default="0"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+-            <column name="mlp_stock_id"/>
+-        </constraint>
+    </table>
+</schema>
