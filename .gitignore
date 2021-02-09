@@ -34,7 +34,7 @@ atlassian*
 /grunt-config.json
 /var/*
 !/var/.htaccess
-/pub/media/catalog/product/*
+/pub/media/*
 /vendor/*
 !/vendor/.htaccess
 !/generated/.htaccess
