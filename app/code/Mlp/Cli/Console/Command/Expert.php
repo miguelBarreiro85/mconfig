@@ -241,12 +241,7 @@ class Expert extends Command
         $functionTim = function ($data){
             return trim($data);
         };
-
-        if(preg_match("/Expert/i",$data[2])){
-            print_r(" - gama: expert - ");
-            return 0;
-        }
-
+    
         $data = array_map($functionTim,$data);
         
         $this->produtoInterno->sku = $data[1];
@@ -254,7 +249,7 @@ class Expert extends Command
         $this->produtoInterno->price = $this->produtoInterno->getPrice((int)trim($data[7]));
 
         
-        $this->setStock($data[16]);
+        $this->setStock($data[6]);
         if($this->produtoInterno->price == 0){
             print_r(" - price 0 - ");
             $logger->info(Cat::ERROR_PRICE_ZERO.$this->produtoInterno->sku);
