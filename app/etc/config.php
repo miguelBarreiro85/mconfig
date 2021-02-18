@@ -311,6 +311,7 @@ return [
         'Klarna_KpGraphQl' => 1,
         'Mageplaza_Core' => 1,
         'Mageplaza_Smtp' => 1,
+        'Mlp_CategoryFilter' => 1,
         'Mlp_Cli' => 1,
         'Mlp_StockManagement' => 0,
         'PayPal_Braintree' => 1,

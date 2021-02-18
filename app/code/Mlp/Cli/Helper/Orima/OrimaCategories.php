@@ -20,6 +20,7 @@ class OrimaCategories {
                         return [$gama,$familia,$subFamilia];
                 }
             case 'QUEIMA':
+            case 'Queima':
                 $gama = Cat::GRANDES_DOMESTICOS;
                 switch ($familia) {
                     case 'FOGAREIROS':
@@ -28,6 +29,7 @@ class OrimaCategories {
                         $subFamilia = Cat::FOGAREIROS;
                         return ([$gama, $familia, $subFamilia]);
                     case 'FOGOES':
+                    case 'Fogoes':
                         $familia = Cat::FOGOES;
                         switch ($subFamilia) {
                             case 'FOGÃO MONOBLOCO 50X60':

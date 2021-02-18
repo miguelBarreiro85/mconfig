@@ -204,7 +204,8 @@ class Orima extends Command
         
         $this->produtoInterno->name = $data[7];
         [$this->produtoInterno->gama,$this->produtoInterno->familia,
-            $this->produtoInterno->subFamilia] = OrimaCategories::getCategoriesOrima($data[0],$data[1],$data[2],$logger,$data[8]);
+            $this->produtoInterno->subFamilia] = OrimaCategories::getCategoriesOrima(strtoupper(trim($data[0])),
+                                                        strtoupper(trim($data[1])),strtoupper(trim($data[02])),$logger,$data[8]);
         $this->produtoInterno->description = $data[8];
         $this->produtoInterno->meta_description = $data[8];
         $this->produtoInterno->length = null;
