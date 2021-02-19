@@ -6,14 +6,4 @@ namespace Magento\Catalog\Api\Data;
  */
 interface CategoryExtensionInterface extends \Magento\Framework\Api\ExtensionAttributesInterface
 {
-    /**
-     * @return \Smile\ElasticsuiteVirtualCategory\Api\Data\VirtualRuleInterface|null
-     */
-    public function getVirtualRule();
-
-    /**
-     * @param \Smile\ElasticsuiteVirtualCategory\Api\Data\VirtualRuleInterface $virtualRule
-     * @return $this
-     */
-    public function setVirtualRule(\Smile\ElasticsuiteVirtualCategory\Api\Data\VirtualRuleInterface $virtualRule);
 }

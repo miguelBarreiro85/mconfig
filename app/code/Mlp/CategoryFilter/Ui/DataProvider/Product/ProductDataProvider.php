@@ -23,6 +23,12 @@ class ProductDataProvider extends \Magento\Catalog\Ui\DataProvider\Product\Produ
             $filterValue = $filter->getValue();
             if (strcmp($filterValue[0],"2") == 0 ) {
                 $items=$this->getCollection()->getItems();
+                foreach ($items as $key => $item) {
+                    $categories = $item->getCategoryIds();
+                    if(count($categories) == 0) {
+                        $this->getCollection()->removeItemByKey($key);
+                    }
+                }
             } 
             $this->getCollection()->addCategoriesFilter(['in' => $filter->getValue()]);
         } elseif (isset($this->addFilterStrategies[$filter->getField()])) {
