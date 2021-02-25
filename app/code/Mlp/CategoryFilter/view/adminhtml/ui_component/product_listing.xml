@@ -38,7 +38,7 @@
                     </confirm>
                     <type>change_categories</type>
                     <label translate="true">Change Categories</label>
-                    <url path="inventorycatalog/source/bulkAssign"/>
+                    <url path="mlpcategoryfilter/Category/bulkAssign"/>
                 </settings>
             </action>
         </massaction>
