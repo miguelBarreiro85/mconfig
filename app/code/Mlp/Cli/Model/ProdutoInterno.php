@@ -201,6 +201,7 @@ class ProdutoInterno
             $logger->info(Cat::WARN_PRODUCT_ADDED.$product->getSku());
         } catch (\Exception $exception) {
             //if same url delete old save new
+            print_r($exception->getMessage());
             if($exception->getCode() == 0) {
                 $searchCriteria = $this->searchCriteriaBuilder->addFilter(ProductInterface::NAME,$this->name,'like')->create();
                 $products = $this->productRepositoryInterface->getList($searchCriteria)->getItems();

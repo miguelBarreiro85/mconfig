@@ -1,0 +1,1 @@
+/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-tracker/view/frontend/web/js/tracking.js

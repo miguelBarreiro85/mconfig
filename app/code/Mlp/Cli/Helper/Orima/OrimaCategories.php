@@ -73,11 +73,11 @@ class OrimaCategories {
                         $familia = Cat::MAQ_ROUPA;
                         $subFamilia = Cat::MAQ_SECAR_ROUPA_BC;
                         return ([$gama, $familia, $subFamilia]);
-                    case 'SECADORES ROUPA CONDENSAÇAO':
+                    case 'SECADORES ROUPA CONDENSAçAO':
                         $familia = Cat::MAQ_ROUPA;
                         $subFamilia = Cat::MAQ_SECAR_ROUPA_COND;
                         return ([$gama, $familia, $subFamilia]);
-                    case 'SECADORES ROUPA VENTILAÇAO':
+                    case 'SECADORES ROUPA VENTILAçAO':
                         $familia = Cat::MAQ_ROUPA;
                         $subFamilia = Cat::MAQ_SECAR_ROUPA_VENT;
                         return ([$gama, $familia, $subFamilia]);
@@ -118,7 +118,7 @@ class OrimaCategories {
                         $familia = Cat::FORNOS;
                         $subFamilia = null;
                         return ([$gama, $familia, $subFamilia]);
-                    case 'MAQUINAS LAVAR LOUÇA ENCASTRE':
+                    case 'MAQUINAS LAVAR LOUçA ENCASTRE':
                         $familia = Cat::MAQ_DE_LOUCA_ENC;
                         $subFamilia = null;
                         return ([$gama, $familia, $subFamilia]);
@@ -143,7 +143,7 @@ class OrimaCategories {
                     case 'PLACAS DOMINO ELECTRICAS':
                     case 'PLACAS MISTAS':
                     case 'PLACAS VITROCERAMICAS':
-                    case 'PLACAS INDUÇAO':
+                    case 'PLACAS INDUçAO':
                         $familia = Cat::PLACAS;
                         $subFamilia = null;
                         return ([$gama, $familia, $subFamilia]);
@@ -223,7 +223,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::ESQUENTADORES_ELECTRICOS;
                                 return ([$gama, $familia, $subFamilia]);
                             case  'ESQUENTADORES ESTANQUES':
-                            case 'ESQUENTADORES IGNIÇAO MANUAL':
+                            case 'ESQUENTADORES IGNIçAO MANUAL':
                             case 'ESQUENTADORES INTELIGENTES':
                             case 'ESQUENTADORES VENTILADOS':
                                 $subFamilia = Cat::ESQUENTADORES_C_GAS;
@@ -236,19 +236,19 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                 }
 
-            case 'MAQUINAS LOUÇA':
+            case 'MAQUINAS LOUçA':
                 $gama = Cat::GRANDES_DOMESTICOS;
                 $familia = Cat::MAQ_DE_LOUCA;
                 switch ($subFamilia) {
-                    case 'MAQUINAS LAVAR LOUÇA 45CM':
+                    case 'MAQUINAS LAVAR LOUçA 45CM':
                         $subFamilia = Cat::MLL_DE_45;
                         return ([$gama, $familia, $subFamilia]);
-                    case 'MAQUINAS LAVAR LOUÇA BRANCAS':
-                    case 'MAQUINAS LAVAR LOUÇA OUTRAS CORES':
-                    case 'MAQUINAS LAVAR LOUÇA INOX':
+                    case 'MAQUINAS LAVAR LOUçA BRANCAS':
+                    case 'MAQUINAS LAVAR LOUçA OUTRAS CORES':
+                    case 'MAQUINAS LAVAR LOUçA INOX':
                         $subFamilia = Cat::MLL_DE_60;
                         return ([$gama, $familia, $subFamilia]);
-                    case 'MAQUINAS LAVAR LOUÇA COMPACTAS':
+                    case 'MAQUINAS LAVAR LOUçA COMPACTAS':
                         $subFamilia = Cat::MLL_COMPACTAS;
                         return ([$gama, $familia, $subFamilia]);
                     default:
@@ -344,13 +344,13 @@ class OrimaCategories {
                                 $familia = Cat::ARTIGOS_DE_MENAGE;
                                 $subFamilia = Cat::PEQ_APARELHOS_COZINHA;
                                 return ([$gama, $familia, $subFamilia]);
-                            case 'BALANÇAS COZINHA':
-                                $subFamilia = Cat::BALANÇAS_DE_COZINHA;
+                            case 'BALANçAS COZINHA':
+                                $subFamilia = Cat::BALANçAS_DE_COZINHA;
                                 return ([$gama, $familia, $subFamilia]);
                             case 'BATEDEIRAS':
                                 $subFamilia = Cat::BATEDEIRAS;
                                 return ([$gama, $familia, $subFamilia]);
-                            case 'CAÇAROLAS':
+                            case 'CAçAROLAS':
                                 $familia = Cat::ARTIGOS_DE_MENAGE;
                                 $subFamilia = Cat::CACAROLAS;
                                 return ([$gama, $familia, $subFamilia]);
@@ -421,8 +421,8 @@ class OrimaCategories {
                     case 'CUIDADOS PESSOAIS':
                         $familia = Cat::ASSEIO_PESSOAL;
                         switch ($subFamilia) {
-                            case 'BALANÇAS WC':
-                                $subFamilia = Cat::BALANÇAS_DE_WC;
+                            case 'BALANçAS WC':
+                                $subFamilia = Cat::BALANçAS_DE_WC;
                                 return ([$gama, $familia, $subFamilia]);
                             case 'MODELADORES DE CABELO':
                                 $subFamilia = Cat::MODELADORES;
@@ -451,7 +451,7 @@ class OrimaCategories {
                                 return([$gama,$familia,'']);
                         }
 
-                    case 'PEQUENO-ALMOÇO':
+                    case 'PEQUENO-ALMOçO':
                         $familia = Cat::APARELHOS_DE_COZINHA;
                         switch ($subFamilia) {
                             case 'CAFETEIRAS':
@@ -545,7 +545,7 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                 }
 
-            case 'CLIMATIZAÇAO':
+            case 'CLIMATIZAçAO':
                 $gama = Cat::CLIMATIZACAO;
                 switch ($familia) {
                     case 'AR CONDICIONADO':
@@ -605,10 +605,10 @@ class OrimaCategories {
                             case 'FOGOES LENHA TRADICIONAIS':
                                 $subFamilia = Cat::FOGOES_LENHA;
                                 return ([$gama, $familia, $subFamilia]);
-                            case 'SALAMANDRA A LENHA FUNDIÇÃO':
-                            case 'SALAMANDRAS LENHA C/ VENTILAÇAO':
+                            case 'SALAMANDRA A LENHA FUNDIçÃO':
+                            case 'SALAMANDRAS LENHA C/ VENTILAçAO':
                             case 'SALAMANDRAS LENHA REDONDAS':
-                            case 'SALAMANDRAS LENHA S/ VENTILAÇAO':
+                            case 'SALAMANDRAS LENHA S/ VENTILAçAO':
                             case 'SALAMANDRAS PELLETS AR QUENTE':
                                 $subFamilia = Cat::SALAMANDRAS;
                                 return ([$gama, $familia, $subFamilia]);

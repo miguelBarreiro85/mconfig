@@ -131,7 +131,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        //$this->downloadCsv($logger);
+        $this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');

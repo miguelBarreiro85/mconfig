@@ -401,6 +401,9 @@ class SorefozCategories {
                             case 'FORNOS':
                                 $subFamilia = Cat::FORNOS_DE_BANCADA;
                                 return [$gama,$familia,$subFamilia];
+                            case 'MAQ.CAFE EXPRESSO':
+                                $subFamilia = Cat::MAQ_CAFE;
+                                return [$gama,$familia,$subFamilia];
                             default:
                                 return [$gama,$familia,$subFamilia];
                         }
