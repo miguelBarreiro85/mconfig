@@ -131,7 +131,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        $this->downloadCsv($logger);
+        //$this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -221,19 +221,20 @@ class Expert extends Command
         3 - PArt
         4 - Marca
         5 - Nome
-        6 - Preço custo
-        7 - reducao
-        8 - preço comercial
-        9 - Atualização
-        10 - Resumo
-        11 - Atributos
-        12 -imagens
-        13 - galeria
-        14 - filtros
-        15 - disponibilidade
-        16 - expert url
-        17 - eficienciaenergetica
-        18 - eficienciaenergeticaimg
+        6 - caracteristicas
+        7 - Preço custo
+        8 - reducao
+        9 - preço comercial
+        10 - Atualização
+        11 - Resumo
+        12 - Atributos
+        13 - imagens
+        14 - galeria
+        15 - filtros
+        16 - disponibilidade
+        17 - expert url
+        18 - eficienciaenergetica
+        19 - eficienciaenergeticaimg
         19 - fichaue
         20 - desenhostec
         21 - criacao
@@ -249,7 +250,7 @@ class Expert extends Command
         $this->produtoInterno->price = $this->produtoInterno->getPrice((int)trim($data[7]));
 
         
-        $this->setStock($data[6]);
+        $this->setStock($data[16]);
         if($this->produtoInterno->price == 0){
             print_r(" - price 0 - ");
             $logger->info(Cat::ERROR_PRICE_ZERO.$this->produtoInterno->sku);
@@ -257,6 +258,7 @@ class Expert extends Command
         }
 
         if($this->produtoInterno->stock == 0){
+            print_r(" - NO STOCK - ");
             return 0;
         }
 

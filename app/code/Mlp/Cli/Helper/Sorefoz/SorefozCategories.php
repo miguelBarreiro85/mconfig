@@ -65,6 +65,31 @@ class SorefozCategories {
             case 'GRANDES DOMÉSTICOS':
                 $gama = Cat::GRANDES_DOMESTICOS;
                 switch ($familia) {
+                    case 'ESQUENTADORES/CALDEIRAS':
+                        $familia = Cat::ESQUENTADORES_CALDEIRAS;
+                        switch ($subFamilia) {
+                            case 'ESQUENTADORES - ELÉCTRICOS':
+                                $subFamilia = Cat::ESQUENTADORES_ELECTRICOS;
+                                return [$gama, $familia, $subFamilia];
+                            case 'ESQUENTADORES C/GÁS':
+                                $subFamilia = Cat::ESQUENTADORES_ELECTRICOS;
+                                return [$gama, $familia, $subFamilia];
+                            case 'CALDEIRAS C/GÁS':
+                                $subFamilia = Cat::CALDEIRAS_GAS;
+                                return [$gama, $familia, $subFamilia];
+                        }
+                    case 'MICROONDAS':
+                        $familia = Cat::MICROONDAS;
+                        switch ($subFamilia) {
+                            case 'MO - COM GRILL':
+                                $subFamilia = Cat::MICROONDAS_GRILL;
+                                return [$gama, $familia, $subFamilia];
+                                break;
+                            
+                            default:
+                                return [$gama, $familia, $subFamilia];
+                                break;
+                        }
                     case 'ENCASTRE - FORNOS':
                         $gama = Cat::ENCASTRE;
                         switch ($subFamilia) {
@@ -154,8 +179,19 @@ class SorefozCategories {
                         return [$gama,$familia,$subFamilia];
                     case 'ENCASTRE - OUTRAS':
                         $gama = Cat::ENCASTRE;
-                        $subFamilia = Cat::OUTRO_ENC;
-                        return [$gama,$familia,$subFamilia];
+                        $familia = Cat::OUTRO_ENC;
+                        return [$gama,$familia,null];
+                    case 'FOGÕES':
+                        $familia = Cat::FOGOES;
+                        switch ($subFamilia) {
+                            case 'FOGÕES - LENHA':
+                                $subFamilia = Cat::FOGOES_LENHA;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                        }
                     case 'MAQUINAS LAVAR ROUPA':
                         $gama = Cat::GRANDES_DOMESTICOS;
                         $familia = Cat::MAQ_ROUPA;
@@ -304,27 +340,26 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                             }
                     case 'EQUIPAMENTOS AUDIO':
+                        $familia = Cat::EQUIPAMENTOS_AUDIO;
                         switch ($subFamilia) {
                             case 'OUTRO HI-FI':
                                 if (preg_match('/AURIC/', $name) == 1
                                     || preg_match('/^AUSCULT/', $name) == 1) {
-                                    $gama = Cat::IMAGEM_E_SOM;
                                     $familia = Cat::AUDIO_PORTATIL;
                                     $subFamilia = Cat::AUSCULTADORES;
                                     return [$gama,$familia,$subFamilia];        
                                 } else if(preg_match('/^COLUNA/', $name) == 1
                                     ||preg_match('/^SIST.AUDIO/', $name) == 1){
-                                    $gama = Cat::IMAGEM_E_SOM;
                                     $familia = Cat::EQUIPAMENTOS_AUDIO;
                                     $subFamilia = Cat::SOUND_BARS;
                                     return [$gama,$familia,$subFamilia];
                                 } else if(preg_match('/^SOUND BAR/', $name) == 1) {
-                                    $gama = Cat::IMAGEM_E_SOM;
                                     $familia = Cat::EQUIPAMENTOS_AUDIO;
                                     $subFamilia = Cat::SOUND_BARS;
                                     return [$gama,$familia,$subFamilia];
                                 }
                             default:
+                                $subFamilia = Cat::OUTRO_HIFI;
                                 return [$gama,$familia,$subFamilia];
                             }
                     case 'SIST.HOME CINEMA':
@@ -332,6 +367,21 @@ class SorefozCategories {
                         $familia = Cat::EQUIPAMENTOS_AUDIO;
                         $subFamilia = Cat::SIST_HOME_CINEMA;
                         return [$gama,$familia,$subFamilia];
+                    case 'ACESSÓRIOS IMAGEM E SOM':
+                        $gama = Cat::IMAGEM_E_SOM;
+                        $familia = Cat::ACESSORIOS_IMAGEM_E_SOM;
+                        switch ($subFamilia) {
+                            case 'MÓVEIS / SUPORTES':
+                                $subFamilia = Cat::MOVEIS_SUPORTES;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            case 'TELAS PROJEÇÃO':
+                                $subFamilia = Cat::TELAS_PROJEÇÃO;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                        }
                     default:
                         return [$gama,$familia,$subFamilia];    
                     }
@@ -339,6 +389,40 @@ class SorefozCategories {
             case 'INFORMÁTICA':
                 $gama = Cat::INFORMATICA;
                 switch ($familia) {
+                    case 'GPS':
+                        $familia=Cat::GPS;
+                        switch ($subFamilia) {
+                            case 'value':
+                                # code...
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+                    case 'IMPRESSORAS':
+                        $familia = Cat::IMPRESSORAS;
+                        switch ($subFamilia) {
+                            case 'MULTIFUNÇÕES J.TINTA':
+                                $subFamilia = Cat::IMPRESSORAS_MULTI_FUNC;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            case 'MULTIFUNÇÕES LASER':
+                                $subFamilia = Cat::IMPRESSORAS_MULTI_FUNC_LASER;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            case 'LASER':
+                                $subFamilia = Cat::IMPRESSORAS_LASER;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            case 'JACTO DE TINTA':
+                                $subFamilia = Cat::IMPRESSORAS_JACTO_DE_TINTA;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            default:
+                                # code...
+                                break;
+                        }
                     case 'ACESSÓRIOS':
                         switch ($subFamilia) {
                             case 'ACESSÓRIOS DE SOM':
@@ -361,24 +445,90 @@ class SorefozCategories {
                         }
                         
                     case "COMPUTADORES E TABLET'S":
+                        $familia = Cat::COMPUTADORES_E_TABLETS;
                         switch ($subFamilia) {
                             case 'DE SECRETÁRIA':
                                 $subFamilia = Cat::DESKTOPS;
                                 return [$gama,$familia,$subFamilia];
+                            case "TABLET'S":
+                                $subFamilia = Cat::TABLETS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'PORTÁTEIS':
+                                $subFamilia = Cat::PORTATEIS_NOTEBOOKS;
+                                return [$gama,$familia,$subFamilia];
                             default:
                                 return [$gama,$familia,$subFamilia];
+                        }
+                    case "MONITORES":
+                        switch ($subFamilia) {
+                            case 'COM SINTONIZADOR TV':
+                                $subFamilia = Cat::MONITORES_C_TV;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            case 'PROJECTORES INFORMÁTICA':
+                                $subFamilia = Cat::PROJECTORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'SEM SINTONIZADOR TV':
+                                $subFamilia = Cat::MONITORES_PC;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                        }
+                    
+                    case 'MEMÓRIAS':
+                        switch ($subFamilia) {
+                            case 'MEMÓRIAS USB':
+                                $subFamilia = Cat::PENS_USB;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            case 'CARTÕES DE MEMÓRIA':
+                                $subFamilia = Cat::CARTOES_MEMORIA;
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                            default:
+                                # code...
+                                break;
                         }
                     default:
                         return [$gama,$familia,$subFamilia];
                 }
                 
             case 'CLIMATIZAÇÃO':
+                $gama = Cat::CLIMATIZACAO;
                 switch ($familia) {
+                    case 'SISTEMAS AQUEC.SOLAR':
+                        $familia = Cat::SISTEMAS_AQUECIMENTO_SOLAR;
+                        switch ($subFamilia) {
+                            case 'ACESSÓRIOS AQUEC.SOLAR':
+                                $familia = Cat::ACESSORIOS_CLIMATIZACAO;
+                                return [$gama,$familia,null];
+                            case 'ACUM.DE ÁGUA':
+                                $subFamilia = Cat::ACUMULADORES_AGUA;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                # code...
+                                break;
+                        }
                     case 'AQUECIMENTO':
+                        $familia = Cat::AQUECIMENTO;
+                        switch ($subFamilia) {
+                            case 'OUTRO AQUECIMENTO':
+                                $subFamilia = Cat::OUTRO_AQUECIMENTO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'EMISSORES TÉRMICOS':
+                                $subFamilia = Cat::EMISSORES_TERMICOS;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
+                        $familia = Cat::AQUECIMENTO;
                         if (preg_match('/^CLIMATIZADOR/', $name) == 1) {
                             $gama = Cat::CLIMATIZACAO;
                             $familia = Cat::AR_CONDICIONADO;
                             $subFamilia = Cat::CLIMATIZADORES;
+                            return [$gama,$familia,$subFamilia];
+                        }else{
                             return [$gama,$familia,$subFamilia];
                         }
                     case 'AR CONDICIONADO':
@@ -390,6 +540,13 @@ class SorefozCategories {
                             default:
                                 return [$gama,$familia,$subFamilia];
                         }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     default:
                         return [$gama,$familia,$subFamilia];
                 }
@@ -429,18 +586,25 @@ class SorefozCategories {
                         return [$gama,$familia,$subFamilia];
                 }
             case 'CAR AUDIO':
+                $familia = Cat::IMAGEM_E_SOM;
                 switch ($familia) {
                     case 'AUTO-RADIOS':
-                        $gama = Cat::IMAGEM_E_SOM;
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::AUTO_RADIOS;
                         return [$gama,$familia,$subFamilia];
-                    case 'ALTIFALANTES':
+                    case 'SISTEMAS DE NAVEGAÇÃO':
+                        $familia = Cat::CAR_AUDIO;
+                        $subFamilia = Cat::SISTEMAS_NAVEGAÇÃO;
+                        return [$gama,$familia,$subFamilia];
                     case 'COLUNAS':
                         $gama = Cat::IMAGEM_E_SOM;
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::COLUNAS_AUTO;
                         return [$gama,$familia,$subFamilia];
+                    case 'AMPLIFICADORES';
+                        $gama = Cat::IMAGEM_E_SOM;
+                        $familia = Cat::CAR_AUDIO;
+                        $subFamilia = Cat::AMPLIFICADORES_AUTO;
                     default:
                         return [$gama,$familia,$subFamilia];
                 }
