@@ -282,7 +282,7 @@ class CategoriesConstants {
     const ESCALFETAS = 'Escalfetas';
     const MICROONDAS = 'Microondas';
     const MICROONDAS_ENC = 'Microondas Enc';
-    const ESQUENTADORES_CALDEIRAS = 'Esquentadores e Caldeiras';
+    const ESQUENTADORES_TERMOACUMULADORES = 'Esquentadores e Termoacumuladores';
     const ESQUENTADORES_ELECTRICOS = 'Esquentadores Eléctricos';
     const ESQUENTADORES_C_GAS = 'Esquentadores Gás';
     const TERMOACUMULADORES = 'Termoacumuladores';
@@ -412,5 +412,14 @@ class CategoriesConstants {
     const ASPIRADORES = 'Aspiradores';
     const ACESSORIOS_MICROONDAS = 'Acessórios Microondas';
     const MAQ_LAVAR_VIDROS = 'Maq Lavar Vidros';
+    const TERMOMETRO_MEDIDORES_TENSAO = "Termómetros e Medidores de Tensão";
+    const PEDICURE_MANICURE = "Pedicure e Manicure";
+    const MASSAJADORES = "Massajadores";
+    const MAQUINAS_BARBEAR = "Maq Barbear";
+    const PANELAS_TABULEIROS = "Panelas e Tabuleiros";
+    const RADIO_DESPERTADOR = "Rádio Despertador";
+    const GRAVADORES = "Gravadores";
+    const LEITOR_MP3_MP4 = "Leitores de MP3 e MP4";
+    const BOMBA_CALOR = "Termoacumuladores Bomba de Calor";
 
 }

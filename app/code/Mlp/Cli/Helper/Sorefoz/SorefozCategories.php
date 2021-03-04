@@ -65,8 +65,23 @@ class SorefozCategories {
             case 'GRANDES DOMÉSTICOS':
                 $gama = Cat::GRANDES_DOMESTICOS;
                 switch ($familia) {
+                    case 'TERMOACUMULADORES':
+                        $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
+                        switch ($subFamilia) {
+                            case 'TERMOACUMULADORES - ELÉCTRICOS':
+                                $subFamilia = Cat::TERMOACUMULADORES_ELECTRICOS;
+                                return [$gama, $familia, $subFamilia];
+                            case 'BOMBA DE CALOR':
+                                $subFamilia = Cat::BOMBA_CALOR;
+                                return [$gama, $familia, $subFamilia];
+                            case 'ACUMULADORES DE ÁGUA':
+                                $subFamilia = Cat::ACUMULADORES_AGUA;
+                                return [$gama, $familia, $subFamilia];
+                            default:
+                                return [$gama, $familia, $subFamilia];
+                        }
                     case 'ESQUENTADORES/CALDEIRAS':
-                        $familia = Cat::ESQUENTADORES_CALDEIRAS;
+                        $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
                         switch ($subFamilia) {
                             case 'ESQUENTADORES - ELÉCTRICOS':
                                 $subFamilia = Cat::ESQUENTADORES_ELECTRICOS;
@@ -291,6 +306,30 @@ class SorefozCategories {
             case 'IMAGEM E SOM':
                 $gama = Cat::IMAGEM_E_SOM;
                 switch ($familia) {
+                    case 'AUDIO PORTATIL':
+                        $familia = Cat::AUDIO_PORTATIL;
+                        switch ($subFamilia) {
+                            case 'RADIOS PORTATEIS':
+                                $subFamilia = Cat::RADIOS_PORTATEIS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'RADIOS C/CD':
+                                $subFamilia = Cat::RADIO_CDS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'RADIO RELOGIO':
+                                $subFamilia = Cat::RADIO_DESPERTADOR;
+                                return [$gama,$familia,$subFamilia];
+                            case 'RADIOS GRAVADORES':
+                            case 'GRAVADORES':
+                                $subFamilia = Cat::GRAVADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'LEITORES DE MP4':
+                            case 'LEITORES DE MP3':
+                                $subFamilia = Cat::LEITOR_MP3_MP4;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                                break;
+                        }
                     case 'CÂMARAS':
                         switch ($subFamilia) {
                             case 'VIDEO CARTÃO MEMÓRIA':
@@ -555,7 +594,33 @@ class SorefozCategories {
                 }
                 
             case 'PEQUENOS DOMÉSTICOS':
+                $gama = Cat::PEQUENOS_DOMESTICOS;
                 switch ($familia) {
+                    case 'ARTIGOS DE MENAGE':
+                        $familia = Cat::ARTIGOS_DE_MENAGE;
+                        switch ($subFamilia) {
+                            case 'PEQ.APARELHOS COZINHA':
+                                $subFamilia = Cat::PEQ_APARELHOS_COZINHA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'PANELAS DE PRESSÃO':
+                                $subFamilia = Cat::PANELAS_DE_PRESSAO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'CAÇAROLAS':
+                                $subFamilia = Cat::CACAROLAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'PANELAS/TABULEIROS':
+                                $subFamilia = Cat::PANELAS_TABULEIROS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TRENS DE COZINHA':
+                                $subFamilia = Cat::TRENS_COZINHA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'FRIGIDEIRAS':
+                                $subFamilia = Cat::FRIGIDEIRAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TACHOS':
+                                $subFamilia = Cat::TACHOS;
+                                return [$gama,$familia,$subFamilia];
+                        }
                     case 'ASSEIO PESSOAL':
                         $familia = Cat::ASSEIO_PESSOAL;
                         switch ($subFamilia) {
@@ -568,8 +633,32 @@ class SorefozCategories {
                             case 'MAQUINAS DE BARBEAR':
                                 $subFamilia = Cat::MAQUINAS_BARBEAR;
                                 return [$gama,$familia,$subFamilia];
-                            case 'TÁBUAS DE PASSAR':
-                                $subFamilia = Cat::TABUAS_PASSAR_FERRO;
+                            case 'ESCOVAS DE DENTES':
+                                $subFamilia = Cat::ESCOVAS_DE_DENTES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MODELADORES':
+                                $subFamilia = Cat::MODELADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'DEPILADORAS':
+                                $subFamilia = Cat::DEPILADORAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'SAÚDE E BELEZA':
+                                $subFamilia = Cat::SAUDE_BELEZA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'BALANÇAS DE W.C.':
+                                $subFamilia = Cat::BALANÇAS_DE_WC;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MASSAJADORES':
+                                $subFamilia = Cat::MASSAJADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'PEDICURE/MANICURE':
+                                $subFamilia = Cat::PEDICURE_MANICURE;
+                                return [$gama,$familia,$subFamilia];
+                            case 'APARELHOS PARA BEBÉ':
+                                $subFamilia = Cat::PUERICULTURA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TERMOMETRO/MEDID.TENSÃO':
+                                $subFamilia = Cat::TERMOMETRO_MEDIDORES_TENSAO;
                                 return [$gama,$familia,$subFamilia];
                             default:
                                 return [$gama,$familia,$subFamilia];
@@ -698,14 +787,14 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                         }
                     case 'MAQUINAS DE COSTURA':
-                        $familia = Cat::MAQ_COSTURA;    
-                        $subFamilia = null;
+                        $familia = Cat::CUIDADO_DE_ROUPA;    
+                        $subFamilia = Cat::MAQ_COSTURA;
                         return [$gama,$familia,$subFamilia];
                     default:
                         return [$gama,$familia,$subFamilia];
                 }
             case 'CAR AUDIO':
-                $familia = Cat::IMAGEM_E_SOM;
+                $gama = Cat::IMAGEM_E_SOM;
                 switch ($familia) {
                     case 'AUTO-RADIOS':
                         $familia = Cat::CAR_AUDIO;
@@ -716,12 +805,10 @@ class SorefozCategories {
                         $subFamilia = Cat::SISTEMAS_NAVEGAÇÃO;
                         return [$gama,$familia,$subFamilia];
                     case 'COLUNAS':
-                        $gama = Cat::IMAGEM_E_SOM;
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::COLUNAS_AUTO;
                         return [$gama,$familia,$subFamilia];
                     case 'AMPLIFICADORES';
-                        $gama = Cat::IMAGEM_E_SOM;
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::AMPLIFICADORES_AUTO;
                     default:
