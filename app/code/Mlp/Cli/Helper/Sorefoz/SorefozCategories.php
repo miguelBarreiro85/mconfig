@@ -506,8 +506,11 @@ class SorefozCategories {
                             case 'ACUM.DE ÁGUA':
                                 $subFamilia = Cat::ACUMULADORES_AGUA;
                                 return [$gama,$familia,$subFamilia];
+                            case 'PAINEIS SOLARES':
+                                $subFamilia = Cat::PAINEIS_SOLARES;
+                                return [$gama,$familia,$subFamilia];
                             default:
-                                # code...
+                                return [$gama,$familia,$subFamilia];
                                 break;
                         }
                     case 'AQUECIMENTO':
@@ -553,7 +556,44 @@ class SorefozCategories {
                 
             case 'PEQUENOS DOMÉSTICOS':
                 switch ($familia) {
+                    case 'ASSEIO PESSOAL':
+                        $familia = Cat::ASSEIO_PESSOAL;
+                        switch ($subFamilia) {
+                            case 'SECADORES DE CABELO':
+                                $subFamilia = Cat::SECADORES_DE_CABELO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'APARADORES':
+                                $subFamilia = Cat::APARADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MAQUINAS DE BARBEAR':
+                                $subFamilia = Cat::MAQUINAS_BARBEAR;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TÁBUAS DE PASSAR':
+                                $subFamilia = Cat::TABUAS_PASSAR_FERRO;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
+                    case 'CUIDADO DE ROUPA':
+                        $familia = Cat::CUIDADO_DE_ROUPA;
+                        switch($subFamilia) {
+                            case 'FERROS A VAPOR':
+                                $subFamilia = Cat::FORNOS_DE_BANCADA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'FERROS COM CALDEIRA':
+                                $subFamilia = Cat::FERROS_CALDEIRA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'FERROS SECOS':
+                                $subFamilia = Cat::FERROS_A_SECO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TÁBUAS DE PASSAR':
+                                $subFamilia = Cat::TABUAS_PASSAR_FERRO;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
                     case 'APARELHOS DE COZINHA':
+                        $familia = Cat::APARELHOS_DE_COZINHA;
                         switch ($subFamilia) {
                             case 'FORNOS':
                                 $subFamilia = Cat::FORNOS_DE_BANCADA;
@@ -561,11 +601,90 @@ class SorefozCategories {
                             case 'MAQ.CAFE EXPRESSO':
                                 $subFamilia = Cat::MAQ_CAFE;
                                 return [$gama,$familia,$subFamilia];
+                            case 'MAQUINAS DE COZINHA':
+                                $subFamilia = Cat::MAQ_DE_COZINHA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'GELEIRAS / REFRIGERADORES':
+                                $subFamilia = Cat::GELEIRAS_CONGELADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'SANDWICHEIRAS':
+                                $subFamilia = Cat::SANDWICHEIRAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'GRELHADORES':
+                                $subFamilia = Cat::GRELHADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'VARINHAS MAGICAS':
+                                $subFamilia = Cat::VARINHAS_MAGICAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'BATEDEIRAS':
+                                $subFamilia = Cat::BATEDEIRAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'JARROS E FERV./PURIF. ÁGUA':
+                                $subFamilia = Cat::JARROS_E_FERV_PURIF_ÁGUA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'FOGAREIROS':
+                                $subFamilia = Cat::FOGAREIROS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'FRITADEIRAS':
+                                $subFamilia = Cat::FRITADEIRAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ROBOT DE COZINHA':
+                                $subFamilia = Cat::ROBOTS_DE_COZINHA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'CAFETEIRAS':
+                                $subFamilia = Cat::CAFETEIRAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TORRADEIRAS':
+                                $subFamilia = Cat::TORRADEIRAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'CENTRIFUGADORAS':
+                                $subFamilia = Cat::CENTRIFUGADORAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'LIQUIDIFICADORAS':
+                                $subFamilia = Cat::LIQUIDIFICADORAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ESPREMEDORES':
+                                $subFamilia = Cat::ESPREMEDORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MOINHOS DE CAFE':
+                                $subFamilia = Cat::MOINHOS_DE_CAFE;
+                                return [$gama,$familia,$subFamilia];
+                            case 'CÁPSULAS DE CAFÉ':
+                                $subFamilia = Cat::CAPSULAS_CAFE;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ABRE-LATAS E FACAS':
+                                $subFamilia = Cat::ABRE_LATAS_FACAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'BALANÇAS DE COZINHA':
+                                $subFamilia = Cat::BALANÇAS_DE_COZINHA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'FIAMBREIRAS':
+                                $subFamilia = Cat::FIAMBREIRAS;
+                                return [$gama,$familia,$subFamilia];
                             default:
                                 return [$gama,$familia,$subFamilia];
                         }
                     case 'APARELHOS DE LIMPEZA':
+                        $familia = Cat::APARELHOS_DE_LIMPEZA;
                         switch ($subFamilia) {
+                            case 'ASPIRADOR SEM SACO':
+                                $subFamilia = Cat::ASPIRADOR_SEM_SACO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ASPIRADOR VERTICAL':
+                                $subFamilia = Cat::ASPIRADOR_VERTICAL;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ASPIRADOR COM SACO':
+                                $subFamilia = Cat::ASPIRADOR_COM_SACO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MINI ASPIRADORES':
+                                $subFamilia = Cat::MINI_ASPIRADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ENCERADORAS':
+                                $subFamilia = Cat::ASPIRADOR_COM_SACO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ASPIRADOR ESCOVA':
+                                $subFamilia = Cat::ASPIRADOR_ESCOVA;
+                                return [$gama,$familia,$subFamilia];
                             case 'MAQ.LAVAR VIDROS':
                                 $subFamilia = Cat::MAQ_LAVAR_VIDROS;
                                 return [$gama,$familia,$subFamilia];

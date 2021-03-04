@@ -117,6 +117,11 @@ class CategoriesConstants {
         
         const DVD_BLURAY_TDT = 'Dvd Bluray Tdt';
    
+    const GELEIRAS_CONGELADORES = "Geleiras e Congeladores";
+    const CAPSULAS_CAFE = "Capsulas de Café";
+    const PAINEIS_SOLARES = "Paineis Solares";
+    const ACUMULADORES_AGUA = "Acumuladores de Água";
+    const SISTEMAS_AQUECIMENTO_SOLAR = "Sistemas de Aquecimento Solar";
     const OUTRO_AQUECIMENTO = "Outro Aquecimento";
     const CALDEIRAS_GAS = "Caldeiras a Gás";
     const ACESSORIOS_GRANDES_DOMESTICOS = "Acessórios Grandes Domésticos";
@@ -401,7 +406,7 @@ class CategoriesConstants {
     const ACESSORIOS_CUIDADOS_ROUPA = 'Acessórios Cuidados Roupa';
     const TIRA_BORBOTOS = 'Tira Borbotos';
     const MAQ_LIMPEZA_VAPOR = 'Maq Limpeza a Vapor';
-    const MAQ_LAVAR_PRESSAO = 'Maq LAVAR Alta Pressão';
+    const MAQ_LAVAR_PRESSAO = 'Maq Lavar Alta Pressão';
     const ACESSORIOS_APARELHOS_LIMPEZA = 'Acessórios Aparelhos Limpeza';
     const OUTROS_APARELHOS_LIMPEZA = 'Outros Aparelhos Limpeza';
     const ASPIRADORES = 'Aspiradores';
