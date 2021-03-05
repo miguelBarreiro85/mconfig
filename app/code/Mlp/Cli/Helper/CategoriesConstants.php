@@ -5,7 +5,7 @@ namespace Mlp\Cli\Helper;
 
 class CategoriesConstants {
     const WARN_DIDNT_FOUND_PRODUCTS = "WARNING : DID NOT FOUND PRODUCT : ";
-    const WARN_deLETING_PRODUCT = "WARNING : deLETING PRODUCT : ";
+    const WARN_DELETING_PRODUCT = "WARNING : deLETING PRODUCT : ";
     const WARN_PRODUCT_ADDED = "WARNING : PRODUCT ADdeD : ";
     const WARN_OLD_PRODUCT = "WARNING : OLD PRODUCT : ";
     const WARN_FOUND_PRODUCT_SKU = "WARNING : FOUND PRODUCT SKU : ";
@@ -79,7 +79,7 @@ class CategoriesConstants {
             const TV_LED_M65 = 'Tv Led +65"' ;
             const TV_HOTELARIA = 'Tv Hotelaria';
         
-        const PROJECTORES = 'Projectores VideO';
+        const PROJECTORES = 'Projectores Video';
             const PROJECTORES_MESA = 'Projectores Mesa';
             const PROJECTORES_PORTATEIS = 'Projectores Portáteis';
 
@@ -259,7 +259,7 @@ class CategoriesConstants {
     const ENCASTRE = 'Encastre';
     const FRIGORIFICOS_COMBINADOS = 'Frigoríficos e Combinados';
     const MAQ_LAVAR_ROUPA = 'Maq Lavar Roupa';
-    const MAQ_SECAR_ROUPA = 'MAQ Secar Roupa';
+    const MAQ_SECAR_ROUPA = 'Maq Secar Roupa';
     const PEQUENOS_DOMESTICOS = 'Pequenos Domésticos';
     const CUIDADO_DE_ROUPA = 'Cuidado de Roupa';
     const APARELHOS_DE_COZINHA = 'Aparelhos de Cozinha';
@@ -395,7 +395,7 @@ class CategoriesConstants {
     const LAVA_LOUCAS = 'Lava Louças';
     const MISTURADORAS = 'Misturadoras';
     const ACESSORIOS_COZINHA = 'Acessórios Aparelhos Cozinha';
-    const HUMIDIFICADORES = 'HUMIDIFICADORES';
+    const HUMIDIFICADORES = 'Humidificadores';
     const OUTROS_EQUIPAMENTOS_COZINHA = 'Outros Equipamentos Cozinha';
     const PUERICULTURA = 'Puericultura';
     const ESCOVAS_DE_DENTES = 'Escovas de Dentes';
@@ -421,5 +421,10 @@ class CategoriesConstants {
     const GRAVADORES = "Gravadores";
     const LEITOR_MP3_MP4 = "Leitores de MP3 e MP4";
     const BOMBA_CALOR = "Termoacumuladores Bomba de Calor";
+    const ALTIFALANTES = "Altifalantes";
+    const ASPIRADOR_ESCOVA = "Aspiradores de Escova";
+    const AQUECEDORES_GAS = "Aquecedores a Gás";
+    const AC_BOMBA_CALOR = "Ar Condicionado Bomba Calor";
 
+    
 }

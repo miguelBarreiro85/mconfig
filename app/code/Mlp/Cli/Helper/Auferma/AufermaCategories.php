@@ -48,6 +48,18 @@ class AufermaCategories {
             case 'GRANDES DOMÉSTICOS':
                 $gama = Cat::GRANDES_DOMESTICOS;
                 switch ($familia) {
+                    case 'FOGOES':
+                        $familia = Cat::FOGOES;
+                        switch($subFamilia) {
+                            case 'FOGÕES C/GÁS':
+                                $subFamilia = Cat::FOGOES_GAS;
+                                return [$gama, $familia, $subFamilia];
+                            case 'FOGÕES - ELÉCTRICOS':
+                                $subFamilia = Cat::FOGOES_ELECTRICOS;
+                                return [$gama, $familia, $subFamilia];
+                            default:
+                                return [$gama, $familia, $subFamilia];
+                        }
                     case 'ENCASTRE - FORNOS':
                         $gama = Cat::ENCASTRE;
                         switch ($subFamilia) {

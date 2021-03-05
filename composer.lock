@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5bcf5616cd061728bdbf3f940b3497a",
+    "content-hash": "a2c3bd3d2ed6178218bbd5ee22fa9f99",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -15960,6 +15960,47 @@
             "description": "Portuguese language package for Magento 2",
             "homepage": "https://www.mageplaza.com",
             "time": "2020-06-29T09:14:07+00:00"
+        },
+        {
+            "name": "mageplaza/module-banner-slider",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-banner-slider.git",
+                "reference": "f47ba4f840da793cb80bce8476db63ab4bc00e82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-banner-slider/zipball/f47ba4f840da793cb80bce8476db63ab4bc00e82",
+                "reference": "f47ba4f840da793cb80bce8476db63ab4bc00e82",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\BannerSlider\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Banner Slider extension",
+            "time": "2020-11-09T02:57:48+00:00"
         },
         {
             "name": "mageplaza/module-core",

@@ -663,7 +663,7 @@ class ExpertCategories {
                             switch ($subFamilia) {
                                 case 'Termoacumuladores':
                                     $gama = Cat::GRANDES_DOMESTICOS;
-                                    $familia = Cat::TERMOACUMULADORES;
+                                    $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
                                     $subFamilia = Cat::TERMOACUMULADORES_ELECTRICOS;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Esquentadores':

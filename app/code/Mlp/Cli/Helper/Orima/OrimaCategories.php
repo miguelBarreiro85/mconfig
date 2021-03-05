@@ -206,7 +206,7 @@ class OrimaCategories {
                 $gama = Cat::GRANDES_DOMESTICOS;
                 switch ($familia) {
                     case 'TERMOACUMULADORES':
-                        $familia = Cat::TERMOACUMULADORES;
+                        $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
                         switch ($subFamilia) {
                             case 'TERMOACUMULADORES':
                             case 'TERMOACUMULADORES HORIZONTAIS':
@@ -217,7 +217,7 @@ class OrimaCategories {
                         }
 
                     case 'ESQUENTADORES':
-                        $familia = Cat::ESQUENTADORES_CALDEIRAS;
+                        $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
                         switch ($subFamilia) {
                             case 'ESQUENTADORES ELETRICOS':
                                 $subFamilia = Cat::ESQUENTADORES_ELECTRICOS;

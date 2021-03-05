@@ -49,7 +49,7 @@ class SorefozCategories {
                     case 'SERVIÇOS INTERNET':
                     case 'SERVIÇOS TELEVISÃO':
                         $familia = Cat::SERVICOS_COMUNICACOES;
-                        return [$gama,$familia,$subFamilia];
+                        return [$gama,$familia,null];
                     case 'TELEFONES FIXOS':
                         $familia = Cat::TELEFONES_FIXOS;
                         $subFamilia = null;
@@ -100,7 +100,9 @@ class SorefozCategories {
                                 $subFamilia = Cat::MICROONDAS_GRILL;
                                 return [$gama, $familia, $subFamilia];
                                 break;
-                            
+                            case 'MO - SEM GRILL':
+                                $subFamilia = Cat::MO_SEM_GRILL;
+                                return [$gama, $familia, $subFamilia];
                             default:
                                 return [$gama, $familia, $subFamilia];
                                 break;
@@ -203,6 +205,12 @@ class SorefozCategories {
                                 $subFamilia = Cat::FOGOES_LENHA;
                                 return [$gama,$familia,$subFamilia];
                                 break;
+                            case 'FOGÕES C/GÁS':
+                                $subFamilia = Cat::FOGOES_GAS;
+                                return [$gama, $familia, $subFamilia];
+                            case 'FOGÕES - ELÉCTRICOS':
+                                $subFamilia = Cat::FOGOES_ELECTRICOS;
+                                return [$gama, $familia, $subFamilia];
                             default:
                                 return [$gama,$familia,$subFamilia];
                                 break;
@@ -499,6 +507,7 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                         }
                     case "MONITORES":
+                        $familia = Cat::MONITORES;
                         switch ($subFamilia) {
                             case 'COM SINTONIZADOR TV':
                                 $subFamilia = Cat::MONITORES_C_TV;
@@ -516,6 +525,7 @@ class SorefozCategories {
                         }
                     
                     case 'MEMÓRIAS':
+                        $familia = Cat::MEMORIAS;
                         switch ($subFamilia) {
                             case 'MEMÓRIAS USB':
                                 $subFamilia = Cat::PENS_USB;
@@ -536,6 +546,30 @@ class SorefozCategories {
             case 'CLIMATIZAÇÃO':
                 $gama = Cat::CLIMATIZACAO;
                 switch ($familia) {
+                    case 'TRATAMENTO DE AR':
+                        $familia = Cat::TRATAMENTO_DE_AR;
+                        switch ($subFamilia) {
+                            case 'DESUMIDIFICADORES':
+                                $subFamilia = Cat::DESUMIDIFICADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'HUMIDIFICADORES':
+                                $subFamilia = Cat::HUMIDIFICADORES;
+                                return [$gama,$familia,$subFamilia];
+                            case 'PURIFICADORES DE AR':
+                                $subFamilia = Cat::PURIFICADORES_AR;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                            }
+                    case 'VENTILAÇÃO':
+                        $familia = Cat::VENTILACAO;
+                        switch ($subFamilia) {
+                            case 'VENTOINHAS':
+                                 $subFamilia = Cat::VENTOINHAS;
+                                 return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
                     case 'SISTEMAS AQUEC.SOLAR':
                         $familia = Cat::SISTEMAS_AQUECIMENTO_SOLAR;
                         switch ($subFamilia) {
@@ -555,6 +589,24 @@ class SorefozCategories {
                     case 'AQUECIMENTO':
                         $familia = Cat::AQUECIMENTO;
                         switch ($subFamilia) {
+                            case 'RADIADORES A OLEO':
+                                $subFamilia = Cat::RADIADORES_A_OLEO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TEXTIL':
+                                $subFamilia = Cat::TEXTIL;
+                                return [$gama,$familia,$subFamilia];
+                            case 'CONVECTORES/TERMOVENT.':
+                                $subFamilia = Cat::CONVECTORES_TERMOVENT;
+                                return [$gama,$familia,$subFamilia];
+                            case 'A GÁS':
+                                $subFamilia = Cat::AQUECEDORES_GAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ELÉCTRICO':
+                                $subFamilia = Cat::ELECTRICO;
+                                return [$gama,$familia,$subFamilia];
+                            case 'RECUPERADORES':
+                                $subFamilia = Cat::RECUPERADORES;
+                                return [$gama,$familia,$subFamilia];
                             case 'OUTRO AQUECIMENTO':
                                 $subFamilia = Cat::OUTRO_AQUECIMENTO;
                                 return [$gama,$familia,$subFamilia];
@@ -574,11 +626,18 @@ class SorefozCategories {
                             return [$gama,$familia,$subFamilia];
                         }
                     case 'AR CONDICIONADO':
+                        $familia = Cat::AR_CONDICIONADO;
                         switch ($subFamilia) {
                             case 'AR COND.INVERTER':
                             case 'AR COND.MULTI-SPLIT':
                                  $subFamilia = Cat::AC_FIXO;
                                  return [$gama,$familia,$subFamilia];
+                            case 'AR COND.PORTATIL':
+                                $subFamilia = Cat::AC_PORTATIL;
+                                return [$gama,$familia,$subFamilia];
+                            case 'AR COND.BOMBA DE CALOR':
+                                $subFamilia = Cat::AC_BOMBA_CALOR;
+                                return [$gama,$familia,$subFamilia];
                             default:
                                 return [$gama,$familia,$subFamilia];
                         }
@@ -796,6 +855,10 @@ class SorefozCategories {
             case 'CAR AUDIO':
                 $gama = Cat::IMAGEM_E_SOM;
                 switch ($familia) {
+                    case 'ALTIFALANTES':
+                        $familia = Cat::CAR_AUDIO;
+                        $subFamilia = Cat::ALTIFALANTES;
+                        return [$gama,$familia,$subFamilia];
                     case 'AUTO-RADIOS':
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::AUTO_RADIOS;

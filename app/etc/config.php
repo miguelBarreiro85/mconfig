@@ -310,6 +310,7 @@ return [
         'Klarna_Onsitemessaging' => 1,
         'Klarna_KpGraphQl' => 1,
         'Mageplaza_Core' => 1,
+        'Mageplaza_BannerSlider' => 1,
         'Mageplaza_Smtp' => 1,
         'Mlp_CategoryFilter' => 1,
         'Mlp_Cli' => 1,
