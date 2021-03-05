@@ -588,7 +588,16 @@ class SorefozCategories {
                         }
                     case 'AQUECIMENTO':
                         $familia = Cat::AQUECIMENTO;
+                        if (preg_match('/^CLIMATIZADOR/', $name) == 1) {
+                            $gama = Cat::CLIMATIZACAO;
+                            $familia = Cat::AR_CONDICIONADO;
+                            $subFamilia = Cat::CLIMATIZADORES;
+                            return [$gama,$familia,$subFamilia];
+                        }
                         switch ($subFamilia) {
+                            case 'SALAMANDRAS':
+                                $subFamilia = Cat::SALAMANDRAS;
+                                return [$gama,$familia,$subFamilia];
                             case 'RADIADORES A OLEO':
                                 $subFamilia = Cat::RADIADORES_A_OLEO;
                                 return [$gama,$familia,$subFamilia];
@@ -614,16 +623,7 @@ class SorefozCategories {
                                 $subFamilia = Cat::EMISSORES_TERMICOS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
-                        }
-                        $familia = Cat::AQUECIMENTO;
-                        if (preg_match('/^CLIMATIZADOR/', $name) == 1) {
-                            $gama = Cat::CLIMATIZACAO;
-                            $familia = Cat::AR_CONDICIONADO;
-                            $subFamilia = Cat::CLIMATIZADORES;
-                            return [$gama,$familia,$subFamilia];
-                        }else{
-                            return [$gama,$familia,$subFamilia];
+                                return [$gama,$familia,$subFamilia];                                       
                         }
                     case 'AR CONDICIONADO':
                         $familia = Cat::AR_CONDICIONADO;

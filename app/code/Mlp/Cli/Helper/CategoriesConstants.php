@@ -106,7 +106,7 @@ class CategoriesConstants {
 
         const AUDIO_PORTATIL = 'Audio Portátil';
             const RADIOS_PORTATEIS = 'Rádios Portáteis';
-            const RADIO_CDS = 'Rádios com Cd';
+            const RADIO_CDS = 'Rádios Cd';
             
         
 

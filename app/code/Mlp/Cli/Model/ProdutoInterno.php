@@ -186,8 +186,8 @@ class ProdutoInterno
 
         $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
         //$this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
-        //$this->imagesHelper->setImages($product, $logger, $imgName . "_e.jpeg");
-        //$this->imagesHelper->setImages($product, $logger, $imgName . ".jpeg");
+        $this->imagesHelper->setImages($product, $logger, $imgName . "_e.jpeg");
+        $this->imagesHelper->setImages($product, $logger, $imgName . ".jpeg");
 
         $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
         //Preço

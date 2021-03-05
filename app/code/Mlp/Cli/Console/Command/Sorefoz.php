@@ -271,7 +271,7 @@ class Sorefoz extends Command
         $this->produtoInterno->weight = (int)$data[19];
         $this->produtoInterno->price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]));
         $this->produtoInterno->image = $data[24];
-        $this->produtoInterno->classeEnergetica = $data[25];
+        $this->produtoInterno->classeEnergetica = $data[27];
         $this->produtoInterno->imageEnergetica = $data[28];
         $this->produtoInterno->stock = $stock;
         return 1;
