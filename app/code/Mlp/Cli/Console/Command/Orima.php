@@ -118,7 +118,7 @@ class Orima extends Command
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
         $priceAttributeId = $this->sqlHelper->sqlGetAttributeId('price');
-        //$this->downloadCsv($logger);
+        $this->downloadCsv($logger);
         foreach ($this->loadCsv->loadCsv('/Orima/Orima_utf.csv',";") as $data) {
             $row++;
             $sku = trim($data[5]);
