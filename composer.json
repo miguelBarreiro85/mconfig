@@ -18,8 +18,7 @@
         "mageplaza/magento-2-portuguese-language-pack": "dev-master",
         "mageplaza/module-banner-slider": "^4.0",
         "mageplaza/module-smtp": "^4.1",
-        "phpoffice/phpspreadsheet": "^1.15",
-        "smile/elasticsuite": "~2.10.0"
+        "phpoffice/phpspreadsheet": "^1.15"
     },
     "autoload": {
         "exclude-from-classmap": [
