@@ -1,0 +1,1 @@
+/var/www/html/vendor/mageplaza/module-banner-slider/view/adminhtml/web/js/grid/preview.js

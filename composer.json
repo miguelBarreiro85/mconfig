@@ -20,6 +20,7 @@
         "mageplaza/module-banner-slider": "^4.0",
         "mageplaza/module-gdpr": "^4.0",
         "mageplaza/module-smtp": "^4.3",
+        "phpoffice/phpspreadsheet": "^1.17",
         "smile/elasticsuite": "~2.10.0"
     },
     "autoload": {
