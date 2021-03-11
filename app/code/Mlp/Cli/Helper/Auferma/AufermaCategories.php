@@ -48,7 +48,7 @@ class AufermaCategories {
             case 'GRANDES DOMÉSTICOS':
                 $gama = Cat::GRANDES_DOMESTICOS;
                 switch ($familia) {
-                    case 'FOGOES':
+                    case 'FOGÕES':
                         $familia = Cat::FOGOES;
                         switch($subFamilia) {
                             case 'FOGÕES C/GÁS':
@@ -245,6 +245,28 @@ class AufermaCategories {
             case 'IMAGEM E SOM':
                 $gama = Cat::IMAGEM_E_SOM;
                 switch ($familia) {
+                    case 'EQUIPAMENTOS AUDIO':
+                        $familia = Cat::EQUIPAMENTOS_AUDIO;
+                        switch ($subFamilia) {
+                            case 'APARELHAGENS MICROS':
+                                $subFamilia = Cat::APARELHAGENS_MICROS;
+                                return [$gama,$familia,$subFamilia];
+                            
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
+                    case 'AUDIO PORTATIL':
+                        $familia = Cat::AUDIO_PORTATIL;
+                        switch ($subFamilia) {
+                            case 'RADIOS C/CD':
+                                $subFamilia = Cat::RADIO_CDS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'RADIOS PORTATEIS':
+                                $subFamilia = Cat::RADIO_CDS;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                return [$gama,$familia,$subFamilia];
+                        }
                     case 'CÂMARAS':
                         switch ($subFamilia) {
                             case 'VIDEO CARTÃO MEMÓRIA':

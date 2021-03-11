@@ -151,7 +151,7 @@ class Auferma extends Command
             $sku = trim($data[0]);
             print_r($row." - ");
             if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
-                //update price anda stock
+                //update price and stock
                 $price = (int)trim($data[3]);
                 if ($price == 0){
                     print_r(" price 0\n");
@@ -354,7 +354,7 @@ class Auferma extends Command
                                             $data[8],$data[9],$data[10],
                                             $logger,$this->produtoInterno->sku);    
  
-        $this->produtoInterno->name = strtoupper($data[1]);
+        $this->produtoInterno->name = mb_strtoupper($data[1],'UTF-8');
         $this->produtoInterno->gama = $gama;
         $this->produtoInterno->familia = $familia;
         $this->produtoInterno->subFamilia = $subFamilia;
@@ -370,7 +370,7 @@ class Auferma extends Command
     }
 
     private function getProductInfo($logger, $name) {
-        if (preg_match("/Beko (.*)$/",$name,$codeMatches) == 1){
+        if (preg_match("/Beko (.*)$/",$name,$codeMatches) == 1 || preg_match("/Grundig (.*)$/",$name,$codeMatches) == 1 ){
             //Por cada linha do csv auferma vamos tentar extrair o codigo que é usado no icecat
             $code = str_replace(" ","",$codeMatches[1]);
             $jsonProduct = $this->getImageUrl($code);

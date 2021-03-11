@@ -4,6 +4,7 @@
 namespace Mlp\Cli\Helper;
 
 class CategoriesConstants {
+    const WARN_SUBFAMILY_NF = "WARNING : SUBFAMILY NOT FOUND : ";
     const WARN_DIDNT_FOUND_PRODUCTS = "WARNING : DID NOT FOUND PRODUCT : ";
     const WARN_DELETING_PRODUCT = "WARNING : deLETING PRODUCT : ";
     const WARN_PRODUCT_ADDED = "WARNING : PRODUCT ADdeD : ";
