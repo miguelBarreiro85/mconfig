@@ -30,6 +30,13 @@ class CategoriesConstants {
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
 
 
+    const PLACAS_GAS = "Placas a Gás";
+    const PLACAS_CRISTAL_GAS = "Placas Cristal Gás";
+    const PLACAS_DOMINO = "Placas Dominó";
+    const PLACAS_MISTAS = "Placas Mistas";
+    const PLACAS_VITROCERAMICAS = "Placas Vitrocerâmicas";
+    const PLACAS_INDUCAO = "Placas de Indução";
+    const PLACAS_CONVENCIONAIS_ELETRICAS = "Placas Convencionais Eléctricas";
     const TELAS_PROJEÇÃO = "Telas de Projeção";
     const CLIMATIZADORES = "Climatizadores";
     const ACESSORIOS_GGRANDES_DOMESTICOS = "Acessórios Grandes Domésticos";
@@ -316,7 +323,7 @@ class CategoriesConstants {
     const CONGELADORES_HORIZONTAIS_INDUSTRIAIS = 'Congeladores Horizontais Ind';
     const CONGELADORES_ILHA_INDUSTRIAIS = 'Congeladores Ilha Ind';
     const ELECTROCUTORES_INSECTOS = 'Electrocutores de Insectos Ind';
-    const FOGOES_INDUSTRIAIS = 'Fogões Iind';
+    const FOGOES_INDUSTRIAIS = 'Fogões Ind';
     const EQUIPAMENTOS_COZINHA_INDUSTRIAIS = 'Equipamentos Cozinha Ind';
     const VARINHAS_INDUSTRIAIS = 'Varinhas Ind';
     const ARREFECEDORES_VERTICAIS_INDUSTRIAIS = 'Arrefecedores Verticais Ind';

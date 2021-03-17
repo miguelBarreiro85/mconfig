@@ -7,7 +7,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 
 class AufermaCategories {
 
-    public static function getCategories($gama,$familia,$subFamilia,$logger,$sku)
+    public static function getCategories($gama,$familia,$subFamilia,$logger,$sku,$name)
     {
         switch ($gama) {
             case 'ACESSÓRIOS E BATERIAS':
@@ -40,10 +40,12 @@ class AufermaCategories {
                                 $subFamilia = null;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku); 
+                        return [$gama,null,null];
                 }           
             case 'GRANDES DOMÉSTICOS':
                 $gama = Cat::GRANDES_DOMESTICOS;
@@ -58,7 +60,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::FOGOES_ELECTRICOS;
                                 return [$gama, $familia, $subFamilia];
                             default:
-                                return [$gama, $familia, $subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama, $familia, null];
                         }
                     case 'ENCASTRE - FORNOS':
                         $gama = Cat::ENCASTRE;
@@ -71,23 +74,35 @@ class AufermaCategories {
                                 $subfamilia = null;
                                 return [$gama, $familia, $subfamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - MESAS':
                         $gama = Cat::ENCASTRE;
+                        $familia = Cat::PLACAS;
                         switch ($subFamilia) {
                             case 'CONVENCIONAIS C/GÁS':
+                                $subFamilia = Cat::PLACAS_GAS;
+                                return [$gama,$familia,$subFamilia];
                             case 'DE INDUÇÃO':
+                                $subFamilia = Cat::PLACAS_INDUCAO;
+                                return [$gama,$familia,$subFamilia];
                             case 'VITROCERÂMICAS C/GÁS':
-                            case 'DOMINÓS C/GÁS':
+                                $subFamilia = Cat::PLACAS_CRISTAL_GAS;
+                                return [$gama,$familia,$subFamilia];
                             case 'VITROCERÂMICAS - ELÉCTRICAS':
+                                $subFamilia = Cat::PLACAS_VITROCERAMICAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'DOMINÓS C/GÁS':
                             case 'DOMINÓS - ELÉCTRICOS':                                
+                                $subFamilia = Cat::PLACAS_DOMINO;
+                                return [$gama,$familia,$subFamilia];
                             case 'CONVENCIONAIS - ELÉCTRICAS':
-                                $familia = Cat::PLACAS;
-                                $subFamilia = null;
+                                $subFamilia = Cat::PLACAS_CONVENCIONAIS_ELETRICAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(CAT::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - EXAUSTOR/EXTRATORES':
                         $gama = Cat::ENCASTRE;
@@ -100,6 +115,7 @@ class AufermaCategories {
                                 $subFamilia = null;
                                 return [$gama,$familia,$subFamilia];
                             default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                 return [$gama,$familia,$subFamilia];
                         }
                     case 'ENCASTRE - FRIO':
@@ -119,7 +135,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::GARRAFEIRAS_ENC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];    
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];    
                         }
                     case 'ENCASTRE - MAQ.LOUÇA':
                         $gama = Cat::ENCASTRE;
@@ -140,7 +157,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::MAQ_SECAR_ROUPA_ENC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - MICROONDAS':
                         $gama = Cat::ENCASTRE;
@@ -170,7 +188,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::MAQ_SECAR_ROUPA_BC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                             }         
                     case 'MAQUINAS LAVAR SECAR ROUPA':
                         $familia = Cat::MAQ_ROUPA;
@@ -186,7 +205,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::CONGELADORES_HORIZONTAIS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'FRIGORIFICOS/COMBINADOS':
                         $familia = Cat::FRIO;
@@ -220,7 +240,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::FRIGOBAR;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'MAQUINAS LAVAR LOUÇA':
                         $familia = Cat::MAQ_DE_LOUCA;
@@ -232,7 +253,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::MLL_DE_45;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }    
                     case 'ENCASTRE - CONJUNTOS':
                         $gama = Cat::ENCASTRE;
@@ -240,7 +262,8 @@ class AufermaCategories {
                         $subFamilia = null;
                         return [$gama,$familia,$subFamilia];        
                     default:
-                        return [$gama,$familia,$subFamilia];        
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,$familia,null];        
                 }
             case 'IMAGEM E SOM':
                 $gama = Cat::IMAGEM_E_SOM;
@@ -253,7 +276,8 @@ class AufermaCategories {
                                 return [$gama,$familia,$subFamilia];
                             
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'AUDIO PORTATIL':
                         $familia = Cat::AUDIO_PORTATIL;
@@ -264,8 +288,12 @@ class AufermaCategories {
                             case 'RADIOS PORTATEIS':
                                 $subFamilia = Cat::RADIO_CDS;
                                 return [$gama,$familia,$subFamilia];
-                            default:
+                            case 'RADIO RELOGIO':
+                                $subFamilia = Cat::RADIO_DESPERTADOR;
                                 return [$gama,$familia,$subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'CÂMARAS':
                         switch ($subFamilia) {
@@ -287,7 +315,8 @@ class AufermaCategories {
                                 $subFamilia = Cat::CAMARAS_VIDEO_HD;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }                
                     case 'TELEVISÃO':
                         $familia = Cat::TELEVISAO;
@@ -310,10 +339,12 @@ class AufermaCategories {
                                 $subFamilia = Cat::TVS_MEDIAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                             }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,$familia,null];
                 }
             case 'INFORMÁTICA':
                 $gama = Cat::INFORMATICA;
@@ -327,10 +358,12 @@ class AufermaCategories {
                                 $subFamilia = Cat::DESKTOPS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
                 
             case 'CLIMATIZAÇÃO':
@@ -349,10 +382,12 @@ class AufermaCategories {
                                     $subFamilia = Cat::AC_FIXO;
                                     return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
             case 'PEQUENOS DOMÉSTICOS':
                 switch ($familia) {
@@ -362,14 +397,17 @@ class AufermaCategories {
                                 $subFamilia = Cat::FORNOS_DE_BANCADA;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null, null];
                 }
         
             default:
                 $logger->info(Cat::VERIFICAR_CATEGORIAS.$sku);
+                return [null,,null, null];
         
         }
     }

@@ -184,7 +184,8 @@ class Sorefoz extends Command
             if (strlen($sku) == 12 || strlen($sku) == 13) {
                 if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
                     //update price anda stock
-                    $price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]));
+                    $price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]),
+                                                        $logger,$this->produtoInterno->sku);
                     if ($price == 0){
                         print_r(" price 0\n");
                         $logger->info(Cat::ERROR_PRICE_ZERO.$sku);
@@ -269,7 +270,8 @@ class Sorefoz extends Command
         $this->produtoInterno->width = (int)$data[21];
         $this->produtoInterno->height = (int)$data[22];
         $this->produtoInterno->weight = (int)$data[19];
-        $this->produtoInterno->price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]));
+        $this->produtoInterno->price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]),
+                                        $logger,$this->produtoInterno->sku);
         $this->produtoInterno->image = $data[24];
         $this->produtoInterno->classeEnergetica = $data[27];
         $this->produtoInterno->imageEnergetica = $data[28];

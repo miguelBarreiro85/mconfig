@@ -200,10 +200,38 @@ class ProdutoInterno
             print_r($product->getSku()." - ");
             $logger->info(Cat::WARN_PRODUCT_ADDED.$product->getSku());
         } catch (\Exception $exception) {
+            $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku);
             //if same url delete old save new
+            /*
             print_r($exception->getMessage());
             if($exception->getCode() == 0) {
-                $searchCriteria = $this->searchCriteriaBuilder->addFilter(ProductInterface::NAME,$this->name,'like')->create();
+                //deletecProduct() Não usar...
+            }else {
+                $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku);
+            }
+            */
+        } 
+        //Adicionar opções de garantia e instalação
+        try{
+            $this->productOptions->add_warranty_option($product,$this->gama, $this->familia, $this->subFamilia);
+            $value = $this->productOptions->getInstallationValue($this->familia);
+            if ($value > 0){
+                $this->productOptions->add_installation_option($product,$value);
+            }
+            print_r("saving Options.. - ");
+            $this->productRepositoryInterface->save($product);
+
+            return $product;
+        }catch (\Exception $e){
+            $logger->info(Cat::ERROR_ADD_PRODUCT_OPTIONS);
+            print_r("add options exception - ".$e->getMessage());
+        }
+
+    }
+
+
+    private function deleteProduct(){
+        $searchCriteria = $this->searchCriteriaBuilder->addFilter(ProductInterface::NAME,$this->name,'like')->create();
                 $products = $this->productRepositoryInterface->getList($searchCriteria)->getItems();
                 if($products){
                     foreach($products as $productToDelete){
@@ -226,30 +254,7 @@ class ProdutoInterno
                     $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku);
                     return null;
                 }
-            }else {
-                $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku);
-            }
-        } 
-        //Adicionar opções de garantia e instalação
-        try{
-            $this->productOptions->add_warranty_option($product,$this->gama, $this->familia, $this->subFamilia);
-            $value = $this->productOptions->getInstallationValue($this->familia);
-            if ($value > 0){
-                $this->productOptions->add_installation_option($product,$value);
-            }
-            print_r("saving Options.. - ");
-            $this->productRepositoryInterface->save($product);
-
-            return $product;
-        }catch (\Exception $e){
-            $logger->info(Cat::ERROR_ADD_PRODUCT_OPTIONS);
-            print_r("add options exception - ".$e->getMessage());
-        }
-
     }
-
-
-
     private function setCategories(\Magento\Catalog\Model\Product $product, $logger, $pGama, $pFamilia, $pSubFamilia)
     {
         
@@ -371,8 +376,12 @@ class ProdutoInterno
         }
     }
 
-    public function getPrice($precoCusto) {
+    public function getPrice($precoCusto,$logger,$sku) {
         try{
+            if($precoCusto == 0) {
+                $logger->info(Cat::ERROR_PRICE_ZERO.$sku);
+                return(0);
+            }
             if ($precoCusto < 20){
                 $preco = $precoCusto * 1.50;
                 return ceil($preco);
@@ -409,7 +418,7 @@ class ProdutoInterno
                 return ceil($preco);
             }
         }catch (\Exception $e){
-            print_r("Preco error: ".$precoCusto);
+            $logger->info(Cat::ERROR_PRICE_ZERO.$sku." : ".$e->getMessage());
         }
         
     }

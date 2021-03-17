@@ -131,7 +131,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        //$this->downloadCsv($logger);
+        $this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -144,7 +144,7 @@ class Expert extends Command
             if (strlen($sku) == 12 || strlen($sku) == 13) {
                 if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
                     //update price anda stock
-                    $price = $this->produtoInterno->getPrice((int)trim($data[7]));
+                    $price = $this->produtoInterno->getPrice((int)trim($data[7]),$logger,$sku);
                     if ($price == 0){
                         print_r(" price 0\n");
                         $logger->info(Cat::ERROR_PRICE_ZERO.$sku);
@@ -247,7 +247,7 @@ class Expert extends Command
         
         $this->produtoInterno->sku = $data[1];
         $this->produtoInterno->manufacturer = $data[4];
-        $this->produtoInterno->price = $this->produtoInterno->getPrice((int)trim($data[7]));
+        $this->produtoInterno->price = $this->produtoInterno->getPrice((int)trim($data[7]),$logger,$this->produtoInterno->sku);
 
         
         $this->setStock($data[16]);
@@ -279,7 +279,7 @@ class Expert extends Command
         
         [$this->produtoInterno->gama,$this->produtoInterno->familia,
             $this->produtoInterno->subFamilia] = ExpertCategories::setExpertCategories($data[2],$logger,
-                                                                                $this->produtoInterno->sku);
+                                                            $this->produtoInterno->sku,$data[15]);
         
         return 1;
     }

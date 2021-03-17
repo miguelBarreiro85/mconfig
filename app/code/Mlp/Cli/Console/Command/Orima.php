@@ -125,7 +125,7 @@ class Orima extends Command
             print_r($row." - ");
             if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
                 //update price anda stock
-                $price = $this->produtoInterno->getPrice((float)$data[9]*1.23);
+                $price = $this->produtoInterno->getPrice((float)$data[9]*1.23,$logger,$sku);
                 if ($price == 0){
                     print_r(" price 0\n");
                     $logger->info(Cat::ERROR_PRICE_ZERO.$sku);
@@ -157,20 +157,17 @@ class Orima extends Command
     private function setOrimaData($data,$logger)
     {
         /*
-         * 0 A- Nome
-         * 1 B- ref orima
-         * 2 C- preço liquido
-         * 3 d- stock
-         * 4 e- gama
-         * 5 f- familia
-         * 6 g- subfamilia
-         * 7 h- marca
-         * 8 i- EAN
-         * 9 j- Detalhes
+         * 0 A- GAMA
+         * 1 B- FAMILIA
+         * 2 C- SUBFAMILIA
+         * 3 d- MARCA
+         * 4 e- REF ORIMA
+         * 5 f- ean
+         * 6 g- STOCK
+         * 7 h- DESCRICAO
+         * 8 i- DETALHES
+         * 9 j- PREÇO VENDA
          * 10 k- Imagem
-         * 11 l- etiqueta energetica
-         * 12 m- manual de instruções
-         * 13 n- esquema tecnico
          */
         
         $functionTim = function ($data){
@@ -189,17 +186,14 @@ class Orima extends Command
         
         $this->produtoInterno->manufacturer = Manufacturer::getOrimaManufacturer($data[4]);
     
-        $this->produtoInterno->price = $this->produtoInterno->getPrice((float)$data[9]*1.23);
+        $this->produtoInterno->price = $this->produtoInterno->getPrice((float)$data[9]*1.23,$logger,$this->produtoInterno->sku);
+        if($this->produtoInterno->price == 0){return  0;}
         $this->produtoInterno->stock = $this->getStock($data[6]);
        
         print_r(" - setting stock ");
         $this->produtoInterno->setStock($logger,"orima");
        
-        if($this->produtoInterno->price == 0){
-            print_r(" - price 0 - ");
-            $logger->info(Cat::ERROR_PRICE_ZERO.$this->produtoInterno->sku);
-            return  0;
-        }
+       
 
         
         $this->produtoInterno->name = $data[7];

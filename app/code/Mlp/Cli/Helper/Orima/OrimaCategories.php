@@ -17,7 +17,8 @@ class OrimaCategories {
                         $subFamilia = null;
                         return [$gama,$familia,$subFamilia];
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
             case 'QUEIMA':
             case 'Queima':
@@ -45,13 +46,12 @@ class OrimaCategories {
                                 $subFamilia = Cat::FOGOES_ELECTRICOS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                print_r("SubFamilia not found".$subFamilia."\n");
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                 return ([$gama, $familia, $subFamilia]);
                         }
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, null, null]);
                 }
 
             case 'MAQUINAS ROUPA':
@@ -59,15 +59,9 @@ class OrimaCategories {
                 switch ($familia) {
                     case 'MAQUINAS LAVAR ROUPA':
                         $familia = Cat::MAQ_ROUPA;
-                        switch ($subFamilia) {
-                            case 'MAQUINAS LAVAR ROUPA CARGA SUPERIOR':
-                                $subFamilia = Cat::MAQ_LAVAR_ROUPA_CARGA_SUPERIOR;
-                                return ([$gama, $familia, $subFamilia]);
-                            default:
-                                $subFamilia = Cat::MAQ_LAVAR_ROUPA_CARGA_FRONTAL;
-                                return ([$gama, $familia, $subFamilia]);
-                        }
-                    case 'MAQUINAS LAVAR SECAR ROUPA':
+                        $subFamilia = Cat::MAQ_LAVAR_ROUPA;
+                        return ([$gama, $familia, $subFamilia]);
+                    case 'MAQUINAS LAVAR SECAR':
                         $familia = Cat::MAQ_ROUPA;
                         $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA;
                         return ([$gama, $familia, $subFamilia]);
@@ -85,7 +79,7 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, null, null]);
                 }
 
             case 'ENCASTRE':
@@ -95,9 +89,7 @@ class OrimaCategories {
                     case 'CHAMINES':
                     case 'EXAUSTORES':
                         $familia = Cat::EXAUSTORES;
-                        $subFamilia = null;
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, $familia, null]);
 
                     case 'COMBINADOS ENCASTRE':
                         $familia = Cat::FRIO_ENC;
@@ -143,14 +135,23 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
 
                     case 'PLACAS A GAS':
+                        $subFamilia = Cat::PLACAS_GAS;;
+                        return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS CRISTAL GAS':
+                        $subFamilia = Cat::PLACAS_CRISTAL_GAS;;
+                        return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS DOMINO':
                     case 'PLACAS DOMINO ELECTRICAS':
+                        $subFamilia = Cat::PLACAS_DOMINO;;
+                        return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS MISTAS':
+                        $subFamilia = Cat::PLACAS_MISTAS;
+                        return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS VITROCERAMICAS':
+                        $subFamilia = Cat::PLACAS_VITROCERAMICAS;
+                        return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS INDUÇAO':
-                        $familia = Cat::PLACAS;
-                        $subFamilia = null;
+                        $$subFamilia = Cat::PLACAS_INDUCAO;
                         return ([$gama, $familia, $subFamilia]);
                     case 'TAMPOS':
                         $subFamilia = Cat::ACESSORIOS_ENC;
@@ -158,7 +159,7 @@ class OrimaCategories {
 
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, null, null]);
                 }
 
             case 'FRIO':
@@ -172,7 +173,7 @@ class OrimaCategories {
                         } elseif ($result == 0) {
                             $subFamilia = Cat::COMBINADOS_CONVENCIONAIS;
                         }
-                        return ([$gama, Cat::FRIGORIFICOS_COMBINADOS, $subFamilia]);
+                        return ([$gama, Cat::FRIO, $subFamilia]);
                     case 'FRIGORIFICOS 1 PORTA':
                         $familia = Cat::FRIO;
                         $subFamilia = Cat::FRIGORIF_1_PORTA;
@@ -206,7 +207,7 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, null, null]);
                 }
 
             case 'AGUAS QUENTES':
@@ -221,7 +222,7 @@ class OrimaCategories {
                                 return ([$gama, $familia, $subFamilia]);
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                return ([$gama, $familia, $subFamilia]);
+                                return ([$gama, null, null]);
                         }
 
                     case 'ESQUENTADORES':
@@ -230,7 +231,7 @@ class OrimaCategories {
                             case 'ESQUENTADORES ELETRICOS':
                                 $subFamilia = Cat::ESQUENTADORES_ELECTRICOS;
                                 return ([$gama, $familia, $subFamilia]);
-                            case  'ESQUENTADORES ESTANQUES':
+                            case 'ESQUENTADORES ESTANQUES':
                             case 'ESQUENTADORES IGNIÇAO MANUAL':
                             case 'ESQUENTADORES INTELIGENTES':
                             case 'ESQUENTADORES VENTILADOS':
@@ -238,11 +239,11 @@ class OrimaCategories {
                                 return ([$gama, $familia, $subFamilia]);
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                return ([$gama, $familia, $subFamilia]);
+                                return ([$gama, $familia, null]);
                         }
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku); 
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, null, null]);
                 }
 
             case 'MAQUINAS LOUÇA':
@@ -262,7 +263,7 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, $familia, null]);
                 }
 
             case 'SOM & IMAGEM':
@@ -285,21 +286,18 @@ class OrimaCategories {
                                 return ([$gama, $familia, $subFamilia]);
                             case 'LEITOR BLU RAY':
                                 $familia = Cat::DVD_BLURAY_TDT;
-                                $subFamilia = null;
-                                return ([$gama, $familia, $subFamilia]);
+                                return ([$gama, $familia, null]);
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                return ([$gama, $familia, $subFamilia]);
+                                return ([$gama, $familia, null]);
                         }
                     case 'SUPORTES':
                         $familia = Cat::ACESSORIOS_IMAGEM_E_SOM;
                         $subFamilia = Cat::MOVEIS_SUPORTES;
                         return ([$gama, $familia, $subFamilia]);
                     default:
-                        $familia = null;
-                        $subFamilia = null;
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                        return ([$gama, $familia, $subFamilia]);
+                        return ([$gama, null, null]);
                 }
 
             case 'PEQUENOS DOMESTICOS':
@@ -428,8 +426,7 @@ class OrimaCategories {
                                 return ([$gama, $familia, $subFamilia]);
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                print_r("subfamilia not found".$subFamilia);
-                                return([$gama,$familia,'']);
+                                return([$gama,$familia,null]);
                         }
 
                     case 'CUIDADOS PESSOAIS':
@@ -444,6 +441,9 @@ class OrimaCategories {
                             case 'SECADORES DE CABELO':
                                 $subFamilia = Cat::SECADORES_DE_CABELO;
                                 return ([$gama, $familia, $subFamilia]);
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return([$gama,$familia,null]);
                         }
 
                     case 'MICRO ONDAS':
@@ -461,8 +461,8 @@ class OrimaCategories {
                                 $subFamilia = Cat::MO_SEM_GRILL;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                print_r("subFamilia not found".$subFamilia);
-                                return([$gama,$familia,'']);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return([$gama,$familia,null]);;
                         }
 
                     case 'PEQUENO-ALMOÇO':
@@ -520,8 +520,8 @@ class OrimaCategories {
                                 $subFamilia = Cat::TABUAS_PASSAR_FERRO;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                            return ([$gama, $familia, null]);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return ([$gama, $familia, null]);
 
                         }
                 }
@@ -634,9 +634,8 @@ class OrimaCategories {
                                 $subFamilia = Cat::RECUPERADORES;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $subFamilia = null;
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                return ([$gama, $familia, $subFamilia]);
+                                return ([$gama, $familia, null]);
 
                         }
                     default:

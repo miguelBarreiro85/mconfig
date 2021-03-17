@@ -7,7 +7,7 @@ use Mlp\Cli\Helper\CategoriesConstants as Cat;
 class ExpertCategories {
     
     
-    public static function setExpertCategories($categories,$logger,$sku) {
+    public static function setExpertCategories($categories,$logger,$sku,$attributes) {
             $pieces = explode("->",$categories);
             $gama = $pieces[0];
             $familia = $pieces[1];
@@ -549,7 +549,7 @@ class ExpertCategories {
                             switch ($subFamilia) {
                                 case 'Máquina Lavar Roupa':
                                 case 'Máquinas TwinWash':
-                                    $subFamilia = Cat::MAQ_LAVAR_ROUPA_CARGA_FRONTAL;
+                                    $subFamilia = Cat::MAQ_LAVAR_ROUPA;
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                     return [$gama, $familia, $subFamilia];
                                 case 'Máquina Secar Roupa':
@@ -565,7 +565,7 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama, $familia, $subFamilia];
+                                    return [$gama, $familia, null];
                             }
                         case 'Frio':
                             $familia = Cat::FRIO;
@@ -649,8 +649,39 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_ENC;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Placas':
-                                    $subFamilia = Cat::PLACAS;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::PLACAS;
+                                    if (preg_match('/(*UTF8)Tipo de Queimadores:(\w+)\s*/', $attributes, $tipoPlaca) == 1
+                                     && preg_match('/Qte.+:(\d)\s*/', $attributes, $numeroQueimadores) == 1) {
+                                        if ($numeroQueimadores[1] <= 2) {
+                                            $subFamilia = Cat::PLACAS_DOMINO;
+                                            return [$gama, $familia, $subFamilia];
+                                        }else {
+                                            switch ($tipoPlaca[1]) {
+                                                case 'G':
+                                                    $subFamilia = Cat::PLACAS_GAS;
+                                                    return [$gama, $familia, $subFamilia];
+                                                case 'Indu':
+                                                    $subFamilia = Cat::PLACAS_INDUCAO;
+                                                    return [$gama, $familia, $subFamilia];
+                                                case 'Misto':
+                                                    $subFamilia = Cat::PLACAS_MISTAS;
+                                                    return [$gama, $familia, $subFamilia];
+                                                case 'Vitrocer':
+                                                    $subFamilia = Cat::PLACAS_VITROCERAMICAS;
+                                                    return [$gama, $familia, $subFamilia];
+                                                case 'El':
+                                                    $subFamilia = Cat::PLACAS_CONVENCIONAIS_ELETRICAS;
+                                                    return [$gama, $familia, $subFamilia];
+                                                default:
+                                                    return [$gama, $familia, null];
+                                                    break;
+                                            }
+                                        }
+                                    }else {
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                        return [$gama, $familia, null];
+                                    }
+                                    
                                 case 'Máquinas Lavar Loiça':
                                     $subFamilia = Cat::MAQ_DE_LOUCA_ENC;
                                     return [$gama, $familia, $subFamilia];
@@ -742,6 +773,9 @@ class ExpertCategories {
                                     $familia = Cat::AR_CONDICIONADO;
                                     $subFamilia = Cat::AC_PORTATIL;
                                     return [$gama,$familia,$subFamilia];
+                                case 'Acessórios Ar Condicionado':
+                                    $familia = Cat::ACESSORIOS_CLIMATIZACAO;
+                                    return [$gama,$familia,null];
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                     return [$gama,$familia,$subFamilia];

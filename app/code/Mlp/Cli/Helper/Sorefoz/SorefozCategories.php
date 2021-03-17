@@ -122,19 +122,30 @@ class SorefozCategories {
                         }
                     case 'ENCASTRE - MESAS':
                         $gama = Cat::ENCASTRE;
+                        $familia = Cat::PLACAS;
                         switch ($subFamilia) {
                             case 'CONVENCIONAIS C/GÁS':
+                                $subFamilia = Cat::PLACAS_GAS;
+                                return [$gama,$familia,$subFamilia];
                             case 'DE INDUÇÃO':
+                                $subFamilia = Cat::PLACAS_INDUCAO;
+                                return [$gama,$familia,$subFamilia];
                             case 'VITROCERÂMICAS C/GÁS':
-                            case 'DOMINÓS C/GÁS':
+                                $subFamilia = Cat::PLACAS_CRISTAL_GAS;
+                                return [$gama,$familia,$subFamilia];
                             case 'VITROCERÂMICAS - ELÉCTRICAS':
+                                $subFamilia = Cat::PLACAS_VITROCERAMICAS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'DOMINÓS C/GÁS':
                             case 'DOMINÓS - ELÉCTRICOS':                                
+                                $subFamilia = Cat::PLACAS_DOMINO;
+                                return [$gama,$familia,$subFamilia];
                             case 'CONVENCIONAIS - ELÉCTRICAS':
-                                $familia = Cat::PLACAS;
-                                $subFamilia = null;
+                                $subFamilia = Cat::PLACAS_CONVENCIONAIS_ELETRICAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(CAT::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - EXAUSTOR/EXTRATORES':
                         $gama = Cat::ENCASTRE;
@@ -220,10 +231,8 @@ class SorefozCategories {
                         $familia = Cat::MAQ_ROUPA;
                         switch($subFamilia){
                             case 'MLR CARGA FRONTAL':
-                                $subFamilia = Cat::MAQ_LAVAR_ROUPA_CARGA_FRONTAL;
-                                return [$gama,$familia,$subFamilia];
                             case 'MLR CARGA SUPERIOR':
-                                $subFamilia = Cat::MAQ_LAVAR_ROUPA_CARGA_SUPERIOR;
+                                $subFamilia = Cat::MAQ_LAVAR_ROUPA;
                                 return [$gama,$familia,$subFamilia];
                             case 'MLR LAVAR E SECAR ROUPA':
                                 $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA;
