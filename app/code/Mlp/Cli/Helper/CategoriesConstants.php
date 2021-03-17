@@ -37,6 +37,16 @@ class CategoriesConstants {
     const PLACAS_VITROCERAMICAS = "Placas Vitrocerâmicas";
     const PLACAS_INDUCAO = "Placas de Indução";
     const PLACAS_CONVENCIONAIS_ELETRICAS = "Placas Convencionais Eléctricas";
+    const EXAUSTORES_CHAMINE="Exaustores de Chaminé";
+    const EXAUSTORES_TELESCOPICOS = "Exaustores Telescópicos";
+    const EXAUSTORES_CONVENCIONAIS="Exaustores Convencionais";
+    const EXTRACTORES="Extractores";
+    const EXAUSTORES_TETO = "Exaustores de Teto";
+    const EXAUSTORES_BANCADA = "Exaustores de Bancada";
+    const FORNOS_MULTIFUNC="Fornos Multifunções";
+    const FORNOS_PIROLITICOS="Fornos Pirolíticos";
+    const FORNOS_POLIVALENTES="Fornos Polivalentes";
+    const FORNOS_GAS = "Fornos a Gás";
     const TELAS_PROJEÇÃO = "Telas de Projeção";
     const CLIMATIZADORES = "Climatizadores";
     const ACESSORIOS_GGRANDES_DOMESTICOS = "Acessórios Grandes Domésticos";

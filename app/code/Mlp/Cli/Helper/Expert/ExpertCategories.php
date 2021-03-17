@@ -626,28 +626,31 @@ class ExpertCategories {
                                     return [$gama, $familia, null];
                             }
                         case 'Encastre':
-                            $familia = Cat::ENCASTRE;
+                            $gama = Cat::ENCASTRE;
                             switch ($subFamilia) {
                                 case 'Máquinas de Secar Roupa':
+                                    $familia = Cat::MAQ_ROUPA_ENC;
                                     $subFamilia = Cat::MAQ_SECAR_ROUPA_ENC;
                                     return [$gama, $familia, $subFamilia];
-                                case 'Exaustores':
                                 case 'Chaminés':
-                                    $subFamilia = Cat::EXAUSTORES;
+                                    $familia = Cat::EXAUSTORES;
+                                    $subFamilia = Cat::EXAUSTORES_CHAMINE;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Máquinas Lavar Roupa':
+                                    $familia = Cat::MAQ_ROUPA_ENC;
                                     $subFamilia = Cat::MAQ_LAVAR_ROUPA_ENC;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Máquina de Café':
-                                    $subFamilia = Cat::MAQ_CAFE_ENC;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::MAQ_CAFE_ENC;
+                                    return [$gama, $familia, null];
                                 case 'Fornos':
-                                    $subFamilia = Cat::FORNOS;
-                                    return [$gama, $familia, $subFamilia];
+                                    $$familia = Cat::FORNOS;
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    return [$gama, $familia, null];
                                 case 'Acessórios':
                                 case 'Consumíveis':
-                                    $subFamilia = Cat::ACESSORIOS_ENC;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::ACESSORIOS_ENC;
+                                    return [$gama, $familia, null];
                                 case 'Placas':
                                     $familia = Cat::PLACAS;
                                     if (preg_match('/(*UTF8)Tipo de Queimadores:(\w+)\s*/', $attributes, $tipoPlaca) == 1
@@ -683,24 +686,27 @@ class ExpertCategories {
                                     }
                                     
                                 case 'Máquinas Lavar Loiça':
-                                    $subFamilia = Cat::MAQ_DE_LOUCA_ENC;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::MAQ_DE_LOUCA_ENC;
+                                    return [$gama, $familia, null];
                                 case 'Microondas':
-                                    $subFamilia = Cat::MICROONDAS_ENC;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::MICROONDAS_ENC;
+                                    return [$gama, $familia, null];
                                 case 'Máquinas de Lavar/Secar Roupa':
+                                    $familia = Cat::MAQ_ROUPA_ENC;
                                     $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA_ENC;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Lava-Loiças':
-                                    $subFamilia = Cat::LAVA_LOUCAS;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::LAVA_LOUCAS;
+                                    return [$gama, $familia, null];
                                 case 'Frio':
-                                    $subFamilia = Cat::FRIO_ENC;
+                                    $familia = Cat::FRIO_ENC;
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama, $familia, $subFamilia];
+                                    return [$gama, $familia, null];
                                 case 'Torneiras':
-                                    $subFamilia = Cat::MISTURADORAS;
-                                    return [$gama, $familia, $subFamilia];
+                                    $familia = Cat::MISTURADORAS;
+                                    return [$gama, $familia, null];
+                                //Exaustores nao sabemos a subfamilia (telescopicos integrar etc... extratores)
+                                case 'Exaustores':
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                     return [$gama, $familia, null];

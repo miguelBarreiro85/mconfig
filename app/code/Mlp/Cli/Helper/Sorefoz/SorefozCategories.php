@@ -4,6 +4,7 @@ namespace Mlp\Cli\Helper\Sorefoz;
 
 use Mlp\Cli\Helper\CategoriesConstants as Cat;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
+use PhpParser\Node\Stmt\ElseIf_;
 
 class SorefozCategories {
 
@@ -17,8 +18,7 @@ class SorefozCategories {
                         switch ($subFamilia) {
                             case 'ACESSÓRIOS':
                                 $familia = Cat::OUTROS_ACESSORIOS;
-                                $subFamilia = null;
-                                return [$gama,$familia,$subFamilia];
+                                return [$gama,$familia,null];
                             case 'BATERIAS':
                                 $familia = Cat::PILHAS_BATERIAS;
                                 $subFamilia = Cat::BATERIAS;
@@ -32,15 +32,14 @@ class SorefozCategories {
                             case 'PROD. P/FRIGORIFICOS':
                                 $gama = Cat::GRANDES_DOMESTICOS;
                                 $familia = Cat::ACESSORIOS_GRANDES_DOMESTICOS;
-                                $subFamilia = null;
-                                return [$gama,$familia,$subFamilia];
+                                return [$gama,$familia,null];
                             default:
                                 $familia = Cat::OUTROS_ACESSORIOS;
-                                $subFamilia = null;
-                                return [$gama,$familia,$subFamilia];
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
             case 'TELEFONES E TELEMÓVEIS':
             case 'SERVIÇOS TV/INTERNET/OUTROS':
@@ -52,14 +51,13 @@ class SorefozCategories {
                         return [$gama,$familia,null];
                     case 'TELEFONES FIXOS':
                         $familia = Cat::TELEFONES_FIXOS;
-                        $subFamilia = null;
-                        return [$gama,$familia,$subFamilia];
+                        return [$gama,$familia,null];
                     case 'TELEMÓVEIS / CARTÕES':
                         $familia = Cat::TELEMOVEIS;
-                        $subFamilia = null;
-                        return [$gama,$familia,$subFamilia];
+                        return [$gama,$familia,null];
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
                 
             case 'GRANDES DOMÉSTICOS':
@@ -78,7 +76,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::ACUMULADORES_AGUA;
                                 return [$gama, $familia, $subFamilia];
                             default:
-                                return [$gama, $familia, $subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama, $familia, null];
                         }
                     case 'ESQUENTADORES/CALDEIRAS':
                         $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
@@ -92,6 +91,9 @@ class SorefozCategories {
                             case 'CALDEIRAS C/GÁS':
                                 $subFamilia = Cat::CALDEIRAS_GAS;
                                 return [$gama, $familia, $subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama, $familia, null];
                         }
                     case 'MICROONDAS':
                         $familia = Cat::MICROONDAS;
@@ -99,25 +101,32 @@ class SorefozCategories {
                             case 'MO - COM GRILL':
                                 $subFamilia = Cat::MICROONDAS_GRILL;
                                 return [$gama, $familia, $subFamilia];
-                                break;
                             case 'MO - SEM GRILL':
                                 $subFamilia = Cat::MO_SEM_GRILL;
                                 return [$gama, $familia, $subFamilia];
                             default:
-                                return [$gama, $familia, $subFamilia];
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama, $familia, null];
                         }
                     case 'ENCASTRE - FORNOS':
                         $gama = Cat::ENCASTRE;
+                        $familia = Cat::FORNOS;
                         switch ($subFamilia) {
                             case 'INDEPENDENTES - ELÉCTRICOS':
+                                $familia = Cat::FORNOS_MULTIFUNC;
+                                return [$gama, $familia, $subFamilia];
                             case 'PIROLITICOS':
+                                $familia = Cat::FORNOS_PIROLITICOS;
+                                return [$gama, $familia, $subFamilia];
                             case 'INDEPENDENTES C/GÁS':
+                                $familia = Cat::FORNOS_GAS;
+                                return [$gama, $familia, $subFamilia];
                             case 'POLIVALENTES':
-                                $familia = Cat::FORNOS;
+                                $familia = Cat::FORNOS_POLIVALENTES;
                                 $subfamilia = null;
                                 return [$gama, $familia, $subfamilia];
                             default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                 return [$gama,$familia,$subFamilia];
                         }
                     case 'ENCASTRE - MESAS':
@@ -149,16 +158,33 @@ class SorefozCategories {
                         }
                     case 'ENCASTRE - EXAUSTOR/EXTRATORES':
                         $gama = Cat::ENCASTRE;
+                        $familia = Cat::EXAUSTORES;
                         switch($subFamilia){
                             case 'EXAUST.DE CHAMINÉ':
+                                if(preg_match('/TECTO/',$name) == 1){
+                                    $subFamilia = Cat::EXAUSTORES_TETO;
+                                    return [$gama,$familia,$subFamilia];       
+                                }else {
+                                    $subFamilia = Cat::EXAUSTORES_CHAMINE;
+                                    return [$gama,$familia,$subFamilia];
+                                }
                             case 'EXAUST.TELESCÓPICOS':
+                                $subFamilia = Cat::EXAUSTORES_TELESCOPICOS;
+                                return [$gama,$familia,$subFamilia];
                             case 'EXAUST.CONVENCIONAIS':
+                                if(preg_match('/BANCADA/',$name) == 1) {
+                                    $subFamilia = Cat::EXAUSTORES_BANCADA;
+                                    return [$gama,$familia,$subFamilia]; 
+                                }else {
+                                    $subFamilia = Cat::EXAUSTORES_CONVENCIONAIS;
+                                    return [$gama,$familia,$subFamilia];
+                                }
                             case 'EXTRACTORES':
-                                $familia = Cat::EXAUSTORES;
-                                $subFamilia = null;
+                                $familia = Cat::EXTRACTORES;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(CAT::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - FRIO':
                         $gama = Cat::ENCASTRE;
@@ -177,12 +203,12 @@ class SorefozCategories {
                                 $subFamilia = Cat::GARRAFEIRAS_ENC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];    
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];    
                         }
                     case 'ENCASTRE - MAQ.LOUÇA':
                         $gama = Cat::ENCASTRE;
                         $familia = Cat::MAQ_DE_LOUCA_ENC;
-                        $subFamilia = null;
                         return [$gama,$familia,$subFamilia];
                     case 'ENCASTRE - MAQ.L.ROUPA':
                         $gama = Cat::ENCASTRE;
@@ -198,13 +224,13 @@ class SorefozCategories {
                                 $subFamilia = Cat::MAQ_SECAR_ROUPA_ENC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - MICROONDAS':
                         $gama = Cat::ENCASTRE;
                         $familia = Cat::MICROONDAS_ENC;
-                        $subFamilia = null;
-                        return [$gama,$familia,$subFamilia];
+                        return [$gama,$familia,null];
                     case 'ENCASTRE - OUTRAS':
                         $gama = Cat::ENCASTRE;
                         $familia = Cat::OUTRO_ENC;
@@ -223,8 +249,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::FOGOES_ELECTRICOS;
                                 return [$gama, $familia, $subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'MAQUINAS LAVAR ROUPA':
                         $gama = Cat::GRANDES_DOMESTICOS;
@@ -238,7 +264,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                $logger->info(Cat::VERIFICAR_CATEGORIAS.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'MAQUINAS SECAR ROUPA':
                         $gama = Cat::GRANDES_DOMESTICOS;
@@ -254,7 +281,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::MAQ_SECAR_ROUPA_BC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                             }         
                     case 'CONGELADORES':
                         $familia = Cat::FRIO;
@@ -266,7 +294,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::CONGELADORES_HORIZONTAIS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'FRIGORIFICOS/COMBINADOS':
                         $familia = Cat::FRIO;
@@ -299,7 +328,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::FRIGOBAR;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'MAQUINAS LAVAR LOUÇA':
                         $familia = Cat::MAQ_DE_LOUCA;
@@ -311,14 +341,16 @@ class SorefozCategories {
                                 $subFamilia = Cat::MLL_DE_45;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }    
                     case 'ENCASTRE - CONJUNTOS':
                         $familia = Cat::ENCASTRE;
                         $subFamilia = Cat::CONJUNTOS_ENC;
                         return [$gama,$familia,$subFamilia];        
                     default:
-                        return [$gama,$familia,$subFamilia];        
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null.null];        
                 }
             case 'IMAGEM E SOM':
                 $gama = Cat::IMAGEM_E_SOM;
@@ -344,8 +376,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::LEITOR_MP3_MP4;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'CÂMARAS':
                         switch ($subFamilia) {
@@ -367,7 +399,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::CAMARAS_VIDEO_HD;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }                
                     case 'TELEVISÃO':   
                         $familia = Cat::TELEVISAO;
@@ -393,7 +426,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::TVS_MEDIAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                             }
                     case 'EQUIPAMENTOS AUDIO':
                         $familia = Cat::EQUIPAMENTOS_AUDIO;
@@ -435,11 +469,12 @@ class SorefozCategories {
                                 $subFamilia = Cat::TELAS_PROJEÇÃO;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];    
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                     }
                             
             case 'INFORMÁTICA':
@@ -447,15 +482,7 @@ class SorefozCategories {
                 switch ($familia) {
                     case 'GPS':
                         $familia=Cat::GPS;
-                        switch ($subFamilia) {
-                            case 'value':
-                                # code...
-                                break;
-                            
-                            default:
-                                # code...
-                                break;
-                        }
+                        return [$gama,$familia,null];
                     case 'IMPRESSORAS':
                         $familia = Cat::IMPRESSORAS;
                         switch ($subFamilia) {
@@ -476,8 +503,8 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                                 break;
                             default:
-                                # code...
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ACESSÓRIOS':
                         switch ($subFamilia) {
@@ -513,7 +540,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::PORTATEIS_NOTEBOOKS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case "MONITORES":
                         $familia = Cat::MONITORES;
@@ -529,8 +557,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::MONITORES_PC;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     
                     case 'MEMÓRIAS':
@@ -545,11 +573,12 @@ class SorefozCategories {
                                 return [$gama,$familia,$subFamilia];
                                 break;
                             default:
-                                # code...
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
                 
             case 'CLIMATIZAÇÃO':
@@ -568,7 +597,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::PURIFICADORES_AR;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                             }
                     case 'VENTILAÇÃO':
                         $familia = Cat::VENTILACAO;
@@ -577,7 +607,8 @@ class SorefozCategories {
                                  $subFamilia = Cat::VENTOINHAS;
                                  return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'SISTEMAS AQUEC.SOLAR':
                         $familia = Cat::SISTEMAS_AQUECIMENTO_SOLAR;
@@ -592,8 +623,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::PAINEIS_SOLARES;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
-                                break;
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'AQUECIMENTO':
                         $familia = Cat::AQUECIMENTO;
@@ -632,7 +663,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::EMISSORES_TERMICOS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];                                       
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];                              
                         }
                     case 'AR CONDICIONADO':
                         $familia = Cat::AR_CONDICIONADO;
@@ -648,17 +680,12 @@ class SorefozCategories {
                                 $subFamilia = Cat::AC_BOMBA_CALOR;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
                 
             case 'PEQUENOS DOMÉSTICOS':
@@ -688,6 +715,9 @@ class SorefozCategories {
                             case 'TACHOS':
                                 $subFamilia = Cat::TACHOS;
                                 return [$gama,$familia,$subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ASSEIO PESSOAL':
                         $familia = Cat::ASSEIO_PESSOAL;
@@ -729,7 +759,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::TERMOMETRO_MEDIDORES_TENSAO;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'CUIDADO DE ROUPA':
                         $familia = Cat::CUIDADO_DE_ROUPA;
@@ -747,7 +778,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::TABUAS_PASSAR_FERRO;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'APARELHOS DE COZINHA':
                         $familia = Cat::APARELHOS_DE_COZINHA;
@@ -819,7 +851,8 @@ class SorefozCategories {
                                 $subFamilia = Cat::FIAMBREIRAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'APARELHOS DE LIMPEZA':
                         $familia = Cat::APARELHOS_DE_LIMPEZA;
@@ -852,14 +885,16 @@ class SorefozCategories {
                                 $subFamilia = Cat::MAQ_LAVAR_PRESSAO;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'MAQUINAS DE COSTURA':
                         $familia = Cat::CUIDADO_DE_ROUPA;    
                         $subFamilia = Cat::MAQ_COSTURA;
                         return [$gama,$familia,$subFamilia];
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,null,null];
                 }
             case 'CAR AUDIO':
                 $gama = Cat::IMAGEM_E_SOM;
@@ -884,10 +919,12 @@ class SorefozCategories {
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::AMPLIFICADORES_AUTO;
                     default:
-                        return [$gama,$familia,$subFamilia];
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        return [$gama,$familia,null];
                 }
             default:
-                return [$gama,$familia,$subFamilia];
+                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                return [null,null,null];
         
         }
     }

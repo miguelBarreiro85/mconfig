@@ -87,10 +87,29 @@ class OrimaCategories {
 
                 switch ($familia) {
                     case 'CHAMINES':
+                        $familia = Cat::EXAUSTORES;
+                        $subFamilia = Cat::EXAUSTORES_CHAMINE;
+                        return ([$gama, $familia, $subFamilia]);
                     case 'EXAUSTORES':
                         $familia = Cat::EXAUSTORES;
-                        return ([$gama, $familia, null]);
-
+                        switch ($subFamilia) {
+                            case 'Exaustores Tradicionais':
+                            case 'Exaustores Integraveis':
+                                $subFamilia = Cat::EXAUSTORES_CONVENCIONAIS;
+                                return ([$gama, $familia, $subFamilia]);
+                            case 'Exaustores Teto':
+                                $subFamilia = Cat::EXAUSTORES_TETO;
+                                return ([$gama, $familia, $subFamilia]);
+                            case 'Exaustores Bancada':
+                                $subFamilia = Cat::EXAUSTORES_BANCADA;
+                                return ([$gama, $familia, $subFamilia]);
+                            case 'Exaustores Gaveta':
+                                $subFamilia = Cat::EXAUSTORES_TELESCOPICOS;
+                                return ([$gama, $familia, $subFamilia]);
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return ([$gama, $familia, null]);
+                        }
                     case 'COMBINADOS ENCASTRE':
                         $familia = Cat::FRIO_ENC;
                         $subFamilia = Cat::COMBINADOS_ENC;
@@ -113,8 +132,21 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                     case 'FORNOS':
                         $familia = Cat::FORNOS;
-                        $subFamilia = null;
-                        return ([$gama, $familia, $subFamilia]);
+                        switch ($subFamilia) {
+                            case 'Fornos Multifunçoes':
+                            case 'Fornos Compactos':
+                            case 'Fornos 90cm':
+                            case 'Fornos Estaticos':
+                            case 'Fornos A Vapor':
+                                $subFamilia = Cat::FORNOS_MULTIFUNC;
+                                return [$gama, $familia, $subFamilia];
+                            case 'Fornos Piroliticos':
+                                $subFamilia = Cat::FORNOS_PIROLITICOS;
+                                return [$gama, $familia, $subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama, $familia, null];
+                        }
                     case 'MAQUINAS LAVAR LOUÇA ENCASTRE':
                         $familia = Cat::MAQ_DE_LOUCA_ENC;
                         $subFamilia = null;
