@@ -29,7 +29,8 @@ class CategoriesConstants {
     const ERROR_ADD_PRODUCT_OPTIONS = "ERRO : ADD PRODUCT OPTIONS : ";
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
 
-
+    const MAQ_DE_LOUCA_ENC_60 = "Maq Louça 60 Enc";
+    const MAQ_DE_LOUCA_ENC_45 = "Maq Louça 45 Enc";
     const PLACAS_GAS = "Placas a Gás";
     const PLACAS_CRISTAL_GAS = "Placas Cristal Gás";
     const PLACAS_DOMINO = "Placas Dominó";
@@ -192,7 +193,7 @@ class CategoriesConstants {
             const FRIO_ENC = 'Frio Enc';
         
         //FOGOES
-        const FOGOES_GAS = 'Fogões Gás';
+        const FOGOES_GAS = 'Fogões a Gás';
         const MAQ_SECAR_ROUPA_ENC = 'Maq Secar Roupa Enc';
         const ACESSORIOS_FRIO = 'Acessórios Frio';
         const MAQ_ROUPA = 'Maq de Roupa';
@@ -287,7 +288,6 @@ class CategoriesConstants {
     const MOVEIS_SUPORTES = 'Móveis e Suportes';
     const ACESSORIOS_IMAGEM_E_SOM = 'Acessórios Imagem e Som';   
     const FOGOES = 'Fogões';
-    const FOGÕES_C_GÁS = 'Fogões Gás';
     const FOGOES_ELECTRICOS = 'Fogões Eléctricos';
     const FORNOS_DE_BANCADA = 'Fornos de Bancada';
     const FORNOS = 'Fornos';
@@ -302,7 +302,7 @@ class CategoriesConstants {
     const MICROONDAS_ENC = 'Microondas Enc';
     const ESQUENTADORES_TERMOACUMULADORES = 'Esquentadores e Termoacumuladores';
     const ESQUENTADORES_ELECTRICOS = 'Esquentadores Eléctricos';
-    const ESQUENTADORES_C_GAS = 'Esquentadores Gás';
+    const ESQUENTADORES_C_GAS = 'Esquentadores a Gás';
     const TERMOACUMULADORES = 'Termoacumuladores';
     const TERMOACUMULADORES_ELECTRICOS = 'Termoacumuladores Eléctricos';
     const CLIMATIZACAO = 'Climatização';

@@ -352,7 +352,7 @@ class Auferma extends Command
         $this->produtoInterno->name = mb_strtoupper($data[1],'UTF-8');
         [$gama,$familia,$subFamilia] =  aufermaCategories::getCategories(
                                             $data[8],$data[9],$data[10],
-                                            $logger,$this->produtoInterno->sku,$this->productRepository->name);    
+                                            $logger,$this->produtoInterno->sku,$this->produtoInterno->name);    
  
         
         $this->produtoInterno->gama = $gama;

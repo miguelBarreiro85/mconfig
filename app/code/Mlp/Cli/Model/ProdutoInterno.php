@@ -185,7 +185,7 @@ class ProdutoInterno
         $product->setCustomAttribute('news_from_date', date("Y/m/d"));
 
         $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
-        $this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
+        //$this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
         $this->imagesHelper->setImages($product, $logger, $imgName . "_e.jpeg");
         $this->imagesHelper->setImages($product, $logger, $imgName . ".jpeg");
 
@@ -196,11 +196,13 @@ class ProdutoInterno
         //Salvar produto
         try {
             print_r("saving product.. - ");
+            
             $product = $this->productRepositoryInterface->save($product);
             print_r($product->getSku()." - ");
-            $logger->info(Cat::WARN_PRODUCT_ADDED.$product->getSku());
         } catch (\Exception $exception) {
-            $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku);
+            $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku.
+                " : code : ".$exception->getCode()." : Message : ".$exception->getMessage());
+            
             //if same url delete old save new
             /*
             print_r($exception->getMessage());
@@ -212,9 +214,10 @@ class ProdutoInterno
             */
         } 
         //Adicionar opções de garantia e instalação
+        /*
         try{
             $this->productOptions->add_warranty_option($product,$this->gama, $this->familia, $this->subFamilia);
-            $value = $this->productOptions->getInstallationValue($this->familia);
+            $value = $this->productOptions->getInstallationValue($this->gama, $this->familia, $this->subFamilia);
             if ($value > 0){
                 $this->productOptions->add_installation_option($product,$value);
             }
@@ -223,14 +226,14 @@ class ProdutoInterno
 
             return $product;
         }catch (\Exception $e){
-            $logger->info(Cat::ERROR_ADD_PRODUCT_OPTIONS);
-            print_r("add options exception - ".$e->getMessage());
+            $logger->info(Cat::ERROR_ADD_PRODUCT_OPTIONS.$this->sku);
         }
+        */
 
     }
 
 
-    private function deleteProduct(){
+    private function deleteProduct($logger){
         $searchCriteria = $this->searchCriteriaBuilder->addFilter(ProductInterface::NAME,$this->name,'like')->create();
                 $products = $this->productRepositoryInterface->getList($searchCriteria)->getItems();
                 if($products){

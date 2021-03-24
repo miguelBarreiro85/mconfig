@@ -65,14 +65,20 @@ class AufermaCategories {
                         }
                     case 'ENCASTRE - FORNOS':
                         $gama = Cat::ENCASTRE;
+                        $familia = Cat::FORNOS;
                         switch ($subFamilia) {
                             case 'INDEPENDENTES - ELÉCTRICOS':
+                                $subFamilia = Cat::FORNOS_MULTIFUNC;
+                                return [$gama, $familia, $subFamilia];
                             case 'PIROLITICOS':
+                                $subFamilia = Cat::FORNOS_PIROLITICOS;
+                                return [$gama, $familia, $subFamilia];
                             case 'INDEPENDENTES C/GÁS':
+                                $subFamilia = Cat::FORNOS_GAS;
+                                return [$gama, $familia, $subFamilia];
                             case 'POLIVALENTES':
-                                $familia = Cat::FORNOS;
-                                $subfamilia = null;
-                                return [$gama, $familia, $subfamilia];
+                                $subFamilia = Cat::FORNOS_POLIVALENTES;
+                                return [$gama, $familia, $subFamilia];
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                 return [$gama,$familia,null];
@@ -101,22 +107,28 @@ class AufermaCategories {
                                 $subFamilia = Cat::PLACAS_CONVENCIONAIS_ELETRICAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                $logger->info(CAT::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(CAT::WARN_SUBFAMILY_NF.$sku." : ".$subFamilia);
                                 return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - EXAUSTOR/EXTRATORES':
                         $gama = Cat::ENCASTRE;
+                        $familia = Cat::EXAUSTORES;
                         switch($subFamilia){
                             case 'EXAUST.DE CHAMINÉ':
+                                $subFamilia = Cat::EXAUSTORES_CHAMINE;
+                                return [$gama,$familia,$subFamilia];
                             case 'EXAUST.TELESCÓPICOS':
+                                $subFamilia = Cat::EXAUSTORES_TELESCOPICOS;
+                                return [$gama,$familia,$subFamilia];
                             case 'EXAUST.CONVENCIONAIS':
+                                $subFamilia = Cat::EXAUSTORES_CONVENCIONAIS;
+                                return [$gama,$familia,$subFamilia];
                             case 'EXTRACTORES':
-                                $familia = Cat::EXAUSTORES;
-                                $subFamilia = null;
+                                $familia = Cat::EXTRACTORES;
                                 return [$gama,$familia,$subFamilia];
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                return [$gama,$familia,$subFamilia];
+                                $logger->info(CAT::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
                         }
                     case 'ENCASTRE - FRIO':
                         $gama = Cat::ENCASTRE;
@@ -407,7 +419,7 @@ class AufermaCategories {
         
             default:
                 $logger->info(Cat::VERIFICAR_CATEGORIAS.$sku);
-                return [null,,null, null];
+                return [null,null, null];
         
         }
     }

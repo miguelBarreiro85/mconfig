@@ -5,6 +5,7 @@ namespace Mlp\Cli\Helper;
 
 
 use Magento\Catalog\Model\ResourceModel\Product;
+use Mlp\Cli\Helper\CategoriesConstants as Cat;
 
 class ProductOptions
 {
@@ -120,7 +121,7 @@ class ProductOptions
     public static function get_one_year_warranty_price($preco, $gama, $familia, $subfamilia)
     {
         switch ($gama) {
-            case 'GRANDES DOMÉSTICOS':
+            case Cat::GRANDES_DOMESTICOS;
                 if ($preco <= 200) {
                     return 14;
                 } elseif ($preco > 200 && $preco <= 400) {
@@ -135,9 +136,9 @@ class ProductOptions
                     return 79;
                 }
                 break;
-            case 'IMAGEM E SOM':
+            case Cat::IMAGEM_E_SOM:
                 switch ($familia) {
-                    case 'CÂMARAS':
+                    case Cat::CAMARAS:
                         if ($preco <= 100) {
                             return 19;
                         } elseif ($preco > 100 && $preco <= 200) {
@@ -168,7 +169,7 @@ class ProductOptions
                         }
                         break;
                 }
-            case 'INFORMÁTICA':
+            case Cat::INFORMATICA:
                 if ($preco <= 200) {
                     return 24;
                 } elseif ($preco > 200 && $preco <= 400) {
@@ -183,8 +184,8 @@ class ProductOptions
                     return 99;
                 }
                 break;
-            case 'COMUNICAÇÕES':
-                if (strcmp($familia, "TELEFONES FIXOS") == 0 || strcmp($subfamilia, "TELEMÓVEIS") == 0){
+            case Cat::COMUNICACOES:
+                if (strcmp($familia, Cat::TELEFONES_FIXOS) == 0 || strcmp($subfamilia, Cat::TELEMOVEIS) == 0){
                     if ($preco <= 150) {
                         return 19;
                     } elseif ($preco > 150 && $preco <= 300) {
@@ -204,7 +205,7 @@ class ProductOptions
                     return 0;
                 }
                 break;
-            case 'PEQUENOS DOMÉSTICOS':
+            case Cat::PEQUENOS_DOMESTICOS:
                 if ($preco <= 50) {
                     return 9;
                 } elseif ($preco > 50 && $preco <= 100) {
@@ -215,9 +216,9 @@ class ProductOptions
                     return 29;
                 }
                 break;
-            case 'CLIMATIZAÇÃO':
+            case Cat::CLIMATIZACAO:
                 switch ($familia){
-                    case 'AR CONDICIONADO':
+                    case Cat::AR_CONDICIONADO:
                         if ($preco <= 200) {
                             return 14;
                         } elseif ($preco > 200 && $preco <= 400) {
@@ -242,7 +243,7 @@ class ProductOptions
     }
     public static function get_three_years_warranty_price($preco, $gama){
         switch ($gama) {
-            case 'GRANDES DOMÉSTICOS':
+            case Cat::GRANDES_DOMESTICOS:
                 if ($preco <= 200) {
                     return 29;
                 } elseif ($preco > 200 && $preco <= 400) {
@@ -257,7 +258,7 @@ class ProductOptions
                     return 149;
                 }
                 break;
-            case 'IMAGEM E SOM':
+            case Cat::IMAGEM_E_SOM:
                 if ($preco <= 200) {
                     return 39;
                 } elseif (200 < $preco && $preco <= 400) {
@@ -276,19 +277,61 @@ class ProductOptions
                 return 0;
         }
     }
-    public static function getInstallationValue($familia)
+    public static function getInstallationValue($gama,$familia,$subFamilia)
     {
-        switch ($familia){
-            case 'ENCASTRE':
-                return 54.90;
-            case 'FOGÕES':
-                return 39.90;
-            case 'ESQUENTADORES/CALDEIRAS':
-                return 74.90;
-            case 'TERMOACUMULADORES':
-                return 64.90;
-            case 'AR CONDICIONADO':
-                return 180;
+        switch ($gama){
+            case Cat::ENCASTRE:
+                switch ($familia) {
+                    case cat::PLACAS:
+                        switch ($subFamilia) {
+                            case Cat::PLACAS_GAS:
+                            case Cat::PLACAS_CRISTAL_GAS:
+                            case Cat::PLACAS_DOMINO:
+                            case Cat::PLACAS_MISTAS:
+                                return 59.90;
+                            case Cat::PLACAS_INDUCAO:
+                            case Cat::PLACAS_VITROCERAMICAS:
+                            case Cat::PLACAS_CONVENCIONAIS_ELETRICAS:
+                                return 39.90;
+                            default:
+                                return 0;
+                        }
+                    case Cat::FORNOS:
+                        switch ($subFamilia) {
+                            case Cat::FORNOS_GAS:
+                                return 59.90;
+                            default:
+                                return 39.90;
+                        }
+                    case Cat::EXAUSTORES:
+                        return 49.90;
+                    default:
+                        return 0;
+                }
+            case Cat::GRANDES_DOMESTICOS:
+                switch ($familia) {
+                    case Cat::FOGOES:
+                        return 39.90;
+                    case Cat::ESQUENTADORES_TERMOACUMULADORES:
+                        switch ($subFamilia) {
+                            case Cat::CALDEIRAS_GAS:
+                                return 0;
+                            default:
+                                return 59.90;
+                                break;
+                        }
+                        return 74.90;
+                    default:
+                        return 0;
+                        break;
+                } 
+            case Cat::CLIMATIZACAO:
+                switch ($familia) {
+                    case Cat::AR_CONDICIONADO:
+                        return 0;
+                    default:
+                        return 0;
+                }
             default:
                 return 0;
         }

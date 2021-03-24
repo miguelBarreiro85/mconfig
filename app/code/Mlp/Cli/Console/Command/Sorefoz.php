@@ -181,7 +181,7 @@ class Sorefoz extends Command
                 continue;
             } 
             //Update status sql
-            if (strlen($sku) == 12 || strlen($sku) == 13) {
+            if (in_array(strlen($sku),[11,12,13])) {
                 if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
                     //update price anda stock
                     $price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]),
@@ -209,7 +209,7 @@ class Sorefoz extends Command
                 }
             } else {
                 print_r("Sku invalido\n");
-                $logger->info(Cat::ERROR_WRONG_SKU.$sku." - name: ".$data[1]);
+                $logger->info(Cat::ERROR_WRONG_SKU.$sku." : name: ".$data[1]);
             }
         }
     }
@@ -294,7 +294,7 @@ class Sorefoz extends Command
             $row++;
             print_r($row." - ");
             $this->setSorefozData($data,$logger);
-            if (strlen($this->produtoInterno->sku) != 13) {
+            if (!in_array(strlen($this->produtoInterno->sku),[12,13])) {
                 print_r("invalid sku - \n");
                 continue;
             }

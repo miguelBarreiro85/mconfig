@@ -131,7 +131,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        $this->downloadCsv($logger);
+        //$this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -141,7 +141,7 @@ class Expert extends Command
             //Update status sql
             $sku = trim($data[1]);
             print_r($row++." - ".$sku." - ");
-            if (strlen($sku) == 12 || strlen($sku) == 13) {
+            if (in_array(strlen($sku),[11,12,13])){
                 if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
                     //update price anda stock
                     $price = $this->produtoInterno->getPrice((int)trim($data[7]),$logger,$sku);
@@ -279,7 +279,7 @@ class Expert extends Command
         
         [$this->produtoInterno->gama,$this->produtoInterno->familia,
             $this->produtoInterno->subFamilia] = ExpertCategories::setExpertCategories($data[2],$logger,
-                                                            $this->produtoInterno->sku,$data[15]);
+                                                            $this->produtoInterno->sku,$data[15],$this->produtoInterno->name);
         
         return 1;
     }
@@ -291,8 +291,27 @@ class Expert extends Command
             $subFamilia = $pieces[2];
         switch ($gama) {
             case "Audiovisual":
-                if(strcmp($familia,"TV")==0){ return false; }
-                else { return true; }
+                switch ($familia) {
+                    case 'TV':
+                        switch ($subFamilia) {
+                            case 'Acessórios':
+                            case 'Cabos':
+                                return true;
+                                break;
+                            default:
+                                return false;
+                        }
+                    case 'Sistema Áudio':
+                        switch ($subFamilia) {
+                            case 'Acessórios':
+                                return true;
+                            default:
+                                return false;
+                        }
+                    default:
+                        return false;
+                        break;
+                }
             case "Climatização":
                 switch ($subFamilia) {
                     case 'Acessórios':

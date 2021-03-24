@@ -3,6 +3,7 @@
 namespace Mlp\Cli\Helper\Orima;
 
 use Mlp\Cli\Helper\CategoriesConstants as Cat;
+use PhpParser\Node\Stmt\Case_;
 
 class OrimaCategories {
 
@@ -17,7 +18,7 @@ class OrimaCategories {
                         $subFamilia = null;
                         return [$gama,$familia,$subFamilia];
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return [$gama,null,null];
                 }
             case 'QUEIMA':
@@ -40,17 +41,17 @@ class OrimaCategories {
                             case 'FOGOES MONOBLOCO 50/55CM':
                             case 'FOGOES MONOBLOCO 60CM':
                             case 'FOGOES PORTA GARRAFA':
-                                $subFamilia = Cat::FOGÕES_C_GÁS;
+                                $subFamilia = Cat::FOGOES_GAS;
                                 return ([$gama, $familia, $subFamilia]);
                             case 'FOGOES VITROCERAMICOS':
                                 $subFamilia = Cat::FOGOES_ELECTRICOS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, $subFamilia]);
                         }
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, null, null]);
                 }
 
@@ -78,7 +79,7 @@ class OrimaCategories {
                         $subFamilia = Cat::MAQ_SECAR_ROUPA_VENT;
                         return ([$gama, $familia, $subFamilia]);
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, null, null]);
                 }
 
@@ -93,21 +94,21 @@ class OrimaCategories {
                     case 'EXAUSTORES':
                         $familia = Cat::EXAUSTORES;
                         switch ($subFamilia) {
-                            case 'Exaustores Tradicionais':
-                            case 'Exaustores Integraveis':
+                            case 'EXAUSTORES TRADICIONAIS':
+                            case 'EXAUSTORES INTEGRAVEIS':
                                 $subFamilia = Cat::EXAUSTORES_CONVENCIONAIS;
                                 return ([$gama, $familia, $subFamilia]);
-                            case 'Exaustores Teto':
+                            case 'EXAUSTORES TETO':
                                 $subFamilia = Cat::EXAUSTORES_TETO;
                                 return ([$gama, $familia, $subFamilia]);
-                            case 'Exaustores Bancada':
+                            case 'EXAUSTORES BANCADA':
                                 $subFamilia = Cat::EXAUSTORES_BANCADA;
                                 return ([$gama, $familia, $subFamilia]);
-                            case 'Exaustores Gaveta':
+                            case 'EXAUSTORES GAVETA':
                                 $subFamilia = Cat::EXAUSTORES_TELESCOPICOS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
                     case 'COMBINADOS ENCASTRE':
@@ -133,18 +134,21 @@ class OrimaCategories {
                     case 'FORNOS':
                         $familia = Cat::FORNOS;
                         switch ($subFamilia) {
-                            case 'Fornos Multifunçoes':
-                            case 'Fornos Compactos':
-                            case 'Fornos 90cm':
-                            case 'Fornos Estaticos':
-                            case 'Fornos A Vapor':
+                            case 'FORNOS MULTIFUNÇOES':
+                            case 'FORNOS COMPACTOS':
+                            case 'FORNOS 90CM':
+                            case 'FORNOS ESTATICOS':
+                            case 'FORNOS A VAPOR':
                                 $subFamilia = Cat::FORNOS_MULTIFUNC;
                                 return [$gama, $familia, $subFamilia];
-                            case 'Fornos Piroliticos':
+                            case 'FORNOS PIROLITICOS':
                                 $subFamilia = Cat::FORNOS_PIROLITICOS;
                                 return [$gama, $familia, $subFamilia];
+                            case 'FORNOS A GAS':
+                                $subFamilia = Cat::FORNOS_GAS;
+                                return [$gama, $familia, $subFamilia];
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return [$gama, $familia, null];
                         }
                     case 'MAQUINAS LAVAR LOUÇA ENCASTRE':
@@ -190,7 +194,7 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
 
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, null, null]);
                 }
 
@@ -238,7 +242,7 @@ class OrimaCategories {
                         $subFamilia = Cat::FRIGOBAR;
                         return ([$gama, $familia, $subFamilia]);
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, null, null]);
                 }
 
@@ -253,7 +257,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::TERMOACUMULADORES_ELECTRICOS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, null, null]);
                         }
 
@@ -270,11 +274,11 @@ class OrimaCategories {
                                 $subFamilia = Cat::ESQUENTADORES_C_GAS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku); 
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name); 
                         return ([$gama, null, null]);
                 }
 
@@ -294,7 +298,7 @@ class OrimaCategories {
                         $subFamilia = Cat::MLL_COMPACTAS;
                         return ([$gama, $familia, $subFamilia]);
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, $familia, null]);
                 }
 
@@ -320,7 +324,7 @@ class OrimaCategories {
                                 $familia = Cat::DVD_BLURAY_TDT;
                                 return ([$gama, $familia, null]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
                     case 'SUPORTES':
@@ -328,7 +332,7 @@ class OrimaCategories {
                         $subFamilia = Cat::MOVEIS_SUPORTES;
                         return ([$gama, $familia, $subFamilia]);
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, null, null]);
                 }
 
@@ -340,13 +344,13 @@ class OrimaCategories {
                         switch ($subFamilia) {
                             case 'APARADORES DE BARBA E BIGODE':
                             case 'APARADORES DE CABELO':
-                                $subFamilia = Cat::APARADORES;
+                                $subFamilia = Cat::CUIDADOS_MASCULINOS;
                                 return ([$gama, $familia, $subFamilia]);
                             case 'DEPILADORAS':
                                 $subFamilia = Cat::DEPILADORAS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
                     case 'CASA':
@@ -376,7 +380,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::SACOS_ASPIRADOR;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
 
@@ -457,7 +461,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::VARINHAS_MAGICAS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return([$gama,$familia,null]);
                         }
 
@@ -474,7 +478,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::SECADORES_DE_CABELO;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return([$gama,$familia,null]);
                         }
 
@@ -493,7 +497,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::MO_SEM_GRILL;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return([$gama,$familia,null]);;
                         }
 
@@ -528,7 +532,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::TORRADEIRAS;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
 
@@ -552,7 +556,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::TABUAS_PASSAR_FERRO;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
 
                         }
@@ -590,7 +594,7 @@ class OrimaCategories {
                         $subFamilia = Cat::VARINHAS_INDUSTRIAIS;
                         return ([$gama, $familia, $subFamilia]);
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, $familia, null]);
                 }
 
@@ -609,7 +613,7 @@ class OrimaCategories {
                                 $subFamilia = Cat::AC_PORTATIL;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
                         }
                     case 'AMBIENTE - PORTATIL, PELLETS E LENHA':
@@ -666,17 +670,17 @@ class OrimaCategories {
                                 $subFamilia = Cat::RECUPERADORES;
                                 return ([$gama, $familia, $subFamilia]);
                             default:
-                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return ([$gama, $familia, null]);
 
                         }
                     default:
-                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama,null,null]);
                 }
 
             default:
-                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                 return [null,null,null];
         }
     }

@@ -7,7 +7,7 @@ use Mlp\Cli\Helper\CategoriesConstants as Cat;
 class ExpertCategories {
     
     
-    public static function setExpertCategories($categories,$logger,$sku,$attributes) {
+    public static function setExpertCategories($categories,$logger,$sku,$attributes,$name) {
             $pieces = explode("->",$categories);
             $gama = $pieces[0];
             $familia = $pieces[1];
@@ -37,7 +37,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_NOTEBOOKS;
                                     return [$gama,$familia,null];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                         case 'Monitores':
@@ -58,7 +58,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::MONITORES_TACTEIS;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                             break;
@@ -74,7 +74,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::IMPRESSORAS_JACTO_DE_TINTA;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                                     
                             }
@@ -94,7 +94,7 @@ class ExpertCategories {
                                 case 'Armazenamento Dados':
                                     $familia = Cat::MEMORIAS;
                                     $subFamilia = null;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,$subFamilia];
                                 case 'Leitor de cartões':
                                     $subFamilia = Cat::LEITOR_CARTOES;
@@ -110,18 +110,18 @@ class ExpertCategories {
                                 case 'drives':
                                 case 'Hubs USB':
                                     $subFamilia = Cat::OUTROS_ACESSORIOS_INFORMATICA;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,$subFamilia];
                                 case 'Adaptadores e Cabos':
                                 case 'Redes':
                                     $subFamilia = Cat::REDES_CABOS;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,$subFamilia];
                                 case 'Transporte':
                                     $subFamilia = Cat::MALAS_BOLSAS_INFORMATICA;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null]; 
                             }
                         case 'Software':
@@ -134,7 +134,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::INFORMATICA_SOFTWARE_POS;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                                     break;
                             }
@@ -154,11 +154,11 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_PC_GAMING;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama,null,null];
                     }
                 
@@ -179,16 +179,14 @@ class ExpertCategories {
                                     $familia = Cat::ACESSORIOS_IMAGEM_E_SOM;
                                     $subFamilia = Cat::CABOS_TV;
                                     return [$gama,$familia,$subFamilia];
-                            
                                 case 'De 50 a 65 Polegadas':
                                     $familia = Cat::TELEVISAO;
                                     $subFamilia = Cat::TVS_GRANDES;
                                     return [$gama,$familia,$subFamilia];
                                 case 'Até 49 Polegadas':
                                     $familia = Cat::TELEVISAO;
-                                    $subFamilia = null;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama,$familia,$subFamilia];
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                    return [$gama,$familia,null];
                                 case 'Mais de 65 Polegadas':
                                     $familia = Cat::TELEVISAO;
                                     $subFamilia = Cat::TVS_GRANDES;
@@ -197,8 +195,12 @@ class ExpertCategories {
                                     $familia = Cat::TELEVISAO;
                                     $subFamilia = Cat::TV_HOTELARIA;
                                     return [$gama,$familia,$subFamilia];
+                                case 'LED':
+                                    $familia = Cat::TELEVISAO;
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                    return [$gama,$familia,null];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                         case 'Projectores':
@@ -214,7 +216,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_PROJECTORES;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];  
                             }
                         case 'Home Cinema':
@@ -231,7 +233,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::RECEPTORES_AV;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Sistema Áudio':
@@ -246,7 +248,7 @@ class ExpertCategories {
                                 case 'Walkmans e Discmans':
                                 case 'Jukebox':
                                     $subFamilia = Cat::OUTRO_HIFI;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, $subFamilia];
                                 case 'Amplificadores':
                                     $subFamilia = Cat::AMPLIFICADORES_HIFI;
@@ -268,7 +270,7 @@ class ExpertCategories {
                                     $subFamilia = null;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Leitores e Gravadores':
@@ -282,7 +284,7 @@ class ExpertCategories {
                                 case 'Acessórios':
                                     $subFamilia = Cat::ACESSORIOS_LEITORES_GRAVADORES;
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Sistema Áudio':
@@ -293,11 +295,11 @@ class ExpertCategories {
                                     $subFamilia = Cat::AUTO_RADIOS;
                                     return [$gama, $familia, $subFamilia];                                    
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama, null, null];
                     }
                 case 'Comunicações':
@@ -340,7 +342,7 @@ class ExpertCategories {
                                     $subFamilia = null;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                             # code...
@@ -352,13 +354,13 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];
                                 
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                                     break;
                             }
                         
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama, null, null];
                     }
                 case 'Foto e Vídeo':
@@ -379,7 +381,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::CAMARAS_REFLEX;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                             break;
@@ -402,7 +404,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_CAM_VIDEO;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         
@@ -429,7 +431,7 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];
                                 
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Cartões de Memória':
@@ -443,7 +445,7 @@ class ExpertCategories {
                             $subFamilia = Cat::PILHAS_RECARREGAVEIS;
                             return [$gama, $familia, $subFamilia];
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama, null, null];
                             
                         
@@ -459,7 +461,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::TOMADAS;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Iluminação':
@@ -475,7 +477,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::DIVERSOS_ILUMINACAO;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Pilhas e Carregadores':
@@ -500,7 +502,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::BATERIAS;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Extensões / Cabos':
@@ -510,7 +512,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::EXTENSOES_MULTIPLAS;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Acessórios':
@@ -520,11 +522,11 @@ class ExpertCategories {
                                     return [$gama, $familia, null];
                                 
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama, null, null];
                             break;
                     }
@@ -538,9 +540,23 @@ class ExpertCategories {
                                     $familia = Cat::ACESSORIOS_GRANDES_DOMESTICOS;
                                     $subFamilia = null;
                                     return [$gama, $familia, $subFamilia];
+                                
+                                case '10 Conjuntos':
+                                case '6 Conjuntos':
+                                    $familia = Cat::MAQ_DE_LOUCA;
+                                    $subFamilia = Cat::MLL_DE_45;
+                                    return [$gama, $familia, $subFamilia];
+                                case '12 Conjuntos':
+                                case '13 Conjuntos':
+                                case '14 Conjuntos':
+                                case '15 Conjuntos':
+                                case '16 Conjuntos':
+                                    $familia = Cat::MAQ_DE_LOUCA;
+                                    $subFamilia = Cat::MLL_DE_60;
+                                    return [$gama, $familia, $subFamilia];
                                 default:
                                     $familia = Cat::MAQ_DE_LOUCA;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];                     
                             }
                             
@@ -550,11 +566,10 @@ class ExpertCategories {
                                 case 'Máquina Lavar Roupa':
                                 case 'Máquinas TwinWash':
                                     $subFamilia = Cat::MAQ_LAVAR_ROUPA;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                     return [$gama, $familia, $subFamilia];
                                 case 'Máquina Secar Roupa':
                                     $subFamilia = Cat::MAQ_SECAR_ROUPA;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, $subFamilia];
                                 case 'Acessórios':
                                 case 'Consumíveis':
@@ -564,7 +579,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Frio':
@@ -577,7 +592,7 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];
                                 case 'Frigorifico 2 portas':
                                     $subFamilia = Cat::FRIGORIF_2_PORTAS;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, $subFamilia];
                                 case 'Congelador Vertical':
                                     $subFamilia = Cat::CONGELADORES_VERTICAIS;
@@ -599,11 +614,10 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_FRIO;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Combinados':
-                                    $subFamilia = Cat::COMBINADOS_CONVENCIONAIS;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama, $familia, $subFamilia];
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                    return [$gama, $familia, null];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                                     break;
                             }
@@ -622,7 +636,7 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];
                                 
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
                         case 'Encastre':
@@ -636,6 +650,10 @@ class ExpertCategories {
                                     $familia = Cat::EXAUSTORES;
                                     $subFamilia = Cat::EXAUSTORES_CHAMINE;
                                     return [$gama, $familia, $subFamilia];
+                                case 'Exaustores':
+                                    $familia = Cat::EXAUSTORES;
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                    return [$gama, $familia, null];
                                 case 'Máquinas Lavar Roupa':
                                     $familia = Cat::MAQ_ROUPA_ENC;
                                     $subFamilia = Cat::MAQ_LAVAR_ROUPA_ENC;
@@ -644,8 +662,22 @@ class ExpertCategories {
                                     $familia = Cat::MAQ_CAFE_ENC;
                                     return [$gama, $familia, null];
                                 case 'Fornos':
-                                    $$familia = Cat::FORNOS;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $familia = Cat::FORNOS;
+                                    if (preg_match('/Limpeza:Piro/',$attributes) == 1) {
+                                        $subFamilia = Cat::FORNOS_PIROLITICOS;
+                                        return [$gama, $familia, $subFamilia];
+                                    }
+                                    elseif (preg_match('/Tipo:(\w+)\s*/',$attributes,$tipoForno) == 1){
+                                        switch ($tipoForno[1]) {
+                                            case 'G':
+                                                $subFamilia = Cat::FORNOS_GAS;
+                                                return [$gama, $familia, $subFamilia];
+                                            default:
+                                                $subFamilia = Cat::FORNOS_MULTIFUNC;
+                                                return [$gama, $familia, $subFamilia];
+                                        }
+                                    }
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                                 case 'Acessórios':
                                 case 'Consumíveis':
@@ -676,12 +708,13 @@ class ExpertCategories {
                                                     $subFamilia = Cat::PLACAS_CONVENCIONAIS_ELETRICAS;
                                                     return [$gama, $familia, $subFamilia];
                                                 default:
+                                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                                     return [$gama, $familia, null];
                                                     break;
                                             }
                                         }
                                     }else {
-                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                         return [$gama, $familia, null];
                                     }
                                     
@@ -700,39 +733,53 @@ class ExpertCategories {
                                     return [$gama, $familia, null];
                                 case 'Frio':
                                     $familia = Cat::FRIO_ENC;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama, $familia, null];
+                                    if (preg_match('/Combinado/',$name) == 1) {
+                                        $subFamilia = Cat::COMBINADOS_ENC;
+                                        return [$gama, $familia, $subFamilia];
+                                    }elseif (preg_match('/Arca Vert/', $name) == 1 || 
+                                        preg_match('/Congelador/',$name) == 1) {
+                                            $subFamilia = Cat::CONGELADORES_ENC;
+                                            return [$gama, $familia, $subFamilia];
+                                        }
+                                    elseif (preg_match('/Frigorifico/',$name)==1) {
+                                        $subFamilia = Cat::FRIGORIFICOS_ENC;
+                                        return [$gama, $familia, $subFamilia];   
+                                    }else {
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                        return [$gama, $familia, null];
+                                    }
                                 case 'Torneiras':
                                     $familia = Cat::MISTURADORAS;
                                     return [$gama, $familia, null];
-                                //Exaustores nao sabemos a subfamilia (telescopicos integrar etc... extratores)
-                                case 'Exaustores':
+                                //Exaustores nao sabemos a subfamilia (telescopicos integrar etc... extratores)                                
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                                     
                             }
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama, null, null];
                     }
                 case 'Climatização':
+                    $gama = Cat::CLIMATIZACAO;
                     switch ($familia) {
                         case 'Climatização de Água':
+                            $gama = Cat::GRANDES_DOMESTICOS;
+                            $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
                             switch ($subFamilia) {
                                 case 'Termoacumuladores':
-                                    $gama = Cat::GRANDES_DOMESTICOS;
-                                    $familia = Cat::ESQUENTADORES_TERMOACUMULADORES;
                                     $subFamilia = Cat::TERMOACUMULADORES_ELECTRICOS;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Esquentadores':
-                                    $gama = Cat::GRANDES_DOMESTICOS;
-                                    $familia = Cat::TERMOACUMULADORES;
-                                    $subFamilia = Cat::TERMOACUMULADORES_ELECTRICOS;
+                                    $subFamilia = Cat::ESQUENTADORES_C_GAS;
+                                    return [$gama, $familia, $subFamilia];
+                                case 'Bombas Calor':
+                                    $subFamilia = Cat::BOMBA_CALOR;
                                     return [$gama, $familia, $subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama, $familia, $subFamilia];
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                    return [$gama, $familia, null];
                             }
                         case 'Climatização':
                             $gama = Cat::CLIMATIZACAO;
@@ -747,9 +794,13 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'Ar Condicionado':
                                     $familia = Cat::AR_CONDICIONADO;
-                                    $subFamilia = null;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama,$familia,$subFamilia];
+                                    if(preg_match('/Portátil/',$name) == 1) {
+                                        $subFamilia = Cat::AC_PORTATIL;
+                                        return [$gama,$familia,$subFamilia];
+                                    }else {
+                                        $subFamilia = Cat::AC_FIXO;
+                                        return [$gama,$familia,$subFamilia];
+                                    }
                                 case 'Aquecimento':
                                     $familia = Cat::AQUECIMENTO;
                                     $subFamilia = Cat::ELECTRICO;
@@ -783,12 +834,12 @@ class ExpertCategories {
                                     $familia = Cat::ACESSORIOS_CLIMATIZACAO;
                                     return [$gama,$familia,null];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,$subFamilia];
                             }
                         
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama,$familia,$subFamilia];
                     }
                 case 'Pequenos Domésticos':
@@ -800,7 +851,7 @@ class ExpertCategories {
                                 case 'Ménage':
                                     $familia = Cat::ARTIGOS_DE_MENAGE;
                                     $subFamilia = null;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,$subFamilia];
                                 case 'Cozedura a Vapor/Panelas Elétricas':
                                     $subFamilia = Cat::MAQ_DE_COZINHA;
@@ -822,7 +873,7 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'Fun Cooking e Diversos':
                                     $subFamilia = Cat::OUTROS_EQUIPAMENTOS_COZINHA;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,$subFamilia];
                                 case 'Liquidificadoras':
                                     $subFamilia = Cat::LIQUIDIFICADORAS;
@@ -873,8 +924,14 @@ class ExpertCategories {
                                 case 'Máq. de Pão':
                                     $subFamilia = Cat::APARELHOS_DE_COZINHA;
                                     return [$gama,$familia,$subFamilia];
+                                case 'Fiambreira':
+                                    $subFamilia = Cat::FIAMBREIRAS;
+                                    return [$gama,$familia,$subFamilia];
+                                case 'Máq. Embalar a Vácuo':
+                                    $subFamilia = Cat::MAQ_DE_COZINHA;
+                                    return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                         case 'Cuidados Pessoais':
@@ -891,7 +948,6 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'Cuidados Masculinos':
                                     $subFamilia = Cat::CUIDADOS_MASCULINOS;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                     return [$gama,$familia,$subFamilia];
                                 case 'Saúde':
                                     $subFamilia = Cat::SAUDE_BELEZA;
@@ -906,7 +962,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::BALANÇAS_DE_WC;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                         case 'Tratamento de Tecidos':
@@ -932,7 +988,7 @@ class ExpertCategories {
                                     $subFamilia = Cat::TIRA_BORBOTOS;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                         case 'Limpeza de Pavimentos':
@@ -955,20 +1011,28 @@ class ExpertCategories {
                                     $subFamilia = Cat::ASPIRADORES_ROBOT;
                                     return [$gama,$familia,$subFamilia];    
                                 case 'Mini-Aspiradores':
-                                    $subFamilia = Cat::ACESSORIOS_APARELHOS_LIMPEZA;
+                                    $subFamilia = Cat::MINI_ASPIRADORES;
                                     return [$gama,$familia,$subFamilia];
                                 case 'Outros':
                                     $subFamilia = Cat::OUTROS_APARELHOS_LIMPEZA;
                                     return [$gama,$familia,$subFamilia];
                                 case 'Aspiradores':
-                                    $subFamilia = Cat::ASPIRADORES;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
-                                    return [$gama,$familia,$subFamilia];
+                                    if (preg_match('/c\/ Saco/',$name)==1) {
+                                        $subFamilia = Cat::ASPIRADOR_COM_SACO;
+                                        return [$gama,$familia,$subFamilia];
+                                    }elseif(preg_match('/s\/ Saco/',$name)==1) {
+                                        $subFamilia = Cat::ASPIRADOR_SEM_SACO;
+                                        return [$gama,$familia,$subFamilia];
+                                    }else {
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                        return [$gama,$familia,null];
+                                    }
+                                    
                                 case 'Aspiradores Verticais':
                                     $subFamilia = Cat::ASPIRADOR_VERTICAL;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
                             }
                         case 'Microondas':
@@ -986,16 +1050,16 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_MICROONDAS;
                                     return [$gama,$familia,$subFamilia];
                                 default:
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];        
                                     break;
                             }
                         default:
-                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                            $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama,null,null];
                     }
                 default:
-                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                     return [null,null,null];
             }
 

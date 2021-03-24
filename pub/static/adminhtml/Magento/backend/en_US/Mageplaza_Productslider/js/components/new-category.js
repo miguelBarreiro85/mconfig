@@ -1,1 +1,0 @@
-/var/www/html/vendor/mageplaza/magento-2-product-slider/view/adminhtml/web/js/components/new-category.js
