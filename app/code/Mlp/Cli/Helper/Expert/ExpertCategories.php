@@ -101,8 +101,8 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'Colunas':
                                     $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::COLUNAS;
-                                    $subFamilia = null;
+                                    $familia = Cat::EQUIPAMENTOS_AUDIO;
+                                    $subFamilia = Cat::SOUND_BARS;
                                     return [$gama,$familia,$subFamilia];
                                 case 'Outros':
                                 case 'Periféricos':
@@ -185,8 +185,21 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'Até 49 Polegadas':
                                     $familia = Cat::TELEVISAO;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                    return [$gama,$familia,null];
+                                    if (preg_match('/Ecr..:(\d\d)/',$attributes,$dimensaoEcra) == 1) {
+                                        if ((int)$dimensaoEcra[1] <= 40 ){
+                                            $subFamilia = Cat::TVS_PEQUENAS;
+                                            return [$gama,$familia,$subFamilia];
+                                        }elseif((int)$dimensaoEcra[1] <= 46) {
+                                            $subFamilia = Cat::TVS_MEDIAS;
+                                            return [$gama,$familia,$subFamilia];
+                                        }else {
+                                            $subFamilia = Cat::TVS_GRANDES;
+                                            return [$gama,$familia,$subFamilia];
+                                        }
+                                    }else{
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                        return [$gama,$familia,null];
+                                    }
                                 case 'Mais de 65 Polegadas':
                                     $familia = Cat::TELEVISAO;
                                     $subFamilia = Cat::TVS_GRANDES;
@@ -197,8 +210,21 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'LED':
                                     $familia = Cat::TELEVISAO;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                    return [$gama,$familia,null];
+                                    if (preg_match('/Ecr..:(\d\d)/',$attributes,$dimensaoEcra) == 1) {
+                                        if ((int)$dimensaoEcra[1] <= 40 ){
+                                            $subFamilia = Cat::TVS_PEQUENAS;
+                                            return [$gama,$familia,$subFamilia];
+                                        }elseif ((int)$dimensaoEcra[1] <= 46) {
+                                            $subFamilia = Cat::TVS_MEDIAS;
+                                            return [$gama,$familia,$subFamilia];
+                                        }else {
+                                            $subFamilia = Cat::TVS_GRANDES;
+                                            return [$gama,$familia,$subFamilia];
+                                        }
+                                    }else{
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                        return [$gama,$familia,null];
+                                    }
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama,$familia,null];
@@ -290,14 +316,21 @@ class ExpertCategories {
                         case 'Sistema Áudio':
                             switch ($subFamilia) {
                                 case 'Electrónica Auto':
-                                    $gama = Cat::IMAGEM_E_SOM;
                                     $familia = Cat::CAR_AUDIO;
                                     $subFamilia = Cat::AUTO_RADIOS;
-                                    return [$gama, $familia, $subFamilia];                                    
+                                    return [$gama, $familia, $subFamilia];     
+                                case 'Gira Discos':
+                                    $familia = Cat::EQUIPAMENTOS_AUDIO;
+                                    $subFamilia = Cat::GIRA_DISCOS;
+                                    return [$gama, $familia, $subFamilia]; 
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
                             }
+                        case 'Monitores':
+                            $familia = Cat::TELEVISAO;
+                            $subFamilia = Cat::TV_HOTELARIA;
+                            return [$gama, $familia, $subFamilia];
                         default:
                             $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                             return [$gama, null, null];
@@ -568,9 +601,19 @@ class ExpertCategories {
                                     $subFamilia = Cat::MAQ_LAVAR_ROUPA;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Máquina Secar Roupa':
-                                    $subFamilia = Cat::MAQ_SECAR_ROUPA;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                    return [$gama, $familia, $subFamilia];
+                                    if(preg_match('/SecagemExaust/',$attributes) == 1){
+                                        $subFamilia = Cat::MAQ_SECAR_ROUPA_VENT;
+                                        return [$gama, $familia, $subFamilia];
+                                    }elseif(preg_match('/SecagemCondensa/',$attributes) == 1){
+                                        $subFamilia = Cat::MAQ_SECAR_ROUPA_COND;
+                                        return [$gama, $familia, $subFamilia];
+                                    }elseif(preg_match('/SecagemBomba/',$attributes) == 1){
+                                        $subFamilia = Cat::MAQ_SECAR_ROUPA_BC;
+                                        return [$gama, $familia, $subFamilia];
+                                    }else{
+                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                        return [$gama, $familia, null];
+                                    }
                                 case 'Acessórios':
                                 case 'Consumíveis':
                                     $subFamilia = Cat::ACESSORIOS_MAQ_ROUPA;
@@ -602,6 +645,7 @@ class ExpertCategories {
                                     return [$gama, $familia, $subFamilia];
                                 case 'Frigorifico 1 porta':
                                     $subFamilia = Cat::FRIGORIF_1_PORTA;
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, $subFamilia];
                                 case 'Arca Horizontal':
                                     $subFamilia = Cat::CONGELADORES_HORIZONTAIS;
@@ -614,14 +658,13 @@ class ExpertCategories {
                                     $subFamilia = Cat::ACESSORIOS_FRIO;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Combinados':
+                                    $subFamilia = Cat::COMBINADOS_CONVENCIONAIS;
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                    return [$gama, $familia, null];
+                                    return [$gama, $familia, $subFamilia];
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                     return [$gama, $familia, null];
-                                    break;
                             }
-                            break;
                         case 'Fogão':
                             $familia = Cat::FOGOES;
                             switch ($subFamilia) {
@@ -685,26 +728,26 @@ class ExpertCategories {
                                     return [$gama, $familia, null];
                                 case 'Placas':
                                     $familia = Cat::PLACAS;
-                                    if (preg_match('/(*UTF8)Tipo de Queimadores:(\w+)\s*/', $attributes, $tipoPlaca) == 1
+                                    if (preg_match('/Tipo de Queimadores:(\w+)\s*/ui', $attributes, $tipoPlaca) == 1
                                      && preg_match('/Qte.+:(\d)\s*/', $attributes, $numeroQueimadores) == 1) {
                                         if ($numeroQueimadores[1] <= 2) {
                                             $subFamilia = Cat::PLACAS_DOMINO;
                                             return [$gama, $familia, $subFamilia];
                                         }else {
                                             switch ($tipoPlaca[1]) {
-                                                case 'G':
+                                                case 'Gás':
                                                     $subFamilia = Cat::PLACAS_GAS;
                                                     return [$gama, $familia, $subFamilia];
-                                                case 'Indu':
+                                                case 'Indução':
                                                     $subFamilia = Cat::PLACAS_INDUCAO;
                                                     return [$gama, $familia, $subFamilia];
                                                 case 'Misto':
                                                     $subFamilia = Cat::PLACAS_MISTAS;
                                                     return [$gama, $familia, $subFamilia];
-                                                case 'Vitrocer':
+                                                case 'Vitrocerâmica':
                                                     $subFamilia = Cat::PLACAS_VITROCERAMICAS;
                                                     return [$gama, $familia, $subFamilia];
-                                                case 'El':
+                                                case 'Elétrico':
                                                     $subFamilia = Cat::PLACAS_CONVENCIONAIS_ELETRICAS;
                                                     return [$gama, $familia, $subFamilia];
                                                 default:
@@ -741,8 +784,11 @@ class ExpertCategories {
                                             $subFamilia = Cat::CONGELADORES_ENC;
                                             return [$gama, $familia, $subFamilia];
                                         }
-                                    elseif (preg_match('/Frigorifico/',$name)==1) {
+                                    elseif (preg_match('/Frigor/',$name)==1) {
                                         $subFamilia = Cat::FRIGORIFICOS_ENC;
+                                        return [$gama, $familia, $subFamilia];   
+                                    }elseif(preg_match('/Garrafeira/',$name)==1){
+                                        $subFamilia = Cat::GARRAFEIRAS_ENC;
                                         return [$gama, $familia, $subFamilia];   
                                     }else {
                                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
@@ -850,9 +896,28 @@ class ExpertCategories {
                             switch ($subFamilia) {
                                 case 'Ménage':
                                     $familia = Cat::ARTIGOS_DE_MENAGE;
-                                    $subFamilia = null;
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                    return [$gama,$familia,$subFamilia];
+                                    if (preg_match('/LE CREUSET/',$name) == 1){
+                                        $subFamilia = Cat::LE_CREUSET;
+                                        return [$gama,$familia,$subFamilia];
+                                    }elseif (preg_match('/Panela Press/',$name) == 1){
+                                        $subFamilia = Cat::PANELAS_DE_PRESSAO;
+                                        return [$gama,$familia,$subFamilia];
+                                    }elseif (preg_match('/Panela/',$name) == 1){
+                                        $subFamilia = Cat::PANELAS_TABULEIROS;
+                                        return [$gama,$familia,$subFamilia];
+                                    }elseif (preg_match('/Frigideira/',$name) == 1) {
+                                        $subFamilia = Cat::FRIGIDEIRAS;
+                                        return [$gama,$familia,$subFamilia];
+                                    }elseif(preg_match('/Ca..arola/',$name) == 1) {
+                                        $subFamilia = Cat::CACAROLAS;
+                                        return [$gama,$familia,$subFamilia];
+                                    }elseif(preg_match('/Trem/',$name) == 1) {
+                                        $subFamilia = Cat::TRENS_COZINHA;
+                                        return [$gama,$familia,$subFamilia];
+                                    }else {
+                                        $subFamilia = Cat::OUTROS_ARTIGOS_MENAGE;
+                                        return [$gama,$familia,$subFamilia];
+                                    }   
                                 case 'Cozedura a Vapor/Panelas Elétricas':
                                     $subFamilia = Cat::MAQ_DE_COZINHA;
                                     return [$gama,$familia,$subFamilia];
@@ -929,6 +994,16 @@ class ExpertCategories {
                                     return [$gama,$familia,$subFamilia];
                                 case 'Máq. Embalar a Vácuo':
                                     $subFamilia = Cat::MAQ_DE_COZINHA;
+                                    return [$gama,$familia,$subFamilia];
+                                case 'Difusor de Aromas':
+                                    $gama = Cat::CLIMATIZACAO;
+                                    $familia = Cat::TRATAMENTO_DE_AR;
+                                    $subFamilia = Cat::DIFUSOR_AROMAS;
+                                    return [$gama,$familia,$subFamilia];
+                                case 'Mata Insetos':
+                                    $gama = Cat::PEQUENOS_DOMESTICOS;
+                                    $familia = Cat::APARELHOS_DE_LIMPEZA;
+                                    $subFamilia = Cat::MATA_INSETOS;
                                     return [$gama,$familia,$subFamilia];
                                 default:
                                     $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
@@ -1017,17 +1092,13 @@ class ExpertCategories {
                                     $subFamilia = Cat::OUTROS_APARELHOS_LIMPEZA;
                                     return [$gama,$familia,$subFamilia];
                                 case 'Aspiradores':
-                                    if (preg_match('/c\/ Saco/',$name)==1) {
+                                    if (preg_match('/c\/ Saco/',$name) ==1 || preg_match('/Saco:Com saco/',$attributes) == 1) {
                                         $subFamilia = Cat::ASPIRADOR_COM_SACO;
                                         return [$gama,$familia,$subFamilia];
-                                    }elseif(preg_match('/s\/ Saco/',$name)==1) {
+                                    }else {
                                         $subFamilia = Cat::ASPIRADOR_SEM_SACO;
                                         return [$gama,$familia,$subFamilia];
-                                    }else {
-                                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                        return [$gama,$familia,null];
                                     }
-                                    
                                 case 'Aspiradores Verticais':
                                     $subFamilia = Cat::ASPIRADOR_VERTICAL;
                                     return [$gama,$familia,$subFamilia];

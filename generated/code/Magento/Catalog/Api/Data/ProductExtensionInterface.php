@@ -95,6 +95,17 @@ interface ProductExtensionInterface extends \Magento\Framework\Api\ExtensionAttr
     public function setConfigurableProductLinks($configurableProductLinks);
 
     /**
+     * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface[]|null
+     */
+    public function getProductLabels();
+
+    /**
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterface[] $productLabels
+     * @return $this
+     */
+    public function setProductLabels($productLabels);
+
+    /**
      * @return \Vertex\Tax\Api\Data\CommodityCodeInterface|null
      */
     public function getVertexCommodityCode();

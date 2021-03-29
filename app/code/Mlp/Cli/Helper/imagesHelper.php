@@ -3,6 +3,7 @@
 
 namespace Mlp\Cli\Helper;
 
+use Mlp\Cli\Helper\CategoriesConstants as Cat;
 
 
 class imagesHelper
@@ -62,7 +63,7 @@ class imagesHelper
         }
     }
 
-    public function setImages($product, $logger, $ImgName)
+    public function setImages($product, $logger, $ImgName, $etiquetaEergetica)
     {
         $baseMediaPath = $this->config->getBaseMediaPath();
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -82,11 +83,19 @@ class imagesHelper
             } catch (\RuntimeException $exception) {
                 print_r("run time exception" . $exception->getMessage() . "\n");
             } catch (\Exception $localizedException) {
-                $logger->info("SEM IMAGEM: " . $product->getSku());
+                if ($etiquetaEergetica) {
+                    $logger->info(Cat::SEM_IMAGEM_ETIQUETA . $product->getSku());
+                }else {
+                    $logger->info(Cat::SEM_IMAGEM_PRODUTO . $product->getSku());
+                }
             }
         } else {
             //not a image
-            $logger->info("SEM IMAGEM: " . $product->getSku());
+            if ($etiquetaEergetica) {
+                $logger->info(Cat::SEM_IMAGEM_ETIQUETA . $product->getSku());
+            }else {
+                $logger->info(Cat::SEM_IMAGEM_PRODUTO . $product->getSku());
+            }
         }
 
     }

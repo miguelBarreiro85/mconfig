@@ -7,7 +7,7 @@ use PhpParser\Node\Stmt\Case_;
 
 class OrimaCategories {
 
-    public static function getCategoriesOrima($gama, $familia, $subFamilia,$logger,$sku)
+    public static function getCategoriesOrima($gama, $familia, $subFamilia,$logger,$sku,$name)
     {
         switch ($gama) {
             case 'ACESSORIOS':
@@ -48,7 +48,7 @@ class OrimaCategories {
                                 return ([$gama, $familia, $subFamilia]);
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                return ([$gama, $familia, $subFamilia]);
+                                return ([$gama, $familia, null]);
                         }
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
@@ -162,7 +162,7 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
 
                     case 'MAQUINAS LAVAR SECAR ENCASTRE':
-                        $familia = Cat::MAQ_LAVAR_SECAR_ROUPA_ENC;
+                        $familia = Cat::MAQ_ROUPA_ENC;;
                         $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA_ENC;
                         return ([$gama, $familia, $subFamilia]);
                     case 'MICRO ONDAS ENCASTRE':
@@ -171,27 +171,37 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
 
                     case 'PLACAS A GAS':
+                        $familia = Cat::PLACAS;
                         $subFamilia = Cat::PLACAS_GAS;;
                         return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS CRISTAL GAS':
+                        $familia = Cat::PLACAS;
                         $subFamilia = Cat::PLACAS_CRISTAL_GAS;;
                         return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS DOMINO':
                     case 'PLACAS DOMINO ELECTRICAS':
+                        $familia = Cat::PLACAS;
                         $subFamilia = Cat::PLACAS_DOMINO;;
                         return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS MISTAS':
+                        $familia = Cat::PLACAS;
                         $subFamilia = Cat::PLACAS_MISTAS;
                         return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS VITROCERAMICAS':
+                        $familia = Cat::PLACAS;
                         $subFamilia = Cat::PLACAS_VITROCERAMICAS;
                         return ([$gama, $familia, $subFamilia]);
                     case 'PLACAS INDUÇAO':
+                    case 'PLACAS INDUÇAO 90CM':
+                    case 'PLACAS INDUÇAO 60CM':
+                    case 'PLACAS INDUÇAO 70CM':
+                    case 'PLACAS INDUÇAO 80CM':
+                        $familia = Cat::PLACAS;
                         $$subFamilia = Cat::PLACAS_INDUCAO;
                         return ([$gama, $familia, $subFamilia]);
                     case 'TAMPOS':
-                        $subFamilia = Cat::ACESSORIOS_ENC;
-                        return ([$gama, $familia, $subFamilia]);
+                        $familia = Cat::ACESSORIOS_ENC;
+                        return ([$gama, $familia, null]);
 
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
@@ -209,7 +219,7 @@ class OrimaCategories {
                         } elseif ($result == 0) {
                             $subFamilia = Cat::COMBINADOS_CONVENCIONAIS;
                         }
-                        return ([$gama, Cat::FRIO, $subFamilia]);
+                        return ([$gama, $familia, $subFamilia]);
                     case 'FRIGORIFICOS 1 PORTA':
                         $familia = Cat::FRIO;
                         $subFamilia = Cat::FRIGORIF_1_PORTA;
@@ -258,7 +268,7 @@ class OrimaCategories {
                                 return ([$gama, $familia, $subFamilia]);
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                return ([$gama, null, null]);
+                                return ([$gama, $familia, null]);
                         }
 
                     case 'ESQUENTADORES':
@@ -295,7 +305,7 @@ class OrimaCategories {
                         $subFamilia = Cat::MLL_DE_60;
                         return ([$gama, $familia, $subFamilia]);
                     case 'MAQUINAS LAVAR LOUÇA COMPACTAS':
-                        $subFamilia = Cat::MLL_COMPACTAS;
+                        $subFamilia = Cat::MLL_DE_45;
                         return ([$gama, $familia, $subFamilia]);
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
@@ -308,7 +318,7 @@ class OrimaCategories {
                     case 'LED´S':
                         $familia = Cat::TELEVISAO;
                         $subFamilia = null;
-                        $logger->info(Cat::VERIFICAR_CATEGORIAS);
+                        $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return ([$gama, $familia, $subFamilia]);
                     case 'SOM & VIDEO':
                         switch ($subFamilia) {

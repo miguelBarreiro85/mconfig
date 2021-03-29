@@ -304,10 +304,14 @@ class Expert extends Command
                     case 'Sistema Áudio':
                         switch ($subFamilia) {
                             case 'Acessórios':
+                            case 'Electrónica Auto':
+                            case 'Jukebox':
                                 return true;
                             default:
                                 return false;
                         }
+                    case 'Leitores e Gravadores':
+                        return true;
                     default:
                         return false;
                         break;

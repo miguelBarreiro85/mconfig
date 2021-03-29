@@ -11,8 +11,9 @@ class CategoriesConstants {
     const WARN_OLD_PRODUCT = "WARNING : OLD PRODUCT : ";
     const WARN_FOUND_PRODUCT_SKU = "WARNING : FOUND PRODUCT SKU : ";
     const WARN_DISABLING_PRODUCT = "WARNING : DISABLING PRODUCT : ";
+    const SEM_IMAGEM_ETIQUETA = "WARNING : SEM IMAGEM ETIQUETA : ";
+    CONST SEM_IMAGEM_PRODUTO  = "WARNING : SEM IMAGEM PRODUTO :";
 
-    
     const ERROR_DISABLING_PRODUCT  = "ERROR : DISABLING PRODUCT : ";
     const ERROR_OPEN_FILE = "ERROR : OPEN FILE : ";
     const ERROR_RENAMING_CSV = "ERRO : RENAMING CSV : ";
@@ -29,6 +30,11 @@ class CategoriesConstants {
     const ERROR_ADD_PRODUCT_OPTIONS = "ERRO : ADD PRODUCT OPTIONS : ";
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
 
+    const GIRA_DISCOS = "Gira Discos";
+    CONST MATA_INSETOS = "Mata Insetos";
+    const DIFUSOR_AROMAS = "Difusor de Aromas";
+    const LE_CREUSET = "Le Creuset";
+    const OUTROS_ARTIGOS_MENAGE = "Outros Artigos de Ménage";
     const MAQ_DE_LOUCA_ENC_60 = "Maq Louça 60 Enc";
     const MAQ_DE_LOUCA_ENC_45 = "Maq Louça 45 Enc";
     const PLACAS_GAS = "Placas a Gás";
@@ -94,9 +100,7 @@ class CategoriesConstants {
         const TELEVISAO =  "Televisão";
             const ACESSORIOS_TV = 'Acessórios Tv';
             const CABOS_TV = 'Cabos Tv';
-            const TV_LED_50_60 = 'Tv Led 50 a 60"';
-            const TV_LED_M65 = 'Tv Led +65"' ;
-            const TV_HOTELARIA = 'Tv Hotelaria';
+            const TV_HOTELARIA = "Tv`s Hotelaria";
         
         const PROJECTORES = 'Projectores Video';
             const PROJECTORES_MESA = 'Projectores Mesa';
@@ -359,7 +363,7 @@ class CategoriesConstants {
     const COFRES = 'Cofres';
     const APARELHOS_DE_LIMPEZA = 'Aparelhos de Limpeza';
     const SACOS_ASPIRADOR = 'Sacos para Aspiradores';
-    const ARTIGOS_DE_MENAGE = 'Artigos de Menage';
+    const ARTIGOS_DE_MENAGE = 'Artigos de Ménage';
     const PEQ_APARELHOS_COZINHA = 'Aparelhos Cozinha';
     const BATEDEIRAS = 'Batedeiras';
     const CACAROLAS = 'Caçarolas';

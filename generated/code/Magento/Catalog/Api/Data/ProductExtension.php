@@ -151,6 +151,24 @@ class ProductExtension extends \Magento\Framework\Api\AbstractSimpleObject imple
     }
 
     /**
+     * @return \Smile\ProductLabel\Api\Data\ProductLabelInterface[]|null
+     */
+    public function getProductLabels()
+    {
+        return $this->_get('product_labels');
+    }
+
+    /**
+     * @param \Smile\ProductLabel\Api\Data\ProductLabelInterface[] $productLabels
+     * @return $this
+     */
+    public function setProductLabels($productLabels)
+    {
+        $this->setData('product_labels', $productLabels);
+        return $this;
+    }
+
+    /**
      * @return \Vertex\Tax\Api\Data\CommodityCodeInterface|null
      */
     public function getVertexCommodityCode()

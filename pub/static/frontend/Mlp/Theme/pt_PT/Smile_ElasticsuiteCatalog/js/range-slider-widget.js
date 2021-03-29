@@ -1,1 +1,0 @@
-/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-catalog/view/frontend/web/js/range-slider-widget.js
