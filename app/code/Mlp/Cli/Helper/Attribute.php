@@ -762,6 +762,13 @@ class Attribute
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
+    
+    public function getEficiencia($eficiencia) {
+        $attribute = [];
+        $attribute['value'] = $this->dataAttributeOptions->createOrGetId('eficiencia_energetica', $eficiencia);
+        $attribute['code'] = 'eficiencia_energetica';
+        return $attribute;
+    }
     public function getSpecialAttributes($gama, $familia, $subfamilia, $description, $name)
     {
         $attributes = [];

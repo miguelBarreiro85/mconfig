@@ -1,0 +1,1 @@
+/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-swatches/view/adminhtml/web/js/product-attributes.js

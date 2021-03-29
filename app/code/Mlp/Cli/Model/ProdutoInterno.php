@@ -125,8 +125,6 @@ class ProdutoInterno
 
     }
 
-
-
     public function addSpecialAttributesSorefoz(\Magento\Catalog\Model\Product $product,$logger){
         $attributes = $this->attributeManager->getSpecialAttributes($this->gama, $this->familia, $this->subFamilia, $this->description, $this->name);
         if (isset($attributes)){
@@ -171,6 +169,7 @@ class ProdutoInterno
         $product->setCustomAttribute('ts_dimensions_width', $this->width);
         $product->setCustomAttribute('ts_dimensions_height', $this->height);
         $product->setCustomAttribute('tax_class_id', 2); //taxable goods id
+        
         $product->setWeight($this->weight);
         $product->setWebsiteIds([1]);
         //$attributeSetId = $this->attributeManager->getAttributeSetId($this->familia, $this->subFamilia);
@@ -185,7 +184,7 @@ class ProdutoInterno
         $product->setCustomAttribute('news_from_date', date("Y/m/d"));
 
         $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
-        $this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
+        //$this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
         $this->imagesHelper->setImages($product, $logger, $imgName . "_e.jpeg", false);
         $this->imagesHelper->setImages($product, $logger, $imgName . ".jpeg", true);
 
@@ -198,6 +197,10 @@ class ProdutoInterno
             print_r("saving product.. - ");
             
             $product = $this->productRepositoryInterface->save($product);
+            //adicionar o atributo eficiencia_energetica
+            $attributeEficiencia = $this->attributeManager->getEficiencia($this->classeEnergetica);
+            $product->setCustomAttribute($attributeEficiencia['code'], $attributeEficiencia['value']);
+            $this -> productResource -> saveAttribute($product, $attributeEficiencia['code']);
             print_r($product->getSku()." - ");
         } catch (\Exception $exception) {
             $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku.
