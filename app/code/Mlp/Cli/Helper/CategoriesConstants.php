@@ -11,8 +11,9 @@ class CategoriesConstants {
     const WARN_OLD_PRODUCT = "WARNING : OLD PRODUCT : ";
     const WARN_FOUND_PRODUCT_SKU = "WARNING : FOUND PRODUCT SKU : ";
     const WARN_DISABLING_PRODUCT = "WARNING : DISABLING PRODUCT : ";
+    const WARN_CLASSE_ENERGETICA = "WARNING : SEM CLASSE ENERGETICA : ";
     const SEM_IMAGEM_ETIQUETA = "WARNING : SEM IMAGEM ETIQUETA : ";
-    CONST SEM_IMAGEM_PRODUTO  = "WARNING : SEM IMAGEM PRODUTO :";
+    CONST SEM_IMAGEM_PRODUTO  = "WARNING : SEM IMAGEM PRODUTO : ";
 
     const ERROR_DISABLING_PRODUCT  = "ERROR : DISABLING PRODUCT : ";
     const ERROR_OPEN_FILE = "ERROR : OPEN FILE : ";
@@ -30,6 +31,7 @@ class CategoriesConstants {
     const ERROR_ADD_PRODUCT_OPTIONS = "ERRO : ADD PRODUCT OPTIONS : ";
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
 
+    
     const GIRA_DISCOS = "Gira Discos";
     CONST MATA_INSETOS = "Mata Insetos";
     const DIFUSOR_AROMAS = "Difusor de Aromas";
@@ -448,5 +450,15 @@ class CategoriesConstants {
     const AQUECEDORES_GAS = "Aquecedores a Gás";
     const AC_BOMBA_CALOR = "Ar Condicionado Bomba Calor";
 
+    const CATEGORIES_ENERGY_LABEL = [
+        self::MAQ_ROUPA,
+        self::MAQ_DE_LOUCA,
+        self::FRIO,
+        self::TELEVISAO,
+        self::MONITORES,
+        self::FORNOS,
+        self::ASPIRADORES,
+        self::AR_CONDICIONADO
+    ];
     
 }

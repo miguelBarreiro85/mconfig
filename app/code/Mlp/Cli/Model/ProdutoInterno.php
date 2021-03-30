@@ -24,6 +24,7 @@ use \Mlp\Cli\Helper\Data as DataAttributeOptions;
 use \Mlp\Cli\Helper\Attribute as Attribute;
 use Mlp\Cli\Helper\Expert\ExpertCategories;
 use \Mlp\Cli\Helper\ProductOptions as ProductOptions;
+
 class ProdutoInterno
 {
     //atributos
@@ -184,9 +185,8 @@ class ProdutoInterno
         $product->setCustomAttribute('news_from_date', date("Y/m/d"));
 
         $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
-        //$this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
-        $this->imagesHelper->setImages($product, $logger, $imgName . "_e.jpeg", false);
-        $this->imagesHelper->setImages($product, $logger, $imgName . ".jpeg", true);
+        $this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
+        
 
         $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
         //Preço
@@ -195,12 +195,23 @@ class ProdutoInterno
         //Salvar produto
         try {
             print_r("saving product.. - ");
-            
-            $product = $this->productRepositoryInterface->save($product);
             //adicionar o atributo eficiencia_energetica
-            $attributeEficiencia = $this->attributeManager->getEficiencia($this->classeEnergetica);
-            $product->setCustomAttribute($attributeEficiencia['code'], $attributeEficiencia['value']);
-            $this -> productResource -> saveAttribute($product, $attributeEficiencia['code']);
+            if (in_array($this->subFamilia, Cat::CATEGORIES_ENERGY_LABEL) || in_array($this->familia, Cat::CATEGORIES_ENERGY_LABEL)) {
+                $this->imagesHelper->setImages($product, $logger, $imgName . "_e", true);
+                //Temos de por esta no fim para aparecer primeiro.. por enquanto todo
+                $this->imagesHelper->setImages($product, $logger, $imgName, false);
+                $product = $this->productRepositoryInterface->save($product);
+                if ($this->classeEnergetica){
+                    $attributeEficiencia = $this->attributeManager->getEficiencia($this->classeEnergetica);
+                    $product->setCustomAttribute($attributeEficiencia['code'], $attributeEficiencia['value']);
+                    $this -> productResource -> saveAttribute($product, $attributeEficiencia['code']);
+                }else {
+                    $logger->info(Cat::WARN_CLASSE_ENERGETICA.$this->sku);
+                }
+            }else {
+                $this->imagesHelper->setImages($product, $logger, $imgName, false);
+                $product = $this->productRepositoryInterface->save($product);
+            }
             print_r($product->getSku()." - ");
         } catch (\Exception $exception) {
             $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku.

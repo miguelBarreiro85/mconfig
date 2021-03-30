@@ -1,0 +1,1 @@
+/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-catalog/view/adminhtml/web/js/category/filter-config/field/min-coverage.js

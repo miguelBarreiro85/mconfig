@@ -1,0 +1,1 @@
+/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-catalog-rule/view/adminhtml/web/js/component/catalog/product/form/rule.js
