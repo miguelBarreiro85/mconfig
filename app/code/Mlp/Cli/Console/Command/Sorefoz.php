@@ -166,7 +166,7 @@ class Sorefoz extends Command
         $logger = new \Zend\Log\Logger();
         $logger -> addWriter($writer);
         print_r("Updating Sorefoz products" . "\n");
-        //$this->getCsvFromFTP($logger);
+        $this->getCsvFromFTP($logger);
         $row = 0;
 
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -239,7 +239,7 @@ class Sorefoz extends Command
         
         $this->produtoInterno->status = Status::STATUS_ENABLED;
         $this->produtoInterno->stock = $stock;
-        $this->produtoInterno->price = ceil((float)trim($data[11]));
+        $this->produtoInterno->price = ceil((float)trim($data[12]));
 
         print_r(" - setting stock ");
         $this->produtoInterno->setStock($logger,"sorefoz");
@@ -308,7 +308,7 @@ class Sorefoz extends Command
                 print_r($this->produtoInterno->sku);
                 $product = $this -> productRepository -> get($this->produtoInterno->sku, true, null, true);
                 $this->imagesHelper->getImages($product->getSku(), $this->produtoInterno->image, $this->produtoInterno->imageEnergetica);
-                $this->imagesHelper->setImages($product, $logger, $this->produtoInterno->sku);
+                $this->imagesHelper->setImages($product, $logger, $this->produtoInterno->sku,);
                 print_r("\n");
             } catch (\Exception $exception) {
                 print_r($exception->getMessage());

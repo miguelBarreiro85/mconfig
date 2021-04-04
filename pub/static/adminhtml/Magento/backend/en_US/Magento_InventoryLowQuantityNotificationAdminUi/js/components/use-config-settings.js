@@ -1,1 +1,0 @@
-/var/www/html/vendor/magento/module-inventory-low-quantity-notification-admin-ui/view/adminhtml/web/js/components/use-config-settings.js

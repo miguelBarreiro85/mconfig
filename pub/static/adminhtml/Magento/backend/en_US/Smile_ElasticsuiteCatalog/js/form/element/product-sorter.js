@@ -1,1 +1,0 @@
-/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-catalog/view/adminhtml/web/js/form/element/product-sorter.js

@@ -81,7 +81,11 @@ class imagesHelper
             try {
                 $images = $product->getMediaGalleryImages();
                 if (!$images || $images->getSize() == 0) {
-                    $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['image', 'small_image', 'thumbnail'], false, false);
+                    if ($etiquetaEergetica) {
+                        $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['energy_image'], false, false);    
+                    }else{
+                        $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['image', 'small_image', 'thumbnail'], false, false);
+                    }
                 }
             } catch (\RuntimeException $exception) {
                 print_r("run time exception" . $exception->getMessage() . "\n");

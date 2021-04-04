@@ -1,1 +1,0 @@
-/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-virtual-category/view/adminhtml/web/js/component/catalog/category/form/assigned_products.js

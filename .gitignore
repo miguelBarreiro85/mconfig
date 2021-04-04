@@ -40,3 +40,5 @@ atlassian*
 !/generated/.htaccess
 .DS_Store
 /app/code/Mlp/Cli/Csv/*
+/generated/*
+/pub/static/*

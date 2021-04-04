@@ -37,8 +37,8 @@ class CategoriesConstants {
     const DIFUSOR_AROMAS = "Difusor de Aromas";
     const LE_CREUSET = "Le Creuset";
     const OUTROS_ARTIGOS_MENAGE = "Outros Artigos de Ménage";
-    const MAQ_DE_LOUCA_ENC_60 = "Maq Louça 60 Enc";
-    const MAQ_DE_LOUCA_ENC_45 = "Maq Louça 45 Enc";
+    const MAQ_DE_LOUCA_ENC_60 = "Máq. Louça 60 Enc";
+    const MAQ_DE_LOUCA_ENC_45 = "Máq. Louça 45 Enc";
     const PLACAS_GAS = "Placas a Gás";
     const PLACAS_CRISTAL_GAS = "Placas Cristal Gás";
     const PLACAS_DOMINO = "Placas Dominó";
@@ -95,7 +95,7 @@ class CategoriesConstants {
     const CAMARAS_IP = "Camaras ip";
     const OUTRO_ENC = "Outros Equipamentos Enc";
     const GARRAFEIRAS_ENC = "Garrafeiras Enc";
-    const MAQ_ROUPA_ENC = "Maq Roupa Enc";
+    const MAQ_ROUPA_ENC = "Máq. Roupa Enc";
     const OUTROS_ACESSORIOS = "Outros Acessórios";
     const IMAGEM_E_SOM = "Imagem e Som";
     
@@ -192,17 +192,17 @@ class CategoriesConstants {
     
     
     const GRANDES_DOMESTICOS = 'Grandes Domésticos';
-        //MAQ LOUCA
-            const ACESSORIOS_MLL = 'Acessórios Maq Louça';
+        //Máq. LOUCA
+            const ACESSORIOS_MLL = 'Acessórios Máq. Louça';
         
         //ENC
             const FRIO_ENC = 'Frio Enc';
         
         //FOGOES
         const FOGOES_GAS = 'Fogões a Gás';
-        const MAQ_SECAR_ROUPA_ENC = 'Maq Secar Roupa Enc';
+        const MAQ_SECAR_ROUPA_ENC = 'Máq. Secar Roupa Enc';
         const ACESSORIOS_FRIO = 'Acessórios Frio';
-        const MAQ_ROUPA = 'Maq de Roupa';
+        const MAQ_ROUPA = 'Máq. de Roupa';
         const GARRAFEIRAS = 'Garrafeiras';
     
     //INFORMATICA
@@ -283,8 +283,8 @@ class CategoriesConstants {
     const COMUNICACOES = 'Comunicações';
     const ENCASTRE = 'Encastre';
     const FRIGORIFICOS_COMBINADOS = 'Frigoríficos e Combinados';
-    const MAQ_LAVAR_ROUPA = 'Maq Lavar Roupa';
-    const MAQ_SECAR_ROUPA = 'Maq Secar Roupa';
+    const MAQ_LAVAR_ROUPA = 'Máq. Lavar Roupa';
+    const MAQ_SECAR_ROUPA = 'Máq. Secar Roupa';
     const PEQUENOS_DOMESTICOS = 'Pequenos Domésticos';
     const CUIDADO_DE_ROUPA = 'Cuidado de Roupa';
     const APARELHOS_DE_COZINHA = 'Aparelhos de Cozinha';
@@ -321,11 +321,11 @@ class CategoriesConstants {
     const EXAUSTORES = 'Exaustores';
     const COMBINADOS_ENC = 'Combinados Enc';
     const CONGELADORES_ENC = 'Congeladores Verticais Enc';
-    const MAQ_CAFE_ENC = 'Maq Café Enc';
+    const MAQ_CAFE_ENC = 'Máq. Café Enc';
     const FRIGORIFICOS_ENC = 'Frigoríficos Enc';
-    const MAQ_DE_LOUCA_ENC = 'Maq Louça Enc';
-    const MAQ_LAVAR_ROUPA_ENC = 'Maq Lavar Roupa Enc';
-    const MAQ_LAVAR_SECAR_ROUPA_ENC = 'Maq Lavar e Secar Roupa Enc';
+    const MAQ_DE_LOUCA_ENC = 'Máq. Louça Enc';
+    const MAQ_LAVAR_ROUPA_ENC = 'Máq. Lavar Roupa Enc';
+    const MAQ_LAVAR_SECAR_ROUPA_ENC = 'Máq. Lavar e Secar Roupa Enc';
     const ACESSORIOS_ENC = 'Acessórios Enc';
     const CONGELADORES_HORIZONTAIS = 'Congeladores Horizontais';
     const FRIGORIF_AMERICANOS = 'Frigoríficos Americanos Sbs';
@@ -344,16 +344,16 @@ class CategoriesConstants {
     const VARINHAS_INDUSTRIAIS = 'Varinhas Ind';
     const ARREFECEDORES_VERTICAIS_INDUSTRIAIS = 'Arrefecedores Verticais Ind';
     const CONGELADORES_VERTICAIS_INDUSTRIAIS = 'Congeladores Verticais Ind';
-    const MAQ_DE_LOUCA = 'Maq Lavar Louça';
-    const MLL_DE_45 = 'Maq Louça 45 Cm';
-    const MLL_DE_60 = 'Maq Louça 60 Cm';
-    const MLL_COMPACTAS = 'Maq Louça Compactas';
-    const MAQ_LAVAR_ROUPA_CARGA_FRONTAL = 'Maq Lavar Carga Frontal';
-    const MAQ_LAVAR_ROUPA_CARGA_SUPERIOR = 'Maq Lavar Carga Superior';
-    const MAQ_LAVAR_SECAR_ROUPA = 'Maq Lavar e Secar Roupa';
-    const MAQ_SECAR_ROUPA_COND = 'Maq Secar Condensação';
-    const MAQ_SECAR_ROUPA_BC = 'Maq Secar Bomba Calor';
-    const MAQ_SECAR_ROUPA_VENT = 'Maq Secar Exaustão';
+    const MAQ_DE_LOUCA = 'Máq. Lavar Louça';
+    const MLL_DE_45 = 'Máq. Louça 45 Cm';
+    const MLL_DE_60 = 'Máq. Louça 60 Cm';
+    const MLL_COMPACTAS = 'Máq. Louça Compactas';
+    const MAQ_LAVAR_ROUPA_CARGA_FRONTAL = 'Máq. Lavar Carga Frontal';
+    const MAQ_LAVAR_ROUPA_CARGA_SUPERIOR = 'Máq. Lavar Carga Superior';
+    const MAQ_LAVAR_SECAR_ROUPA = 'Máq. Lavar e Secar Roupa';
+    const MAQ_SECAR_ROUPA_COND = 'Máq. Secar Condensação';
+    const MAQ_SECAR_ROUPA_BC = 'Máq. Secar Bomba Calor';
+    const MAQ_SECAR_ROUPA_VENT = 'Máq. Secar Exaustão';
     const ASSEIO_PESSOAL = 'Asseio Pessoal';
     const APARADORES = 'Aparadores';
     const DEPILADORAS = 'Depiladoras';
@@ -371,7 +371,7 @@ class CategoriesConstants {
     const CACAROLAS = 'Caçarolas';
     const CAIXA_HERMETICA = 'Caixa Hermética';
     const CENTRIFUGADORAS = 'Centrifugadoras';
-    const MAQ_DE_COZINHA = 'Maq de Cozinha';
+    const MAQ_DE_COZINHA = 'Máq. de Cozinha';
     const ABRE_LATAS_FACAS = 'Abre-Latas e Facas';
     const FIAMBREIRAS = 'Fiambreiras';
     const FRIGIDEIRAS = 'Frigideiras';
@@ -389,7 +389,7 @@ class CategoriesConstants {
     const MO_SEM_GRILL = 'Microondas sem Grill';
     const CAFETEIRAS = 'Cafeteiras';
     const JARROS_E_FERV_PURIF_ÁGUA = 'Jarros Fervedores e Purificadores';
-    const MAQ_CAFE = 'Maq Café Expresso';
+    const MAQ_CAFE = 'Máq. Café Expresso';
     const MOINHOS_DE_CAFE = 'Moinhos de Café';
     const SANDWICHEIRAS = 'Sandwicheiras';
     const TERMOS = 'Termos';
@@ -413,7 +413,7 @@ class CategoriesConstants {
     const FRIGOBAR = 'Frigobar';
     const BALANÇAS_DE_COZINHA = 'Balanças de Cozinha';
     const FRIO = 'Frio';
-    const ACESSORIOS_MAQ_ROUPA = 'Acessórios Maq Roupa';
+    const ACESSORIOS_MAQ_ROUPA = 'Acessórios Máq. Roupa';
     const ACESSORIOS_CLIMATIZACAO = 'Acessórios Climatização';
     const PURIFICADORES_AR = 'Purificadores de Ar';
     const LAVA_LOUCAS = 'Lava Louças';
@@ -426,20 +426,20 @@ class CategoriesConstants {
     CONST ACESSORIOS_ASSEIO = 'Acessórios de Asseio Pessoal';
     const CUIDADOS_MASCULINOS = 'Cuidados Masculinos';
     const SAUDE_BELEZA = 'Saúde e Beleza';
-    const MAQ_COSTURA = 'Maq Costura';
+    const MAQ_COSTURA = 'Máq. Costura';
     const ACESSORIOS_CUIDADOS_ROUPA = 'Acessórios Cuidados Roupa';
     const TIRA_BORBOTOS = 'Tira Borbotos';
-    const MAQ_LIMPEZA_VAPOR = 'Maq Limpeza a Vapor';
-    const MAQ_LAVAR_PRESSAO = 'Maq Lavar Alta Pressão';
+    const MAQ_LIMPEZA_VAPOR = 'Máq. Limpeza a Vapor';
+    const MAQ_LAVAR_PRESSAO = 'Máq. Lavar Alta Pressão';
     const ACESSORIOS_APARELHOS_LIMPEZA = 'Acessórios Aparelhos Limpeza';
     const OUTROS_APARELHOS_LIMPEZA = 'Outros Aparelhos Limpeza';
     const ASPIRADORES = 'Aspiradores';
     const ACESSORIOS_MICROONDAS = 'Acessórios Microondas';
-    const MAQ_LAVAR_VIDROS = 'Maq Lavar Vidros';
+    const MAQ_LAVAR_VIDROS = 'Máq. Lavar Vidros';
     const TERMOMETRO_MEDIDORES_TENSAO = "Termómetros e Medidores de Tensão";
     const PEDICURE_MANICURE = "Pedicure e Manicure";
     const MASSAJADORES = "Massajadores";
-    const MAQUINAS_BARBEAR = "Maq Barbear";
+    const MAQUINAS_BARBEAR = "Máq. Barbear";
     const PANELAS_TABULEIROS = "Panelas e Tabuleiros";
     const RADIO_DESPERTADOR = "Rádio Despertador";
     const GRAVADORES = "Gravadores";
@@ -450,6 +450,7 @@ class CategoriesConstants {
     const AQUECEDORES_GAS = "Aquecedores a Gás";
     const AC_BOMBA_CALOR = "Ar Condicionado Bomba Calor";
 
+    const ENERGY_IMAGE_ATTRIBUTE = "energy_image";
     const CATEGORIES_ENERGY_LABEL = [
         self::MAQ_ROUPA,
         self::MAQ_DE_LOUCA,
@@ -457,8 +458,10 @@ class CategoriesConstants {
         self::TELEVISAO,
         self::MONITORES,
         self::FORNOS,
-        self::ASPIRADORES,
-        self::AR_CONDICIONADO
+        self::AR_CONDICIONADO,
+        self::EXAUSTORES,
+        self::MAQ_DE_LOUCA_ENC,
+        self::MAQ_ROUPA_ENC
     ];
     
 }

@@ -1,1 +1,0 @@
-/var/www/html/vendor/smile/elasticsuite/src/module-elasticsuite-core/view/frontend/web/js/form-mini.js

@@ -232,7 +232,8 @@ class Orima extends Command
                 $this->produtoInterno->familia,
                 $this->produtoInterno->subFamilia,
                 $logger,
-                $this->produtoInterno->sku);
+                $this->produtoInterno->sku,
+                $this->produtoInterno->name);
             $this->produtoInterno->gama = $mlpGama;
             $this->produtoInterno->familia = $mlpFamilia;
             $this->produtoInterno->subFamilia = $mlpSubFamilia;

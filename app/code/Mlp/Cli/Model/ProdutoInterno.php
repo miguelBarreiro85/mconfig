@@ -216,7 +216,6 @@ class ProdutoInterno
         } catch (\Exception $exception) {
             $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku.
                 " : code : ".$exception->getCode()." : Message : ".$exception->getMessage());
-            
             //if same url delete old save new
             /*
             print_r($exception->getMessage());
@@ -400,38 +399,38 @@ class ProdutoInterno
                 return(0);
             }
             if ($precoCusto < 20){
-                $preco = $precoCusto * 1.50;
+                $preco = $precoCusto * 1.50 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 50){
-                $preco = $precoCusto * 1.45;
+                $preco = $precoCusto * 1.45 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 100) {
-                $preco = $precoCusto * 1.40;
+                $preco = $precoCusto * 1.40 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 250) {
-                $preco = $precoCusto * 1.35;
+                $preco = $precoCusto * 1.35 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 350) {
-                $preco = $precoCusto * 1.30;
+                $preco = $precoCusto * 1.30 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 400) {
-                $preco = $precoCusto * 1.25;
+                $preco = $precoCusto * 1.25 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 500) {
-                $preco = $precoCusto * 1.20;
+                $preco = $precoCusto * 1.20 * 1.23;
                 return ceil($preco);
             }
             if ($precoCusto < 700) {
-                $preco = $precoCusto * 1.15;
+                $preco = $precoCusto * 1.15 * 1.23;
                 return ceil($preco);
             }else {
-                $preco = $precoCusto * 1.10;
+                $preco = $precoCusto * 1.10 * 1.23;
                 return ceil($preco);
             }
         }catch (\Exception $e){
