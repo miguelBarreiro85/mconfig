@@ -392,7 +392,7 @@ class ProdutoInterno
         }
     }
 
-    public function getPrice($precoCusto,$logger,$sku) {
+    public function getPrice($precoCusto,$logger,$sku) {    
         try{
             if($precoCusto == 0) {
                 $logger->info(Cat::ERROR_PRICE_ZERO.$sku);

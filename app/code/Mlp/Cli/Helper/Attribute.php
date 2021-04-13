@@ -12,6 +12,7 @@ use Magento\Eav\Model\Entity\TypeFactory;
 use Magento\Eav\Model\Entity\Attribute\SetFactory;
 use Magento\Eav\Model\AttributeSetManagement;
 use Magento\Eav\Model\AttributeSetRepository;
+use Magento\Eav\Api\AttributeOptionManagementInterface;
 
 
 class Attribute
@@ -29,12 +30,15 @@ class Attribute
 
     private $attributeSetManagement;
 
+    private $attributeOptionManagement;
+
     public function __construct(\Magento\Framework\Api\AttributeValueFactory $valueFactory,
                                 Data $dataAttributeOptions,
                                 CollectionFactory $attributeSetCollection,
                                 typeFactory $eavTypeFactory,
                                 SetFactory $attributeSetFactory,
-                                AttributeSetManagement $attributeSetManagement)
+                                AttributeSetManagement $attributeSetManagement,
+                                AttributeOptionManagementInterface $attributeOptionManagementInterface)
     {
         $this->valueFactory = $valueFactory;
         $this->dataAttributeOptions = $dataAttributeOptions;
@@ -42,6 +46,22 @@ class Attribute
         $this->eavTypeFactory = $eavTypeFactory;
         $this->attributeSetFactory = $attributeSetFactory;
         $this->attributeSetManagement = $attributeSetManagement;
+        $this->attributeOptionManagement = $attributeOptionManagementInterface;
+    }
+
+    public function deleteAttributeOptions($attributeCode) {
+        $items = $this->attributeOptionManagement->getItems('catalog_product',$attributeCode);
+        foreach ($items as $item) {
+            if (is_numeric($item->getLabel())){
+                $optionId = $this->dataAttributeOptions->getOptionId($attributeCode,$item->getLabel());
+                try {
+                    $this->attributeOptionManagement->delete('catalog_product',$attributeCode, $optionId) ? 
+                        print_r("deleted: ". $item->getLabel()."\n") : print_r("not delete" . $item->getLabel());
+                }catch(\Exception $e) {
+                    print_r($e->getMessage());
+                }
+            }
+        }
     }
 
     public function addSorefozAttributes($description, $familia, $subfamilia)

@@ -184,7 +184,7 @@ class Orima extends Command
             return 0;
         }
         
-        $this->produtoInterno->manufacturer = Manufacturer::getOrimaManufacturer($data[4]);
+        $this->produtoInterno->manufacturer = Manufacturer::getOrimaManufacturer($data[3]);
     
         $this->produtoInterno->price = $this->produtoInterno->getPrice((float)$data[9]*1.23,$logger,$this->produtoInterno->sku);
         if($this->produtoInterno->price == 0){return  0;}

@@ -18,6 +18,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Mlp\Cli\Helper\imagesHelper as imagesHelper;
+use Mlp\Cli\Helper\Attribute;
 use Mlp\Cli\Helper\CategoriesConstants as Cat;
 /**
  * Class Products
@@ -47,6 +48,7 @@ class Products extends Command
     const DISABLE_PRODUCTS = 'disable-products';
     const UNIQUE_PRODUCTS_MANUFACTURER_BY_VENDOR = 'list-unique-manufacturers-by-vendor';
     const ADD_PRODUCTS = 'add-products';
+    const DELETE_PRODUCT_ATTRIBUTE_OPTIONS = 'delete-product-attribute-options';
     /**
      * @var ProductRepositoryInterface
      */
@@ -94,6 +96,7 @@ class Products extends Command
 
     private $sourceItemRepositoryI;
     
+    private $attributeHelper;
 
     private $categoryManager;
     public function __construct(
@@ -111,7 +114,8 @@ class Products extends Command
                                 \Mlp\Cli\Console\Command\Sorefoz $sorefoz,
                                 \Magento\Framework\Filesystem\DirectoryList $directory,
                                 \Mlp\Cli\Helper\Category $categoryManager,
-                                \Mlp\Cli\Helper\LoadCsv $loadCsv)
+                                \Mlp\Cli\Helper\LoadCsv $loadCsv,
+                                Attribute $attributeHelper)
     {
         $this->productRepository = $productRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -128,6 +132,7 @@ class Products extends Command
         $this->loadCsv = $loadCsv;
         $this->categoryManager = $categoryManager;
         $this->sourceItemRepositoryI = $sourceItemRepositoryI;
+        $this->attributeHelper = $attributeHelper;
         parent::__construct();
     }
 
@@ -177,6 +182,12 @@ class Products extends Command
                     '-a',
                     InputOption::VALUE_NONE,
                     'ADD PRODUTCS'
+                ),
+                new InputOption(
+                    self::DELETE_PRODUCT_ATTRIBUTE_OPTIONS,
+                    '-o',
+                    InputOption::VALUE_NONE,
+                    'DELETE PRODUCT ATRIBUTE OPTIONS'
                 )
             ])
             ->addArgument('oldManufacturer', InputArgument::OPTIONAL, 'oldManufacturer')
@@ -238,6 +249,10 @@ class Products extends Command
             //$this->addProducts($logger);
             $this->disableAllProductsSql();
             return true;
+        }
+        $deleteAttributeOptions = $input->getOption(self::DELETE_PRODUCT_ATTRIBUTE_OPTIONS);
+        if($deleteAttributeOptions) {
+            $this->attributeHelper->deleteAttributeOptions('manufacturer');
         }
         else {
             throw new \InvalidArgumentException('Option  ELSE');
