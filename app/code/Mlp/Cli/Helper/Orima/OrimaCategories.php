@@ -598,6 +598,7 @@ class OrimaCategories {
                     case 'FOGOES GAMA INDUSTRIAL':
                     case 'TREMPES':
                         $familia = Cat::FOGOES_INDUSTRIAIS;
+                        $subFamilia = null;
                         return ([$gama, $familia, $subFamilia]);
                     case 'VARINHAS GAMA HOTELEIRA':
                         $familia = Cat::EQUIPAMENTOS_COZINHA_INDUSTRIAIS;
