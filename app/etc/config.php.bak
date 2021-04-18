@@ -327,7 +327,7 @@ return [
         'Mageplaza_Smtp' => 1,
         'Mlp_CategoryFilter' => 1,
         'Mlp_Cli' => 1,
-        'Mlp_StockManagement' => 1,
+        'Mlp_StockManagement' => 0,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
         'Smile_ElasticsuiteAdminNotification' => 1,

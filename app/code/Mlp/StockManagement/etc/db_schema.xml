@@ -13,7 +13,7 @@
         <column xsi:type="decimal" name="quantity" scale="4" precision="10" unsigned="false" nullable="false"
                 default="0"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
--            <column name="mlp_stock_id"/>
--        </constraint>
+            <column name="mlp_stock_id"/>
+        </constraint>
     </table>
 </schema>

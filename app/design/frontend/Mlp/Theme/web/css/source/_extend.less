@@ -1,0 +1,55 @@
+@media-common: true;
+
+
+
+
+& when (@media-common = true) {
+    // your code
+    .mlp_title {
+        font-weight: bold !important;
+        font-size: large !important;
+    }
+    .footer-title{
+        font-weight: bold;
+    }
+
+    .block.newsletter {
+        .title {
+            display: block;
+        }
+        .content {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    // your code
+    .page-footer{
+
+        .footer_contacts{
+
+            .footer-title-border{
+                border-top: 1px solid #cecece;
+                margin: 10px -15px 10p -15px;
+            }   
+            .mlp_title{
+                margin-top: 10px;
+            }
+            .mlp_contact_link {
+                padding: 0px !important;
+            }
+            .links {
+                margin: 0px;
+            }
+        }
+    } 
+    .footer-title{
+        border-top: 1px solid #cecece;
+        margin-top: 1px;
+        padding-bottom: 12px;
+        padding-top: 12px;
+        
+    }
+}
