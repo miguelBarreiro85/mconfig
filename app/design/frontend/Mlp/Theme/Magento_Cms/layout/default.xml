@@ -18,7 +18,7 @@
             <container name="mlp_horario_container" htmlTag="div" htmlClass="horario" after="-">
                 <block class="Magento\Framework\View\Element\Text" name="footer.horario" >
                     <arguments>
-                        <argument name="text" xsi:type="string">Estamos abertos de Segunda a Sábado das 09:30 às 13:00 e das 14:30 às 19:00</argument>
+                        <argument name="text" xsi:type="string">De Segunda a Sábado das 09:30 às 13:00 e das 14:30 às 19:00</argument>
                     </arguments>
                 </block>
             </container>
