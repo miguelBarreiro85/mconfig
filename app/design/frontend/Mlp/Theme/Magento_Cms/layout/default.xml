@@ -13,7 +13,7 @@
         
         <referenceContainer name="footer">
             <container name="contacts_footer_container" label="Contact Footer Container" htmlTag="div" htmlClass="mlp_contact_links" before="-"/>
-            <container name="services_footer_links_container" label="Services Footer Links" htmlTag="div" htmlClass="mlp_service_links" after="contacts_footer_container"/>
+          
             <container name="links_uteis_container" label="Links Uteis Footer" htmlTag="div" htmlClass="mlp_links" after="services_footer_links_container"/>
             <container name="mlp_horario_container" htmlTag="div" htmlClass="horario" after="-">
                 <block class="Magento\Framework\View\Element\Text" name="footer.horario" >
@@ -30,30 +30,7 @@
 
         
             
-        <referenceContainer name="services_footer_links_container">
-            <container name="footer_services_title_container" htmlTag="div" htmlClass="footer-title" >
-                <block class="Magento\Framework\View\Element\Text" name="footer.contact.title" >
-                    <arguments>
-                        <argument name="text" xsi:type="string">Serviços</argument>
-                    </arguments>
-                </block>
-            </container>
-            <block class="Magento\Framework\View\Element\Html\Links" name="footer_links_services" >
-                <arguments>
-                    <argument name="css_class" xsi:type="string">footer links</argument>
-                </arguments>
-            </block>
-        </referenceContainer>
-
-        <referenceContainer name="footer_links_services">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="instalacao-ar-concicionado">
-                <arguments>
-                    <argument name="label" xsi:type="string">Instalação de Ar Condicionado</argument>
-                    <argument name="path" xsi:type="string">instalação-ar-condicionado</argument>
-                </arguments>
-                
-            </block>
-        </referenceContainer>
+        
 
         <referenceContainer name="links_uteis_container">
             <container name="footer_links_title_container" htmlTag="div" htmlClass="footer-title" before="-">
@@ -71,35 +48,16 @@
         </referenceContainer>
 
         <referenceBlock name="footer_links_cms">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" ifconfig="contact/contact/enabled" name="contact-us-link">
-                <arguments>
-                    <argument name="label" xsi:type="string" translate="true">Contact Us</argument>
-                    <argument name="path" xsi:type="string">contact</argument>
-                </arguments>
-            </block>
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="rss-link" ifconfig="rss/config/active">
-                <arguments>
-                    <argument name="label" xsi:type="string" translate="true">RSS</argument>
-                    <argument name="path" xsi:type="string">rss</argument>
-                </arguments>
-            </block>
-            <block class="Magento\Sales\Block\Guest\Link" name="sales-guest-form-link">
-                <arguments>
-                    <argument name="label" xsi:type="string" translate="true">Orders and Returns</argument>
-                    <argument name="path" xsi:type="string">sales/guest/form</argument>
-                </arguments>
-            </block>
-
             <block class="Magento\Framework\View\Element\Html\Link\Current" name="privacy-policy-link">
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">Privacy and Cookie Policy</argument>
                     <argument name="path" xsi:type="string">privacy-policy-cookie-restriction-mode</argument>
                 </arguments>
             </block>
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="privacy-policy-link">
+                        <block class="Magento\Framework\View\Element\Html\Link\Current" name="entregas-servicos">
                 <arguments>
-                    <argument name="label" xsi:type="string" translate="true">Privacy and Cookie Policy</argument>
-                    <argument name="path" xsi:type="string">privacy-policy-cookie-restriction-mode</argument>
+                    <argument name="label" xsi:type="string" translate="true">Entregas e instalações</argument>
+                    <argument name="path" xsi:type="string">entrega-e-servicos</argument>
                 </arguments>
             </block>
             <block class="Magento\Framework\View\Element\Html\Link\Current" name="termos-e-condicoes">
@@ -113,12 +71,6 @@
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">Sobre nós</argument>
                     <argument name="path" xsi:type="string">sobre-nos</argument>
-                </arguments>
-            </block>
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="entregas-servicos">
-                <arguments>
-                    <argument name="label" xsi:type="string" translate="true">Entregas e serviços</argument>
-                    <argument name="path" xsi:type="string">entrega-e-servicos</argument>
                 </arguments>
             </block>
             <block class="Magento\Framework\View\Element\Html\Link\Current" name="custom-footer-link">
