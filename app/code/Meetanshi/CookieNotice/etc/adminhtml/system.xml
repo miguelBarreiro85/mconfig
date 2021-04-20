@@ -1,7 +1,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <system>
         <tab id="meetanshi" translate="label" sortOrder="50">
-            <label><![CDATA[COOKIES DEFI    NIÇÕES]]></label>
+            <label><![CDATA[COOKIES DEFINIÇÕES]]></label>
         </tab>
         <section id="cookienotice" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Cookie Notice</label>
