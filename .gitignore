@@ -42,3 +42,4 @@ atlassian*
 /app/code/Mlp/Cli/Csv/*
 /generated/*
 /pub/static/*
+/app/etc/config.php
