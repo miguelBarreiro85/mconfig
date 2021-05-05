@@ -34,6 +34,7 @@ class Auferma extends Command
     const ADD_PRODUCTS_XLSX = 'add-products-xlsx';
     const UPDATE_STOCKS_XLSX = 'update-stocks-xlsx';
     const GET_PRODUCT_IMAGES = 'get-product-images';
+    const UPDATE_CATEGORIES = 'update-categories';
 
     const AUFERMA_INTERNO_XLSX = '/app/code/Mlp/Cli/Csv/Auferma/aufermaInterno.xlsx';
     const AUFERMA_STOCK_XLSX = '/app/code/Mlp/Cli/Csv/Auferma/aufermaStock.xlsx';
@@ -99,6 +100,12 @@ class Auferma extends Command
                     '-I',
                     InputOption::VALUE_NONE,
                     'GET PRODUCT IMAGES' 
+                ),
+                new InputOption(
+                    self::UPDATE_CATEGORIES,
+                    '-c',
+                    InputOption::VALUE_NONE,
+                    'UPDATE PRODUCT CATEGORIES' 
                 )
             ])->addArgument('categories', InputArgument::OPTIONAL, 'Categories?');;
         parent::configure();
@@ -135,8 +142,41 @@ class Auferma extends Command
             print_r("finished");
             exit;
         }
+        $updateCategories = $input->getOption(self::UPDATE_CATEGORIES);
+        if ($updateCategories) {
+            $this->updateProductCategories();
+            print_r("finished");
+            exit;
+        }
         else {
             throw new \InvalidArgumentException('Option is missing.');
+        }
+    }
+
+    protected function updateProductCategories(){
+        //Se precisarmos de alterar as categorias basta mudar o fichero sorefozCategories.php e executar este comando
+        $writer = new \Zend\Log\Writer\Stream($this -> directory -> getRoot() . '/var/log/Auferma.log');
+        $logger = new \Zend\Log\Logger();
+        $logger -> addWriter($writer);
+        print_r("Updating Auferma Categories" . "\n");
+        $row = 0;
+        foreach ($this -> loadCsv -> loadCsv('/Auferma/aufermaInterno.csv', ",") as $data) {
+            $sku = trim($data[0]);
+            $name = trim($data[1]);
+            print_r($row++." - ".$sku." - \n");
+            try {
+                [$gama,$familia,$subFamilia] =  aufermaCategories::getCategories(
+                    $data[8],$data[9],$data[10],
+                    $logger,$sku,$this->produtoInterno->name);     
+                $product = $this->productRepository->get($sku, true, null, true);
+                $this->produtoInterno->setCategories($product, $logger, $gama,$familia,$subFamilia);
+            }catch (NoSuchEntityException $e){
+                print_r("Produto ainda não existe\n");
+            }catch (Exception $e) {
+                print_r("ERRO: ".$e->getMessage()."\n");
+                $logger->info(Cat::ERROR_GET_CATEGORIAS.$this->produtoInterno->sku);
+            }
+                
         }
     }
 

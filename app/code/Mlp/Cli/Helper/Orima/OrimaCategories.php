@@ -197,7 +197,7 @@ class OrimaCategories {
                     case 'PLACAS INDUÇAO 70CM':
                     case 'PLACAS INDUÇAO 80CM':
                         $familia = Cat::PLACAS;
-                        $$subFamilia = Cat::PLACAS_INDUCAO;
+                        $subFamilia = Cat::PLACAS_INDUCAO;
                         return ([$gama, $familia, $subFamilia]);
                     case 'TAMPOS':
                         $familia = Cat::ACESSORIOS_ENC;

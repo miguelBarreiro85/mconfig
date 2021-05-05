@@ -55,7 +55,66 @@ class SorefozCategories {
                         return [$gama,$familia,null];
                     case 'TELEMÓVEIS / CARTÕES':
                         $familia = Cat::TELEMOVEIS;
-                        return [$gama,$familia,null];
+                        switch ($subFamilia) {
+                            case 'TELEMÓVEIS':
+                                $familia = Cat::TELEMOVEIS;
+                                return [$gama,$familia,null];
+                            case 'CARTÕES VODAFONE':
+                                $familia = Cat::CARTOES_SIM;
+                                return [$gama,$familia,null];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                return [$gama, $familia, null];
+                        }
+                    case 'SMARTPHONES':
+                        switch ($subFamilia) {
+                            case 'SMARTPHONES IPHONE':
+                                $familia = Cat::SMARTPHONES_IPHONE;
+                                return [$gama,$familia,null];
+                            case 'SMARTPHONES ANDROID':
+                                $familia = Cat::SMARTPHONES_ANDROID;
+                                return [$gama,$familia,null];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                return [$gama, $familia, null];
+                        }     
+                    case 'ACESSÓRIOS TELECOMUNICAÇÕES':
+                        $familia = Cat::ACESSORIOS_COMUNICACOES;
+                        switch ($subFamilia) {
+                            case 'POWERBANKS':
+                                $subFamilia = Cat::POWERBANKS;
+                                return [$gama,$familia, $subFamilia];
+                            case 'OUTROS ACESSÓRIOS':
+                                $subFamilia = Cat::OUTROS_ACESSORIOS_COMUNICACOES;
+                                return [$gama,$familia, $subFamilia];    
+                            case 'AUSCULTADORES E AURICULARES':
+                                $gama = Cat::IMAGEM_E_SOM;
+                                $familia = Cat::AUDIO_PORTATIL;
+                                $subFamilia = Cat::AUSCULTADORES;
+                                return [$gama,$familia, $subFamilia];
+                            case 'MINI COLUNAS PORTÁTEIS':
+                                $gama = Cat::IMAGEM_E_SOM;
+                                $familia = Cat::AUDIO_PORTATIL;
+                                $subFamilia = Cat::MINI_COLUNAS_PORTATEIS;
+                                return [$gama,$familia, $subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                return [$gama, $familia, null];
+                        }
+                    case 'WEARABLES':
+                        $familia = Cat::WEARABLES;
+                        switch ($subFamilia) {
+                            case 'PULSEIRAS FITNESS':
+                                $subFamilia = Cat::PULSEIRAS_FITNESS;
+                                return [$gama,$familia, $subFamilia];
+                                break;
+                            case 'SMARTWATCHES':
+                                $subFamilia = Cat::SMARTWATCHES;
+                                return [$gama,$familia, $subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                return [$gama, $familia, null];
+                        }
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return [$gama,null,null];
@@ -378,6 +437,7 @@ class SorefozCategories {
                                 $subFamilia = Cat::RADIO_CDS;
                                 return [$gama,$familia,$subFamilia];
                             case 'RADIO RELOGIO':
+                                $familia = Cat::HOME_AUDIO;
                                 $subFamilia = Cat::RADIO_DESPERTADOR;
                                 return [$gama,$familia,$subFamilia];
                             case 'RADIOS GRAVADORES':
@@ -443,21 +503,23 @@ class SorefozCategories {
                                 return [$gama,$familia,null];
                             }
                     case 'EQUIPAMENTOS AUDIO':
-                        $familia = Cat::EQUIPAMENTOS_AUDIO;
+                        $familia = Cat::HOME_AUDIO;
                         switch ($subFamilia) {
                             case 'OUTRO HI-FI':
-                                if (preg_match('/AURIC/', $name) == 1
-                                    || preg_match('/^AUSCULT/', $name) == 1) {
+                                if (preg_match('/AURIC/', $name) == 1) {
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::AURICULARES;
+                                    return [$gama,$familia,$subFamilia];        
+                                } 
+                                if (preg_match('/AUSCULT/', $name) == 1){
                                     $familia = Cat::AUDIO_PORTATIL;
                                     $subFamilia = Cat::AUSCULTADORES;
                                     return [$gama,$familia,$subFamilia];        
                                 } else if(preg_match('/^COLUNA/', $name) == 1
                                     ||preg_match('/^SIST.AUDIO/', $name) == 1){
-                                    $familia = Cat::EQUIPAMENTOS_AUDIO;
                                     $subFamilia = Cat::SOUND_BARS;
                                     return [$gama,$familia,$subFamilia];
                                 } else if(preg_match('/^SOUND BAR/', $name) == 1) {
-                                    $familia = Cat::EQUIPAMENTOS_AUDIO;
                                     $subFamilia = Cat::SOUND_BARS;
                                     return [$gama,$familia,$subFamilia];
                                 }
@@ -467,7 +529,7 @@ class SorefozCategories {
                             }
                     case 'SIST.HOME CINEMA':
                         $gama = Cat::IMAGEM_E_SOM;
-                        $familia = Cat::EQUIPAMENTOS_AUDIO;
+                        $familia = Cat::HOME_AUDIO;
                         $subFamilia = Cat::SIST_HOME_CINEMA;
                         return [$gama,$familia,$subFamilia];
                     case 'ACESSÓRIOS IMAGEM E SOM':
@@ -519,25 +581,7 @@ class SorefozCategories {
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return [$gama,$familia,null];
                         }
-                    case 'ACESSÓRIOS':
-                        switch ($subFamilia) {
-                            case 'ACESSÓRIOS DE SOM':
-                                if (preg_match('/^COLUNA/', $name) == 1) {
-                                    $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::AUDIO_PORTATIL;
-                                    $subFamilia = Cat::COLUNAS;
-                                    return [$gama,$familia,$subFamilia];
-                                }
-                                if (preg_match('/^AUSC/', $name) == 1) {
-                                    $gama = Cat::IMAGEM_E_SOM;
-                                    $familia = Cat::AUDIO_PORTATIL;
-                                    $subFamilia = Cat::COLUNAS;
-                                    return [$gama,$familia,$subFamilia];
-                                }
-                            default:
-                                $familia = Cat::ACESSORIOS_INFORMATICA;
-                                return [$gama,$familia,null];
-                        }
+                    
                         
                     case "COMPUTADORES E TABLET'S":
                         $familia = Cat::COMPUTADORES_E_TABLETS;
@@ -549,7 +593,11 @@ class SorefozCategories {
                                 $subFamilia = Cat::TABLETS;
                                 return [$gama,$familia,$subFamilia];
                             case 'PORTÁTEIS':
+                            case 'PORTÁTEIS GAMING':
                                 $subFamilia = Cat::PORTATEIS_NOTEBOOKS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'CALCULADORAS':
+                                $subFamilia = Cat::CALCULADORAS;
                                 return [$gama,$familia,$subFamilia];
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
@@ -589,6 +637,79 @@ class SorefozCategories {
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return [$gama,$familia,null];
                         }
+                    case 'ACESSÓRIOS INFORMÁTICA':
+                        $familia = Cat::ACESSORIOS_INFORMATICA;
+                        switch ($subFamilia) {
+                            case 'ACESSÓRIOS DE SOM':
+                                if (preg_match('/^COLUNA/', $name) == 1) {
+                                    $gama = Cat::IMAGEM_E_SOM;
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::COLUNAS;
+                                    return [$gama,$familia,$subFamilia];
+                                }
+                                if (preg_match('/^AUSC/', $name) == 1) {
+                                    $gama = Cat::IMAGEM_E_SOM;
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::AUSCULTADORES;
+                                    return [$gama,$familia,$subFamilia];
+                                }
+                                if (preg_match('/^AURIC/', $name) == 1){
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::AURICULARES;
+                                    return [$gama,$familia,$subFamilia];
+                                }
+                                if (preg_match('/DESPERTADOR/', $name) == 1){
+                                    $familia = Cat::HOME_AUDIO;
+                                    $subFamilia = Cat::RADIO_DESPERTADOR;
+                                    return [$gama,$familia,$subFamilia];
+                                }
+                                    //Tem de ser primeiro que o rádio senão devolve os despertadores como radios portateis
+                                if (preg_match('/RADIO/', $name) == 1){
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    $subFamilia = Cat::RADIOS_PORTATEIS;
+                                    return [$gama,$familia,$subFamilia];
+                                }
+                                if (preg_match('/SOUND BAR/', $name) == 1){
+                                    $familia = Cat::HOME_AUDIO;
+                                    $subFamilia = Cat::SOUND_BARS;
+                                    return [$gama,$familia,$subFamilia];
+                                }if (preg_match('/MP3/', $name) == 1 || 
+                                    preg_match('/MP4/', $name) == 1){
+                                    $subFamilia = Cat::LEITOR_MP3_MP4;
+                                    $familia = Cat::AUDIO_PORTATIL;
+                                    return [$gama,$familia,$subFamilia];
+                                }else {
+                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                    return [$gama,$familia,null];
+                                }
+                            case 'REDES / CABOS':
+                                $subFamilia = Cat::CARTOES_MEMORIA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'OUTROS ACESSÓRIOS':
+                                $subFamilia = Cat::OUTROS_ACESSORIOS_INFORMATICA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ACESSÓRIOS DE SOM':
+                                $subFamilia = Cat::ACESSORIOS_SOM_INFORMATICA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ACESSÓRIOS DE VIDEO':
+                                $subFamilia = Cat::ACESSORIOS_VIDEO_INFORMATICA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'RATOS':
+                                $subFamilia = Cat::RATOS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'TECLADOS':
+                                $subFamilia = Cat::TECLADOS;
+                                return [$gama,$familia,$subFamilia];
+                            case 'ACESSÓRIOS P/GPS':
+                                $subFamilia = Cat::ACESSORIOS_GPS;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
+                                return [$gama,$familia,null];
+                        }
+                    case 'CONSUMÍVEIS':
+                        $familia = Cat::CONSUMIVEIS_INF;
+                        return [$gama,$familia,null];
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return [$gama,null,null];

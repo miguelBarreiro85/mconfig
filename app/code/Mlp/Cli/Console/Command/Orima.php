@@ -25,8 +25,7 @@ class Orima extends Command
      * Filter Prodcuts
      */
     const ADD_PRODUCTS = 'add-products';
-    const FILTER_PRODUCTS = 'filter-products';
-
+    const UPDATE_CATEGORIES = 'update-categories';
 
     private $directory;
     private $categoryManager;
@@ -70,10 +69,10 @@ class Orima extends Command
                     'Add new Products'
                 ),
                 new InputOption(
-                    self::FILTER_PRODUCTS,
-                    '-f',
+                    self::UPDATE_CATEGORIES,
+                    '-c',
                     InputOption::VALUE_NONE,
-                    'Filter Products'
+                    'Update Categories'
                 )
             ])->addArgument('categories', InputArgument::OPTIONAL, 'Categories?');
         parent::configure();
@@ -89,32 +88,51 @@ class Orima extends Command
         $logger->addWriter($writer);
 
         $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_GLOBAL);
-        $categories = $input->getArgument('categories');
-        $filterProducts = $input->getOption(self::FILTER_PRODUCTS);
-        if ($filterProducts) {
-            $this->filterProducts();
-        }
         $addProducts = $input->getOption(self::ADD_PRODUCTS);
         if ($addProducts) {
-            $this->updateProducts($logger, $categories);
+            $this->updateProducts($logger);
         }
-        $filterProducts = $input->getOption(self::FILTER_PRODUCTS);
-        if ($filterProducts) {
-            $this->filterProducts();
+        $updateCategories = $input->getOption(self::UPDATE_CATEGORIES);
+        if ($updateCategories) {
+            $this->updateProductCategories($logger);
         }
         else {
             throw new \InvalidArgumentException('Option ' . self::FILTER_PRODUCTS . ' is missing.');
         }
     }
 
-    private function filterProducts()
-    {
-        print_r(phpinfo());
+    protected function updateProductCategories($logger){
+        //Se precisarmos de alterar as categorias basta mudar o fichero orimaCategories.php e executar este comando
+        print_r("Updating Sorefoz Categories" . "\n");
+        //$this->getCsvFromFTP($logger);
+        $row = 0;
+        foreach ($this -> loadCsv -> loadCsv('/Sorefoz/tot_jlcb_utf.csv', ";") as $data) {
+            $sku = trim($data[18]);
+            $name = trim($data[1]);
+            print_r($row++." - ".$sku." - \n");
+            //É para entrar??
+            if ($this->notValidProduct($data)){
+                print_r("not valid\n");
+                continue;
+            } 
+            if (in_array(strlen($sku),[11,12,13])) {
+                try {
+                    [$gama,$familia,$subFamilia] =  ExpertCategories::setExpertCategories([trim($data[5]),trim($data[7]),trim($data[9])],
+                                        $logger,$sku,$data[15],$name);        
+                    
+                    $product = $this->productRepository->get($sku, true, null, true);
+                    $this->produtoInterno->setCategories($product, $logger, $gama,$familia,$subFamilia);
+                }catch (Exception $e) {
+                    print_r("ERRO: ".$e->getMessage()."\n");
+                    $logger->info(Cat::ERROR_UPDATE_CATEGORIAS.$this->produtoInterno->sku);
+                }
+                
+            }
+        }
     }
 
-    protected function updateProducts($logger, $categoriesFilter = null){    
+    protected function updateProducts($logger){    
         print_r("Updating Orima products" . "\n");
-        
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
         $priceAttributeId = $this->sqlHelper->sqlGetAttributeId('price');

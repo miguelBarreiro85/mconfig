@@ -24,6 +24,8 @@ use \Mlp\Cli\Helper\Data as DataAttributeOptions;
 use \Mlp\Cli\Helper\Attribute as Attribute;
 use Mlp\Cli\Helper\Expert\ExpertCategories;
 use \Mlp\Cli\Helper\ProductOptions as ProductOptions;
+use \Magento\Catalog\Api\CategoryLinkManagementInterface;
+use Magento\Catalog\Model\CategoryLinkManagement;
 
 class ProdutoInterno
 {
@@ -66,6 +68,7 @@ class ProdutoInterno
     private $productResource;
     private $productOptions;
     private $registry;
+    private $categoryLinkManagement;
 
     public function __construct(\Magento\Framework\Registry $registry,
                                 ProductFactory $productFactory,
@@ -84,7 +87,8 @@ class ProdutoInterno
                                  \Magento\InventoryApi\Api\SourceItemsSaveInterface $sourceItemSaveI,
                                  \Magento\Framework\Api\FilterBuilder  $filterBuilder,
                                 \Mlp\Cli\Helper\imagesHelper $imagesHelper,
-                                \Mlp\Cli\Helper\ProductOptions $productOptions)
+                                \Mlp\Cli\Helper\ProductOptions $productOptions,
+                                CategoryLinkManagement $categoryLinkManagement)
     {
 
         $this->directory = $directory;
@@ -105,6 +109,7 @@ class ProdutoInterno
         $this->productResource = $productResource;
         $this->productOptions = $productOptions;
         $this->registry = $registry;
+        $this->categoryLinkManagement = $categoryLinkManagement;
     }
 
     public function setData($sku, $name, $gama, $familia, $subfamilia,
@@ -183,11 +188,8 @@ class ProdutoInterno
         $product->setTypeId('simple'); // type of product (simple/virtual/downloadable/configurable)
         $product->setCreatedAt(date("Y/m/d"));
         $product->setCustomAttribute('news_from_date', date("Y/m/d"));
-
-        $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
         $this->imagesHelper->getImages($imgName,$this->image,$this->imageEnergetica);
-        
-
+    
         $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
         //Preço
         $product->setPrice($this->price);
@@ -197,10 +199,13 @@ class ProdutoInterno
             print_r("saving product.. - ");
             //adicionar o atributo eficiencia_energetica
             if (in_array($this->subFamilia, Cat::CATEGORIES_ENERGY_LABEL) || in_array($this->familia, Cat::CATEGORIES_ENERGY_LABEL)) {
+                //Esta função guarda a imagem e define que pertence ao atributo energy_image ou às imagens normais
                 $this->imagesHelper->setImages($product, $logger, $imgName . "_e", true);
                 //Temos de por esta no fim para aparecer primeiro.. por enquanto todo
                 $this->imagesHelper->setImages($product, $logger, $imgName, false);
                 $product = $this->productRepositoryInterface->save($product);
+                //Só podemos adicionar as categorias depois de guardar o produto
+                $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
                 if ($this->classeEnergetica){
                     $attributeEficiencia = $this->attributeManager->getEficiencia($this->classeEnergetica);
                     $product->setCustomAttribute($attributeEficiencia['code'], $attributeEficiencia['value']);
@@ -216,15 +221,6 @@ class ProdutoInterno
         } catch (\Exception $exception) {
             $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku.
                 " : code : ".$exception->getCode()." : Message : ".$exception->getMessage());
-            //if same url delete old save new
-            /*
-            print_r($exception->getMessage());
-            if($exception->getCode() == 0) {
-                //deletecProduct() Não usar...
-            }else {
-                $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku);
-            }
-            */
         } 
         //Adicionar opções de garantia e instalação
         /*
@@ -244,8 +240,6 @@ class ProdutoInterno
         */
 
     }
-
-
     private function deleteProduct($logger){
         $searchCriteria = $this->searchCriteriaBuilder->addFilter(ProductInterface::NAME,$this->name,'like')->create();
                 $products = $this->productRepositoryInterface->getList($searchCriteria)->getItems();
@@ -271,41 +265,26 @@ class ProdutoInterno
                     return null;
                 }
     }
-    private function setCategories(\Magento\Catalog\Model\Product $product, $logger, $pGama, $pFamilia, $pSubFamilia)
+    public function setCategories(\Magento\Catalog\Model\Product $product, $logger, $pGama, $pFamilia, $pSubFamilia)
     {
-        
-        $categories = $this->categoryManager->getCategoriesArray();
-        try {
-            if (isset($pSubFamilia)){
-                $product->setCategoryIds([$categories[$pGama],
-                    $categories[$pFamilia], $categories[$pSubFamilia]]);
-            }else {
-                $product->setCategoryIds([$categories[$pGama],
-                    $categories[$pFamilia]]);
-            }
-
-        } catch (\Exception $ex) { 
-            
-            //Adicionar nova categoria
-            try{
-                $this->categoryManager->createCategory($pGama, $pFamilia, $pSubFamilia, $categories);
-            }catch (\Exception $ex){
-                print_r(" - Erro ao adicionar nova categtoria ". $ex->getMessage());
-            }
-            try{
-                $categories = $this->categoryManager->getCategoriesArray();
-                if (isset($pSubFamilia)){
-                    $product->setCategoryIds([$categories[$pGama],
-                        $categories[$pFamilia], $categories[$pSubFamilia]]);
-                }else {
-                    $product->setCategoryIds([$categories[$pGama],
-                        $categories[$pFamilia]]);
+        $categories = array_filter([$pGama, $pFamilia, $pSubFamilia]);
+        $categoriesList = $this->categoryManager->getCategoriesArray();
+        foreach($categories as $cat) {
+            if (!array_key_exists($cat, $categoriesList)){
+                try{
+                    $this->categoryManager->createCategory($pGama, $pFamilia, $pSubFamilia, $categoriesList);
+                    $categoriesList = $this->categoryManager->getCategoriesArray();
+                    //Se criar as categorias pode sair do ciclo
+                    break;
+                }catch (\Exception $ex){
+                    print_r(" - Erro ao adicionar nova categoria ". $ex->getMessage());
                 }
-            }catch(\Exception $e){
-                print_r(" - Erro ao atribuir categoria: ".$e->getMessage());
-                $logger->info(Cat::VERIFICAR_CATEGORIAS.$product->getSku().$e->getMessage());
             }
-
+        }
+        $catIds = array_map(fn($cat) => $categoriesList[$cat], $categories); //Array com os Ids
+        if (!$this->categoryLinkManagement->assignProductToCategories($product->getSku(), $catIds)){
+            print_r(" - Erro ao atribuir categoria: ".$product->getSku());
+            $logger->info(Cat::VERIFICAR_CATEGORIAS.$product->getSku());
         }
     }
 

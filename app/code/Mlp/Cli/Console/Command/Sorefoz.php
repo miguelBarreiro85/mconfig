@@ -13,6 +13,7 @@ use Mlp\Cli\Helper\Manufacturer as Manufacturer;
 use Mlp\Cli\Helper\splitFile;
 use Mlp\Cli\Helper\imagesHelper;
 use Mlp\Cli\Helper\LoadCsv;
+use Mlp\Cli\Helper\Category;
 use SqlHelper as GlobalSqlHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -30,7 +31,7 @@ class Sorefoz extends Command
     /**
      * Filter Prodcuts
      */
-    const ADD_PRODUCTS = 'add-products';
+    const UPDATE_CATEGORIES = 'updata-categories';
     const UPDATE_STOCKS = 'update-stocks';
     const ADD_IMAGES = 'add-images';
 
@@ -44,6 +45,7 @@ class Sorefoz extends Command
     private $imagesHelper;
     private $sorefozCategories;
     private $sqlHelper;
+    private $categoryHelper;
 
     public function __construct(
                                 
@@ -54,7 +56,8 @@ class Sorefoz extends Command
                                 \Magento\Catalog\Api\ProductRepositoryInterface $productRepositoryInterface,
                                 LoadCsv $loadCsv,
                                 imagesHelper $imagesHelper,
-                                \Mlp\Cli\Helper\Sorefoz\SorefozCategories $sorefozCategories)
+                                \Mlp\Cli\Helper\Sorefoz\SorefozCategories $sorefozCategories,
+                                \Mlp\Cli\Helper\Category $categoryHelper)
     {
 
         $this -> directory = $directory;
@@ -65,6 +68,8 @@ class Sorefoz extends Command
         $this->loadCsv = $loadCsv;
         $this->imagesHelper = $imagesHelper;
         $this->sorefozCategories = $sorefozCategories;
+        $this->categoryHelper = $categoryHelper;
+
         parent ::__construct();
     }
 
@@ -74,8 +79,8 @@ class Sorefoz extends Command
             -> setDescription('Manage Sorefoz Products')
             -> setDefinition([
                 new InputOption(
-                    self::ADD_PRODUCTS,
-                    '-a',
+                    self::UPDATE_CATEGORIES,
+                    '-c',
                     InputOption::VALUE_NONE,
                     'Add new Products'
                 ),
@@ -102,9 +107,9 @@ class Sorefoz extends Command
     {
         $this -> state -> setAreaCode(\Magento\Framework\App\Area::AREA_GLOBAL);
         $categories = $input->getArgument('categories');
-        $addProducts = $input -> getOption(self::ADD_PRODUCTS);
+        $addProducts = $input -> getOption(self::UPDATE_CATEGORIES);
         if ($addProducts) {
-            $this->addSorefozProducts($categories);
+            $this->updateProductCategories($categories);
         }
         $updateStocks = $input -> getOption(self::UPDATE_STOCKS);
         if ($updateStocks) {
@@ -120,45 +125,42 @@ class Sorefoz extends Command
     }
 
 
-    protected function addSorefozProducts($categoriesFilter = null)
-    {
-
-        $writer = new \Zend\Log\Writer\Stream($this->directory->getRoot().'/var/log/Sorefoz.log');
+    protected function updateProductCategories(){
+        //Se precisarmos de alterar as categorias basta mudar o fichero sorefozCategories.php e executar este comando
+        $writer = new \Zend\Log\Writer\Stream($this -> directory -> getRoot() . '/var/log/Sorefoz.log');
         $logger = new \Zend\Log\Logger();
-        $logger->addWriter($writer);
-
+        $logger -> addWriter($writer);
+        print_r("Updating Sorefoz Categories" . "\n");
         $this->getCsvFromFTP($logger);
         $row = 0;
-        foreach ($this->loadCsv->loadCsv('/Sorefoz/tot_jlcb_utf.csv',";") as $data) {
-            $row++;
-            print_r($row." - ");
-            if (!$this->setSorefozData($data,$logger)){
-                print_r("\n");
+        foreach ($this -> loadCsv -> loadCsv('/Sorefoz/tot_jlcb_utf.csv', ";") as $data) {
+            $sku = trim($data[18]);
+            $name = trim($data[1]);
+            print_r($row++." - ".$sku." - \n");
+            //É para entrar??
+            if ($this->notValidProduct($data)){
+                print_r("not valid\n");
                 continue;
-            }
-            
-            if (!is_null($categoriesFilter)){
-                if (strcmp($categoriesFilter,$this->produtoInterno->familia) != 0){
-                    print_r("\n");
-                    continue;
-                }
-            }
-            try {
-                $product = $this -> productRepository -> get($this->produtoInterno->sku, true, null, true);
-            } catch (NoSuchEntityException $exception) {
-                $product = $this->produtoInterno -> add_product($logger, $this->produtoInterno->sku);
-                //$this -> produtoInterno -> addSpecialAttributesSorefoz($product, $logger);
-            }
-            if(isset($product)){
+            } 
+            if (in_array(strlen($sku),[11,12,13])) {
                 try {
-                    print_r(" - Setting price: \n");
-                    $this->produtoInterno->updatePrice($logger);
-                } catch (\Exception $ex) {
-                    print_r("Update stock exception - " . $ex -> getMessage() . "\n");
+                    [$gama,$familia,$subFamilia] =  $this->sorefozCategories
+                        ->getCategories(trim($data[5]),trim($data[7]),trim($data[9]),
+                                        $logger,$sku,$name);        
+                    
+                    $product = $this->productRepository->get($sku, true, null, true);
+                    $this->produtoInterno->setCategories($product, $logger, $gama,$familia,$subFamilia);
+                }catch (NoSuchEntityException $e){
+                    print_r("Produto ainda não existe\n");
+                }catch (Exception $e) {
+                    print_r("ERRO: ".$e->getMessage()."\n");
+                    $logger->info(Cat::ERROR_GET_CATEGORIAS.$this->produtoInterno->sku);
                 }
+                
             }
         }
     }
+
     
     protected function updateSorefozProducts()
     {
@@ -185,7 +187,7 @@ class Sorefoz extends Command
                 if ($this->sqlHelper->sqlUpdateStatus($sku,$statusAttributeId[0]["attribute_id"])){
                     //update price anda stock
                     $price = $this->produtoInterno->getPrice((int)str_replace(".", "", $data[12]),
-                                                        $logger,$this->produtoInterno->sku);
+                                                        $logger,$sku);
                     if ($price == 0){
                         print_r(" price 0\n");
                         $logger->info(Cat::ERROR_PRICE_ZERO.$sku);
@@ -262,7 +264,7 @@ class Sorefoz extends Command
         
         $this->produtoInterno->gama = $gama;
         $this->produtoInterno->familia = $familia;
-        $this->produtoInterno->subFamilia = $subFamilia;
+        $this->produtoInterno->subFamilia = $subFamilia; 
         $this->produtoInterno->description = $data[25];
         $this->produtoInterno->meta_description = $data[24];
         $this->produtoInterno->manufacturer = Manufacturer::getSorefozManufacturer($data[3]);
@@ -359,31 +361,8 @@ class Sorefoz extends Command
 
     private function notValidProduct($data) {
         switch(trim($data[5])){
-            case 'TELEFONES E TELEMÓVEIS':
-                switch (trim($data[9])) {
-                    case 'TELEFONES DOMÉSTICOS':
-                    case 'TELEMÓVEIS':
-                        return false;
-                    default:
-                        return true;
-                }
             case 'ACESSÓRIOS E BATERIAS':
                 return true;
-            case 'INFORMÁTICA':
-                switch (trim($data[7])) {
-                    case 'ACESSÓRIOS':
-                    case 'CONSUMÍVEIS':
-                        return true;
-                    case "COMPUTADORES E TABLET'S":
-                        switch (trim($data[9])) {
-                            case 'CALCULADORAS':
-                                return true;
-                            default:
-                                return false;
-                        }
-                    default:
-                        return false;  
-                }
             case 'GRANDES DOMÉSTICOS':
                 if (strcmp(trim($data[7]),"ACESSORIOS ENCASTRE")==0){
                     return true;
@@ -414,8 +393,7 @@ class Sorefoz extends Command
                         return true;
                     default:
                         return false;
-                }
-                
+                }  
             default:
                 return false;
         }

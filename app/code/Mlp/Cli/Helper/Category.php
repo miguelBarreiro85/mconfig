@@ -102,6 +102,15 @@ class Category
         }
     }
 
+    public function removeProductCategory($sku, $categoryId) {
+        try{
+            $result = $this->categoryLinkRepositoryInterface->deleteByIds($categoryId, $sku);
+        }catch(\Exception $e){
+            print_r($e->getMessage());
+        }
+        
+    }
+
     public function deleteProductsByCategoryId($catId) {
         //Para apagar é preciso registar
         print_r(": ".$catId);

@@ -31,7 +31,19 @@ class CategoriesConstants {
     const ERROR_ADD_PRODUCT_OPTIONS = "ERRO : ADD PRODUCT OPTIONS : ";
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
 
-    
+    const HOME_AUDIO = "Home audio";
+    const CARTOES_SIM = "Cartões SIM";
+    const PULSEIRAS_FITNESS = "Pulseiras Fitness";
+    const WEARABLES = "Wearables";
+    const SMARTPHONES_IPHONE = "iPhones";   
+    const SMARTPHONES_ANDROID = "Smartphones Android";
+    const MINI_COLUNAS_PORTATEIS = "Mini colunas";
+    const POWERBANKS = "Powerbanks";
+    const RATOS = "Ratos";
+    const ACESSORIOS_GPS = "Acessórios de GPS";
+    const ACESSORIOS_SOM_INFORMATICA = "Acessórios de som Inf.";
+    const ACESSORIOS_VIDEO_INFORMATICA = "Acessórios de vídeo Inf.";
+    const CALCULADORAS = "Calculadoras";
     const GIRA_DISCOS = "Gira Discos";
     CONST MATA_INSETOS = "Mata Insetos";
     const DIFUSOR_AROMAS = "Difusor de Aromas";
@@ -82,7 +94,7 @@ class CategoriesConstants {
     const IMPRESSORAS_TERMICAS = "Impressoras Térmicas";
     const IMPRESSORAS_SIMPLES = "Impressoras Simples";
     const IMPRESSORAS_MULTI_FUNC = "Impressoras Multifunções Jacto Tinta";
-    const CONSUMIVEIS_IMPRESSORAS = "Consumiveis Impressoras";
+    const CONSUMIVEIS_INF = "Consumíveis Inf.";
     const SEGURANCA = "Segurança";
     const VIDEOVIGILANCIA = "Videovigilancia";
     const ACESSORIOS_SMARTPHONES = "Acessórios Smartphone";

@@ -28,7 +28,7 @@ class Expert extends Command
      */
     const UPDATE_PRODUCTS = 'update-products';
     const ADD_IMAGES = 'add-images';
-    const ADD_DESCRIPTION = 'add-description';
+    const UPDATE_CATEGORIES = 'update-categories';
     
 
     private $directory;
@@ -77,10 +77,10 @@ class Expert extends Command
                     'Add Images'
                 ),
                 new InputOption(
-                    self::ADD_DESCRIPTION,
-                    '-I',
+                    self::UPDATE_CATEGORIES,
+                    '-c',
                     InputOption::VALUE_NONE,
-                    'Add Description'
+                    'Update Categories'
                 )
             ])->addArgument('categories', InputArgument::OPTIONAL, 'Categories?');
         parent::configure();
@@ -105,9 +105,9 @@ class Expert extends Command
         if ($addImages) {
             $this->addImages($categories);
         }
-        $addDescription = $input->getOption(self::ADD_DESCRIPTION);
-        if ($addDescription) {
-            $this->addDescription($logger, $categories);
+        $updateCategories = $input->getOption(self::UPDATE_CATEGORIES);
+        if ($updateCategories) {
+            $this->updateProductCategories($logger);
         }
         
         else {
@@ -116,17 +116,36 @@ class Expert extends Command
     }
 
 
-    protected function addDescription($logger, $categoriesFilter = null) {
+    protected function updateProductCategories($logger){
+        //Se precisarmos de alterar as categorias basta mudar o fichero expertCategories.php e executar este comando
+        $writer = new \Zend\Log\Writer\Stream($this -> directory -> getRoot() . '/var/log/Sorefoz.log');
+        $logger = new \Zend\Log\Logger();
+        $logger -> addWriter($writer);
+        print_r("Updating Sorefoz Categories" . "\n");
+        //$this->getCsvFromFTP($logger);
         $row = 0;
-        foreach ($this -> loadCsv -> loadCsv('/Expert/Expert.csv', ";") as $data) {
-            //Update status sql
-            $sku = trim($data[1]);
-            print_r($row++." - ".$sku." - ");
-            if (strlen($sku) == 12 || strlen($sku) == 13) {
-                $this->produtoInterno->sku = $sku;
-                $this->produtoInterno->add_description($logger,$data[6]);
+        foreach ($this -> loadCsv -> loadCsv('/Sorefoz/tot_jlcb_utf.csv', ";") as $data) {
+            $sku = trim($data[18]);
+            $name = trim($data[1]);
+            print_r($row++." - ".$sku." - \n");
+            //É para entrar??
+            if ($this->notValidProduct($data)){
+                print_r("not valid\n");
+                continue;
+            } 
+            if (in_array(strlen($sku),[11,12,13])) {
+                try {
+                    [$gama,$familia,$subFamilia] =  ExpertCategories::setExpertCategories([trim($data[5]),trim($data[7]),trim($data[9])],
+                                        $logger,$sku,$data[15],$name);        
+                    
+                    $product = $this->productRepository->get($sku, true, null, true);
+                    $this->produtoInterno->setCategories($product, $logger, $gama,$familia,$subFamilia);
+                }catch (Exception $e) {
+                    print_r("ERRO: ".$e->getMessage()."\n");
+                    $logger->info(Cat::ERROR_UPDATE_CATEGORIAS.$this->produtoInterno->sku);
+                }
+                
             }
-            print_r("\n");
         }
     }
     protected function updateProducts($logger, $categoriesFilter = null){
