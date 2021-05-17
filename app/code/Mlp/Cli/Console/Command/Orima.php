@@ -227,13 +227,10 @@ class Orima extends Command
         $this->produtoInterno->height = null;
         $this->produtoInterno->weight = null;
         $this->produtoInterno->manufacturer = Manufacturer::getOrimaManufacturer(trim($data[3]));
-        
         $this->produtoInterno->status = 1;
-        
         $this->produtoInterno->image = $data[10];
         $this->produtoInterno->imageEnergetica = $data[11];
         $this->produtoInterno->classeEnergetica = $data[12];
-        
         return 1;
     }
 

@@ -223,7 +223,7 @@ class Expert extends Command
 
     private function setStock($stock){
         if (preg_match("/Disponivel/i",$stock) == 1){
-            $this->produtoInterno->stock = 1;
+            $this->produtoInterno->stock = 3;
             $this->produtoInterno->status = Status::STATUS_ENABLED;
         }else {
             $this->produtoInterno->stock = 0;

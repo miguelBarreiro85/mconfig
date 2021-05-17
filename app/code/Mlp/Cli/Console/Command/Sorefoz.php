@@ -218,7 +218,7 @@ class Sorefoz extends Command
 
     private function getStock($stock) {
         if (preg_match("/sim/i",$stock) == 1){
-            return 1;
+            return 3;
         }else {
             return 0;
         }
