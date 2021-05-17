@@ -13,6 +13,7 @@
     "version": "2.4.2",
     "require": {
         "avada/module-proofo": "^1.0",
+        "ifthenpay/multibanco-magento": "^1.0",
         "magento/composer-root-update-plugin": "~1.1",
         "magento/product-community-edition": "2.4.2",
         "mageplaza/magento-2-portuguese-language-pack": "dev-master",

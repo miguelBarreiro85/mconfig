@@ -31,6 +31,28 @@ class CategoriesConstants {
     const ERROR_ADD_PRODUCT_OPTIONS = "ERRO : ADD PRODUCT OPTIONS : ";
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
 
+    const TOSHIBA = "TOSHIBA";
+    const SONY = "SONY";
+    const SAMSUNG = "SAMSUNG";
+    const BROTHER = "BROTHER";
+    const PHILIPS = "PHILIPS";
+    const HOTPOINT = "HOTPOINT";
+    const WHIRLPOOL = "WHIRLPOOL";
+    const FAGOR = "FAGOR";
+    const EDESA = "EDESA";
+    const BOSCH = "BOSCH";
+    const SIEMENS = "SIEMENS";
+    const BRIEL = "BRIEL";
+    const AEG = "AEG";
+    const ZANUSSI = "ZANUSSI";
+    const ELECTROLUX = "ELECTROLUX";
+    const BRAUN = "BRAUN";
+    const NOS = "NOS";
+    const ORIMA = "ORIMA";
+    const LG = "LG";
+    const BLACKDECKER = "BLACK&DECKER";
+
+    const CARREGADORES_CABOS_BATERIAS = "Carregadores, cabos e baterias";
     const HOME_AUDIO = "Home audio";
     const CARTOES_SIM = "Cartões SIM";
     const PULSEIRAS_FITNESS = "Pulseiras Fitness";

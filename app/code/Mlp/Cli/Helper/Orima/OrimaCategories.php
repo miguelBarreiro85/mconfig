@@ -642,6 +642,7 @@ class OrimaCategories {
                             case 'VENTOINHAS MESA':
                             case 'VENTOINHAS PE':
                             case 'COLUNAS DE AR':
+                            case 'VENTOINHA DE CHAO':
                                 $familia = Cat::VENTILACAO;
                                 $subFamilia = Cat::VENTOINHAS;
                                 return ([$gama, $familia, $subFamilia]);

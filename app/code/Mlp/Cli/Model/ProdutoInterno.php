@@ -216,6 +216,7 @@ class ProdutoInterno
             }else {
                 $this->imagesHelper->setImages($product, $logger, $imgName, false);
                 $product = $this->productRepositoryInterface->save($product);
+                $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
             }
             print_r($product->getSku()." - ");
         } catch (\Exception $exception) {

@@ -153,8 +153,17 @@ class AufermaCategories {
                     case 'ENCASTRE - MAQ.LOUÇA':
                         $gama = Cat::ENCASTRE;
                         $familia = Cat::MAQ_DE_LOUCA_ENC;
-                        $subFamilia = null;
-                        return [$gama,$familia,$subFamilia];
+                        switch ($subFamilia) {
+                            case 'MAQ.LAVAR LOUÇA 60 Cm':
+                                $subFamilia = Cat::MAQ_DE_LOUCA_ENC_60;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MAQ.LAVAR LOUÇA 45 Cm':
+                                $subFamilia = Cat::MAQ_DE_LOUCA_ENC_45;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];  
+                        }
                     case 'ENCASTRE - MAQ.L.ROUPA':
                         $gama = Cat::ENCASTRE;
                         $familia = Cat::MAQ_ROUPA_ENC;
@@ -182,10 +191,19 @@ class AufermaCategories {
                         $subFamilia = Cat::OUTRO_ENC;
                         return [$gama,$familia,$subFamilia];
                     case 'MAQUINAS LAVAR ROUPA':
-                        $familia = Cat::GRANDES_DOMESTICOS;
+                        $gama = Cat::GRANDES_DOMESTICOS;
                         $familia = Cat::MAQ_ROUPA;
-                        $subFamilia = Cat::MAQ_LAVAR_ROUPA;
-                        return [$gama,$familia,$subFamilia];
+                        switch ($subFamilia) {
+                            case 'MLR CARGA FRONTAL':
+                                $subFamilia = Cat::MAQ_LAVAR_ROUPA;
+                                return [$gama,$familia,$subFamilia];
+                            case 'MLR LAVAR E SECAR ROUPA':
+                                $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA;
+                                return [$gama,$familia,$subFamilia];
+                            default:
+                                $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
+                                return [$gama,$familia,null];
+                            }
                     case 'MAQUINAS SECAR ROUPA':
                         $gama = Cat::GRANDES_DOMESTICOS;
                         $familia = Cat::MAQ_ROUPA;
@@ -203,10 +221,7 @@ class AufermaCategories {
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku);
                                 return [$gama,$familia,null];
                             }         
-                    case 'MAQUINAS LAVAR SECAR ROUPA':
-                        $familia = Cat::MAQ_ROUPA;
-                        $subFamilia = Cat::MAQ_LAVAR_SECAR_ROUPA;
-                        return [$gama,$familia,$subFamilia];
+                    
                     case 'CONGELADORES':
                         $familia = Cat::FRIO;
                         switch ($subFamilia) {
@@ -422,35 +437,5 @@ class AufermaCategories {
                 return [null,null, null];
         
         }
-    }
-
-    public function setCategories($gama, $familia, $subfamilia, $name,$logger,$sku)
-    {
-        $categories = [];
-        //Especifico para alguns artigos que tem categorias totalmente diferentes
-        //Informatica Acessorios Acessorios de som
-        if (preg_match('/^COLUNA/', $name) == 1) {
-            $categories['gama'] = 'IMAGEM E SOM';
-            $categories['familia'] = 'COLUNAS';
-            $categories['subfamilia'] = null;
-            return $categories;
-        }
-        if (preg_match('/^AUSC/', $name) == 1) {
-            $categories['gama'] = 'IMAGEM E SOM';
-            $categories['familia'] = 'AUSCULTADORES';
-            $categories['subfamilia'] = null;
-            return $categories;
-        }
-        if (preg_match('/^CLIMATIZADOR/', $name) == 1) {
-            $categories['gama'] = 'CLIMATIZAÇÃO';
-            $categories['familia'] = 'AR CONDICIONADO';
-            $categories['subfamilia'] = 'CLIMATIZADORES';
-            return $categories;
-        }
-        $categories = $this->getCategories($gama,$familia,$subfamilia,$logger,$sku);
-        //$categories['gama'] = $this -> setGamaSorefoz($gama);
-        //$categories['familia'] = $this -> setFamiliaSorefoz($familia);
-        //$categories['subfamilia'] = $this -> setSubFamiliaSorefoz($familia,$subfamilia);
-        return $categories;
     }
 }

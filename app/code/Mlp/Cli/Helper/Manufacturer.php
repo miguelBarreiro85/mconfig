@@ -1,8 +1,7 @@
 <?php
 
-
 namespace Mlp\Cli\Helper;
-
+use Mlp\Cli\Helper\CategoriesConstants as Cat;
 
 class Manufacturer
 {
@@ -16,76 +15,80 @@ class Manufacturer
     public static function getSorefozManufacturer($manufacturer)  {
         switch ($manufacturer) {
             case 'TOSHIBA  - INFORMATICA':
-                return 'TOSHIBA';
+                return Cat::TOSHIBA;
             case 'SONY  - MAGNÉTICOS':
             case 'SONY  - PILHAS':
-                return 'SONY';
+                return Cat::SONY;
             case 'SAMSUNG  - LINHA CASTANHA':
             case 'SAMSUNG  - INFORMATICA':
             case 'SAMSUNG  - LINHA BRANCA':
             case 'SAMSUNG  - AR CONDICIONADO':
-                return 'SAMSUNG';
+                return Cat::SAMSUNG;
             case 'LG  - LINHA CASTANHA':
             case 'LG  - INFORMATICA':
             case 'LG  - LINHA BRANCA':
             case 'LG  - AR CONDICIONADO';
-                return 'LG';
+                return Cat::LG;
             case 'BROTHER  INFORMÁTICA':
-                return 'BROTHER';
+                return Cat::BROTHER;
             case 'PHILIPS D.A.P.':
-                return 'PHILIPS';
+                return Cat::PHILIPS;
             case 'HOTPOINT / ARISTON':
             case 'HOTPOINT / ARISTON PAE':
-                return 'HOTPOINT';
+                return Cat::HOTPOINT;
             case 'WHIRLPOOL  - PROFISSIONAL':
             case 'WHIRLPOOL  - AR CONDICIONADO':
-                return 'WHIRLPOOL';
+                return Cat::WHIRLPOOL;
             case 'FAGOR  - CONFORT':
             case 'FAGOR  P.A.E.':
-                return 'FAGOR';
+                return Cat::FAGOR;
             case 'EDESA  - CONFORT':
-                return 'EDESA';
+                return Cat::EDESA;
             case 'BOSCH  P.A.E.':
-                return 'BOSCH';
+                return Cat::BOSCH;
             case 'SIEMENS  P.A.E.':
-                return 'SIEMENS';
+                return Cat::SIEMENS;
             case 'BRIEL  - CAFÉ':
-                return 'BRIEL';
+                return Cat::BRIEL;
             case 'AEG  D.A.P.':
             case 'AEG  - CLIMATIZAÇÃO':
             case 'AEG  - USO PESSOAL':
-                return 'AEG';
+                return Cat::AEG;
             case 'ZANUSSI  D.A.P.':
-                return 'ZANUSSI';
+                return Cat::ZANUSSI;
             case 'ELECTROLUX  D.A.P.':
-                return 'ELECTROLUX';
+                return Cat::ELECTROLUX;
             case 'BRAUN  - CASA E COZINHA':
-                return 'BRAUN';
+                return Cat::BRAUN;
             case 'NOS  - ZON/OPTIMUS':
-                return 'NOS';
+                return Cat::NOS;
             default:
                 return $manufacturer;
         }
     }
     public static function getOrimaManufacturer($manufacturer) {
         switch($manufacturer){
-            case 'LG | LINHA CASTANHA':
-            case 'LG | LINHA BRANCA':
-            case 'LG | LINHA CONFORTO':
-                return 'LG';
-            case 'BOSCH | PEQUENOS DOMESTICOS':
-            case 'BOSCH | LINHA BRANCA':
-                return 'BOSCH';
-            case 'SAMSUNG | LINHA BRANCA':
-            case 'SAMSUNG | LINHA CASTANHA':
-                return 'SAMSUNG';
-            case 'SIEMENS | LINHA BRANCA':
-            case 'SIEMENS | PEQUENOS DOMESTICOS':
-                return 'SIEMENS';
+            case 'Orima':
+                return Cat::ORIMA;
+            case 'Lg | Linha Castanha':
+            case 'Lg | Linha Branca':
+            case 'Lg | Linha Conforto':
+                return Cat::LG;
+            case 'Bosch | Pequenos Domesticos':
+            case 'Bosch | Linha Branca':
+                return Cat::BOSCH;
+            case 'Samsung | Linha Branca':
+            case 'Samsung | Linha Castanha':
+                return Cat::SAMSUNG;
+            case 'Siemens | Linha Branca':
+                return Cat::SIEMENS;
             case 'AEG | PEQUENOS DOMESTICOS':
-                return 'AEG';
+            case 'Aeg':
+                return Cat::AEG;
+            case 'Black&decker':
+                return Cat::BLACKDECKER;   
             default:
-                return $manufacturer;
+                return strtoupper($manufacturer);
         }
     }
 }

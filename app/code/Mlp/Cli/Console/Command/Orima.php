@@ -91,13 +91,15 @@ class Orima extends Command
         $addProducts = $input->getOption(self::ADD_PRODUCTS);
         if ($addProducts) {
             $this->updateProducts($logger);
+            return true;
         }
         $updateCategories = $input->getOption(self::UPDATE_CATEGORIES);
         if ($updateCategories) {
             $this->updateProductCategories($logger);
+            return true;
         }
         else {
-            throw new \InvalidArgumentException('Option ' . self::FILTER_PRODUCTS . ' is missing.');
+            throw new \InvalidArgumentException('Option is missing.');
         }
     }
 
@@ -196,7 +198,7 @@ class Orima extends Command
 
         
         $this->produtoInterno->sku = $data[5];
-        if (strlen($this->produtoInterno->sku) < 13) {
+        if (in_array(strlen($this->produtoInterno->sku),[11,12,13])) {
             print_r("Wrong sku - ");
             $logger->info(Cat::ERROR_WRONG_SKU.$this->produtoInterno->sku);
             return 0;
@@ -224,7 +226,7 @@ class Orima extends Command
         $this->produtoInterno->width = null;
         $this->produtoInterno->height = null;
         $this->produtoInterno->weight = null;
-        
+        $this->produtoInterno->manufacturer = Manufacturer::getOrimaManufacturer(trim($data[3]));
         
         $this->produtoInterno->status = 1;
         

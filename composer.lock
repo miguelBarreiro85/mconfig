@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad63f964352d51472f6281134632d988",
+    "content-hash": "4a4cdda28f141de671c3201c9e19052f",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -2049,6 +2049,50 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.7.0"
             },
             "time": "2020-09-30T07:37:11+00:00"
+        },
+        {
+            "name": "ifthenpay/multibanco-magento",
+            "version": "1.0.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/manuelrocha88/magento2-Ifthenpay_Multibanco.git",
+                "reference": "bdb817059c6c70e0ae9014a58ad909634885f55d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/manuelrocha88/magento2-Ifthenpay_Multibanco/zipball/bdb817059c6c70e0ae9014a58ad909634885f55d",
+                "reference": "bdb817059c6c70e0ae9014a58ad909634885f55d",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Ifthenpay\\Multibanco\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Método de pagamento multibanco Ifthenpay para Magento 2",
+            "homepage": "https://www.ifthenpay.com",
+            "keywords": [
+                "gateway",
+                "ifthenpay",
+                "magento2",
+                "merchant",
+                "multibanco",
+                "pay",
+                "payment"
+            ],
+            "support": {
+                "issues": "https://github.com/manuelrocha88/magento2-Ifthenpay_Multibanco/issues",
+                "source": "https://github.com/manuelrocha88/magento2-Ifthenpay_Multibanco/tree/1.0.16"
+            },
+            "time": "2018-11-12T12:19:26+00:00"
         },
         {
             "name": "justinrainbow/json-schema",

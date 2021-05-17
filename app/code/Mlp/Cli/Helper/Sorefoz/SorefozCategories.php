@@ -97,6 +97,9 @@ class SorefozCategories {
                                 $familia = Cat::AUDIO_PORTATIL;
                                 $subFamilia = Cat::MINI_COLUNAS_PORTATEIS;
                                 return [$gama,$familia, $subFamilia];
+                            case 'CARREGADORES E BATERIAS':
+                                $subFamilia = Cat::CARREGADORES_CABOS_BATERIAS;
+                                return [$gama,$familia, $subFamilia];
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return [$gama, $familia, null];
@@ -703,6 +706,9 @@ class SorefozCategories {
                             case 'ACESSÓRIOS P/GPS':
                                 $subFamilia = Cat::ACESSORIOS_GPS;
                                 return [$gama,$familia,$subFamilia];
+                            case 'MALAS':
+                                $subFamilia = Cat::MALAS_BOLSAS_INFORMATICA;
+                                return [$gama,$familia,$subFamilia];
                             default:
                                 $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                                 return [$gama,$familia,null];
@@ -1057,6 +1063,7 @@ class SorefozCategories {
                     case 'AMPLIFICADORES';
                         $familia = Cat::CAR_AUDIO;
                         $subFamilia = Cat::AMPLIFICADORES_AUTO;
+                        return [$gama,$familia,$subFamilia];
                     default:
                         $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
                         return [$gama,$familia,null];

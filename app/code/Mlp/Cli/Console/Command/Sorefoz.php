@@ -264,7 +264,7 @@ class Sorefoz extends Command
         
         $this->produtoInterno->gama = $gama;
         $this->produtoInterno->familia = $familia;
-        $this->produtoInterno->subFamilia = $subFamilia; 
+        $this->produtoInterno->subFamilia = $subFamilia;
         $this->produtoInterno->description = $data[25];
         $this->produtoInterno->meta_description = $data[24];
         $this->produtoInterno->manufacturer = Manufacturer::getSorefozManufacturer($data[3]);
