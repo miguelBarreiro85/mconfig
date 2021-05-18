@@ -41,6 +41,8 @@ atlassian*
 .DS_Store
 /app/code/Mlp/Cli/Csv/*
 !/app/code/Mlp/Cli/Csv/Auferma/
+/app/code/Mlp/Cli/Csv/Auferma/*
+!/app/code/Mlp/Cli/Csv/Auferma/aufermaInterno.csv
 /generated/*
 /pub/static/*
 /app/etc/config.php
