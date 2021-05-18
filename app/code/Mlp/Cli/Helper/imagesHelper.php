@@ -63,48 +63,60 @@ class imagesHelper
         }
     }
 
-    public function setImages($product, $logger, $ImgName, bool $etiquetaEergetica)
-    {
-        $baseMediaPath = $this->config->getBaseMediaPath();
+    protected function getImageName($ImgName, $baseMediaPath) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         try{
             $type = finfo_file($finfo, $this->directory->getRoot()."/pub/media/".$baseMediaPath. "/" . $ImgName);
-        }catch (\Exception $exception){}
+        }catch (\Exception $exception){
+
+        }
         if (isset($type) && in_array($type, array("image/png", "image/jpeg", "image/gif"))) {
             //por o ficheiro com extensao    
             $extension = preg_split('/\//',$type);
             $newImgName = $ImgName.".".$extension[1];
             rename($this->directory->getRoot()."/pub/media/catalog/product/".$ImgName,
                     $this->directory->getRoot()."/pub/media/catalog/product/".$newImgName);
-        
+            return $newImgName;
+        }else {
+            return false;
+        }
+    }
+    public function setImage($product, $logger, $ImgName)
+    {
+        $baseMediaPath = $this->config->getBaseMediaPath(); 
+        $newImgName = $this->getImageName($ImgName, $baseMediaPath);
+        if($newImgName){
             //this is a image
             try {
-                $images = $product->getMediaGalleryImages();
-                if (!$images || $images->getSize() == 0) {
-                    if ($etiquetaEergetica) {
-                        $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['energy_image'], false, false);    
-                    }else{
-                        $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['image', 'small_image', 'thumbnail'], false, false);
-                    }
-                }
+             $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['image', 'small_image', 'thumbnail'], false, false);
+             print_r(" - Setting Image - ");
+            } catch (\RuntimeException $exception) {
+             print_r("run time exception" . $exception->getMessage() . "\n");
+            } catch (\Exception $localizedException) {
+             $logger->info(Cat::SEM_IMAGEM_PRODUTO . $product->getSku());
+            }
+        } else {
+            $logger->info(Cat::SEM_IMAGEM_PRODUTO . $product->getSku());
+        }
+
+    }
+
+    public function setImageEtiqueta($product, $logger, $ImgName){
+        $baseMediaPath = $this->config->getBaseMediaPath(); 
+        $newImgName = $this->getImageName($ImgName, $baseMediaPath);
+        if($newImgName){
+            try {
+                $product->addImageToMediaGallery($baseMediaPath . "/" . $newImgName, ['energy_image'], false, false);
+                print_r(" - Setting Etiqueta - ");
             } catch (\RuntimeException $exception) {
                 print_r("run time exception" . $exception->getMessage() . "\n");
             } catch (\Exception $localizedException) {
                 print_r($localizedException->getMessage());
-                if ($etiquetaEergetica) {
-                    $logger->info(Cat::SEM_IMAGEM_ETIQUETA . $product->getSku());
-                }else {
-                    $logger->info(Cat::SEM_IMAGEM_PRODUTO . $product->getSku());
-                }
-            }
-        } else {
-            //not a image
-            if ($etiquetaEergetica) {
                 $logger->info(Cat::SEM_IMAGEM_ETIQUETA . $product->getSku());
-            }else {
-                $logger->info(Cat::SEM_IMAGEM_PRODUTO . $product->getSku());
             }
+        }else {
+            $logger->info(Cat::SEM_IMAGEM_ETIQUETA . $product->getSku());
         }
-
+        
     }
 }

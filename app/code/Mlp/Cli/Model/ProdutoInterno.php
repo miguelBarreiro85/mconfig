@@ -199,22 +199,19 @@ class ProdutoInterno
             print_r("saving product.. - ");
             //adicionar o atributo eficiencia_energetica
             if (in_array($this->subFamilia, Cat::CATEGORIES_ENERGY_LABEL) || in_array($this->familia, Cat::CATEGORIES_ENERGY_LABEL)) {
-                //Esta função guarda a imagem e define que pertence ao atributo energy_image ou às imagens normais
-                $this->imagesHelper->setImages($product, $logger, $imgName . "_e", true);
-                //Temos de por esta no fim para aparecer primeiro.. por enquanto todo
-                $this->imagesHelper->setImages($product, $logger, $imgName, false);
+                $this->imagesHelper->setImageEtiqueta($product, $logger, $imgName . "_e");
+                $this->imagesHelper->setImage($product, $logger, $imgName);
                 $product = $this->productRepositoryInterface->save($product);
                 //Só podemos adicionar as categorias depois de guardar o produto
                 $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
                 if ($this->classeEnergetica){
-                    $attributeEficiencia = $this->attributeManager->getEficiencia($this->classeEnergetica);
-                    $product->setCustomAttribute($attributeEficiencia['code'], $attributeEficiencia['value']);
-                    $this -> productResource -> saveAttribute($product, $attributeEficiencia['code']);
+                    $this->setClasseEnergetica($product);
+                    
                 }else {
                     $logger->info(Cat::WARN_CLASSE_ENERGETICA.$this->sku);
                 }
             }else {
-                $this->imagesHelper->setImages($product, $logger, $imgName, false);
+                $this->imagesHelper->setImage($product, $logger, $imgName);
                 $product = $this->productRepositoryInterface->save($product);
                 $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
             }
@@ -289,6 +286,11 @@ class ProdutoInterno
         }
     }
 
+    public function setClasseEnergetica($product){
+        $attributeEficiencia = $this->attributeManager->getEficiencia($this->classeEnergetica);
+        $product->setCustomAttribute($attributeEficiencia['code'], $attributeEficiencia['value']);
+        $this -> productResource -> saveAttribute($product, $attributeEficiencia['code']);
+    }
     public function setStock($logger, $source)
     {
         $filterSku = $this->filterBuilder
@@ -426,6 +428,26 @@ class ProdutoInterno
             $this->productRepositoryInterface->save($product);
         }catch(\Exception $e){
             print_r($e->getMessage());
+        }        
+    }
+
+    public function updateProductImages($product, $logger, $imgName, $img, $etiqueta=false){
+        try {
+            $mediaAttributeValues = $product->getMediaAttributeValues();
+            if ($mediaAttributeValues){
+                if($etiqueta && strcmp($mediaAttributeValues["energy_image"],"no_selection") == 0){
+                    $this->imagesHelper->getImages($this->sku,null,$etiqueta);
+                    $this->imagesHelper->setImageEtiqueta($product, $logger, $imgName . "_e");
+                }
+                if(strcmp($mediaAttributeValues["image"], "no_selection") == 0){
+                    $this->imagesHelper->getImages($this->sku,$img,null);
+                    $this->imagesHelper->setImage($product, $logger, $imgName);
+                }
+            }
+               
+        }catch(\Exception $e){
+            print_r($e->getMessage());
+            $logger->info(Cat::ERROR_UPDATE_IMAGES." : ".$product->getSku());
         }        
     }
 }

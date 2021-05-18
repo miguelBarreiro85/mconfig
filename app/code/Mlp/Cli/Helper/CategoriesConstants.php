@@ -30,6 +30,7 @@ class CategoriesConstants {
     const ERROR_SAVE_PRODUCT = "ERRO : SAVE PRODUCT : ";
     const ERROR_ADD_PRODUCT_OPTIONS = "ERRO : ADD PRODUCT OPTIONS : ";
     const ERROR_ADD_EAN_TO_OLD_EANFILE = "ERRO : ADD EAN TO OLD EAN FILE : ";
+    const ERROR_UPDATE_IMAGES = "ERRO : UPDATE PRODUCT IMAGES";
 
     const TOSHIBA = "TOSHIBA";
     const SONY = "SONY";

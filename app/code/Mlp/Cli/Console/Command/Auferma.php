@@ -245,6 +245,7 @@ class Auferma extends Command
                 }
                 //Se for Acessórios Tvs ou pequenos domésticos etc.. salta fora
                 $codFamilia = $aSheet->getCell('G'.$aRow->getRowIndex())->getValue();
+                $isGrundig = $aSheet->getCell('F', $aRow->getRowIndex())->getValue();
                 if (in_array((int)(string)$codFamilia,  [800,295,250,210,190,150,105,220,930,235])){
                     print_r("Salta Fora!!\n");
                     continue;

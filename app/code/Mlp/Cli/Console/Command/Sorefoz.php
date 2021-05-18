@@ -14,6 +14,7 @@ use Mlp\Cli\Helper\splitFile;
 use Mlp\Cli\Helper\imagesHelper;
 use Mlp\Cli\Helper\LoadCsv;
 use Mlp\Cli\Helper\Category;
+use Mlp\Cli\Model\ProdutoInterno;
 use SqlHelper as GlobalSqlHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -242,8 +243,6 @@ class Sorefoz extends Command
         $this->produtoInterno->status = Status::STATUS_ENABLED;
         $this->produtoInterno->stock = $stock;
         $this->produtoInterno->price = ceil((float)trim($data[12]));
-
-        print_r(" - setting stock ");
         $this->produtoInterno->setStock($logger,"sorefoz");
        
         if($this->produtoInterno->price == 0){
@@ -285,35 +284,31 @@ class Sorefoz extends Command
     
     private function addImages($categoriesFilter) 
     {
-
         $writer = new \Zend\Log\Writer\Stream($this->directory->getRoot().'/var/log/Sorefoz.log');
         $logger = new \Zend\Log\Logger();
         $logger->addWriter($writer);
-
-        
         $row = 0;
         foreach ($this->loadCsv->loadCsv('/Sorefoz/tot_jlcb_utf.csv',";") as $data) {
             $row++;
             print_r($row." - ");
             $this->setSorefozData($data,$logger);
-            if (!in_array(strlen($this->produtoInterno->sku),[12,13])) {
+            if (!in_array(strlen($this->produtoInterno->sku),[11,12,13])) {
                 print_r("invalid sku - \n");
                 continue;
-            }
-            if (!is_null($categoriesFilter)){
-                if (strcmp($categoriesFilter,$this->produtoInterno->subFamilia) != 0){
-                    print_r($this->produtoInterno->sku . " - Fora de Gama \n");
-                    continue;
-                }
             }
             try {
                 print_r($this->produtoInterno->sku);
                 $product = $this -> productRepository -> get($this->produtoInterno->sku, true, null, true);
-                $this->imagesHelper->getImages($product->getSku(), $this->produtoInterno->image, $this->produtoInterno->imageEnergetica);
-                $this->imagesHelper->setImages($product, $logger, $this->produtoInterno->sku,);
+                //Ver se o produto tem imagem senão tiver adicionar.
+                $this->produtoInterno->updateProductImages($product, $logger, $this->produtoInterno->sku, 
+                    $this->produtoInterno->image, $this->produtoInterno->imageEnergetica);
+                $this->productRepository->save($product);
+                if($this->produtoInterno->classeEnergetica){
+                    $this->produtoInterno->setClasseEnergetica($product);
+                }
                 print_r("\n");
             } catch (\Exception $exception) {
-                print_r($exception->getMessage());
+                print_r($exception->getMessage().PHP_EOL);
             }
         }
     }
