@@ -682,8 +682,8 @@ class SorefozCategories {
                                     $familia = Cat::AUDIO_PORTATIL;
                                     return [$gama,$familia,$subFamilia];
                                 }else {
-                                    $logger->info(Cat::WARN_SUBFAMILY_NF.$sku." : ".$name);
-                                    return [$gama,$familia,null];
+                                    $subFamilia = Cat::OUTROS_ACESSORIOS_INFORMATICA;
+                                    return [$gama,$familia,$subFamilia];
                                 }
                             case 'REDES / CABOS':
                                 $subFamilia = Cat::CARTOES_MEMORIA;

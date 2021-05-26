@@ -109,24 +109,17 @@ class Orima extends Command
         //$this->getCsvFromFTP($logger);
         $row = 0;
         foreach ($this -> loadCsv -> loadCsv('/Sorefoz/tot_jlcb_utf.csv', ";") as $data) {
-            $sku = trim($data[18]);
-            $name = trim($data[1]);
+            $sku = trim($data[5]);
+            $name = trim($data[7]);
             print_r($row++." - ".$sku." - \n");
-            //É para entrar??
-            if ($this->notValidProduct($data)){
-                print_r("not valid\n");
-                continue;
-            } 
             if (in_array(strlen($sku),[11,12,13])) {
                 try {
-                    [$gama,$familia,$subFamilia] =  ExpertCategories::setExpertCategories([trim($data[5]),trim($data[7]),trim($data[9])],
-                                        $logger,$sku,$data[15],$name);        
-                    
+                    [$gama,$familia,$subFamilia] =  OrimaCategories::getCategoriesOrima($data[0],$data[1],$data[2],$logger,$sku,$name);
                     $product = $this->productRepository->get($sku, true, null, true);
                     $this->produtoInterno->setCategories($product, $logger, $gama,$familia,$subFamilia);
                 }catch (Exception $e) {
                     print_r("ERRO: ".$e->getMessage()."\n");
-                    $logger->info(Cat::ERROR_UPDATE_CATEGORIAS.$this->produtoInterno->sku);
+                    $logger->info(Cat::ERROR_UPDATE_CATEGORIES.$this->produtoInterno->sku);
                 }
                 
             }
@@ -138,7 +131,7 @@ class Orima extends Command
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
         $priceAttributeId = $this->sqlHelper->sqlGetAttributeId('price');
-        $this->downloadCsv($logger);
+        //$this->downloadCsv($logger);
         foreach ($this->loadCsv->loadCsv('/Orima/Orima_utf.csv',";") as $data) {
             $row++;
             $sku = trim($data[5]);

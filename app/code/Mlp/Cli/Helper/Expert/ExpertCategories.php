@@ -350,9 +350,18 @@ class ExpertCategories {
                                     $subFamilia = Cat::ALIMENTACAO_COMUNICACOES;
                                     return [$gama, $familia, $subFamilia];
                                 case 'Telemóveis':
-                                    $familia = Cat::TELEMOVEIS;
                                     $subFamilia = null;
-                                    return [$gama, $familia, $subFamilia];
+                                    if(preg_match('/Android/',$attributes) == 1){
+                                        $familia = Cat::SMARTPHONES_ANDROID;
+                                        return [$gama, $familia, $subFamilia];
+                                    }elseif(preg_match('/Galaxy/',$name) == 1 || preg_match('/Smartphone/',$name) == 1 ){
+                                        $familia = Cat::SMARTPHONES_ANDROID;
+                                        return [$gama, $familia, $subFamilia];
+                                    }
+                                    else{
+                                        $familia = Cat::TELEMOVEIS;
+                                        return [$gama, $familia, $subFamilia];
+                                    }
                                 case 'Auriculares':
                                     $familia = Cat::ACESSORIOS_COMUNICACOES;
                                     $subFamilia = Cat::AURICULARES;

@@ -222,9 +222,12 @@ class OrimaCategories {
                         return ([$gama, $familia, $subFamilia]);
                     case 'FRIGORIFICOS 1 PORTA':
                         $familia = Cat::FRIO;
-                        $subFamilia = Cat::FRIGORIF_1_PORTA;
+                        if (strcmp($subFamilia,"Frigorificos Mini-bar") == 0){
+                            $subFamilia = Cat::FRIGOBAR;
+                        }else {
+                            $subFamilia = Cat::FRIGORIF_1_PORTA;
+                        }
                         return ([$gama, $familia, $subFamilia]);
-
                     case 'FRIGORIFICOS 2 PORTAS':
                         $familia = Cat::FRIO;
                         $result = preg_match("/NF/", $subFamilia);

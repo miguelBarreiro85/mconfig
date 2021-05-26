@@ -103,13 +103,12 @@ class Expert extends Command
         }
         $addImages = $input->getOption(self::ADD_IMAGES);
         if ($addImages) {
-            $this->addImages($categories);
+            $this->addImages();
         }
         $updateCategories = $input->getOption(self::UPDATE_CATEGORIES);
         if ($updateCategories) {
             $this->updateProductCategories($logger);
         }
-        
         else {
             throw new \InvalidArgumentException('Option is missing.');
         }
@@ -121,28 +120,26 @@ class Expert extends Command
         $writer = new \Zend\Log\Writer\Stream($this -> directory -> getRoot() . '/var/log/Sorefoz.log');
         $logger = new \Zend\Log\Logger();
         $logger -> addWriter($writer);
-        print_r("Updating Sorefoz Categories" . "\n");
+        print_r("Updating Expert Categories" . "\n");
         //$this->getCsvFromFTP($logger);
         $row = 0;
-        foreach ($this -> loadCsv -> loadCsv('/Sorefoz/tot_jlcb_utf.csv', ";") as $data) {
-            $sku = trim($data[18]);
-            $name = trim($data[1]);
+        foreach ($this -> loadCsv -> loadCsv('/Expert/Expert.csv', ";") as $data) {
+            $sku = trim($data[1]);
+            $name = trim($data[5]);
             print_r($row++." - ".$sku." - \n");
             //É para entrar??
-            if ($this->notValidProduct($data)){
+            if ($this->notValidProduct($data[2])){
                 print_r("not valid\n");
                 continue;
             } 
             if (in_array(strlen($sku),[11,12,13])) {
                 try {
-                    [$gama,$familia,$subFamilia] =  ExpertCategories::setExpertCategories([trim($data[5]),trim($data[7]),trim($data[9])],
-                                        $logger,$sku,$data[15],$name);        
-                    
+                    [$gama,$familia,$subFamilia] =  ExpertCategories::setExpertCategories(trim($data[2]),$logger,$sku,$data[15], trim($data[5]));        
                     $product = $this->productRepository->get($sku, true, null, true);
                     $this->produtoInterno->setCategories($product, $logger, $gama,$familia,$subFamilia);
-                }catch (Exception $e) {
+                }catch (\Exception $e) {
                     print_r("ERRO: ".$e->getMessage()."\n");
-                    $logger->info(Cat::ERROR_UPDATE_CATEGORIAS.$this->produtoInterno->sku);
+                    $logger->info(Cat::ERROR_UPDATE_CATEGORIES.$this->produtoInterno->sku);
                 }
                 
             }
@@ -150,7 +147,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        $this->downloadCsv($logger);
+        //$this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -424,7 +421,7 @@ class Expert extends Command
                 
             }
     }
-    private function addImages($categoriesFilter) 
+    private function addImages() 
     {
 
         $writer = new \Zend\Log\Writer\Stream($this->directory->getRoot().'/var/log/Expert.log');
@@ -435,27 +432,25 @@ class Expert extends Command
         $row = 0;
         foreach ($this->loadCsv->loadCsv('/Expert/Expert.csv',";") as $data) {
             $row++;
+            $sku = trim($data[1]);
             print_r($row." - ");
             $this->setData($data,$logger);
-            if (strlen($this->produtoInterno->sku) != 13) {
+            if (in_array(strlen($sku),[11,12,13])){
                 print_r("invalid sku - \n");
                 continue;
-            }
-            if (!is_null($categoriesFilter)){
-                if (strcmp($categoriesFilter,$this->produtoInterno->subFamilia) != 0){
-                    print_r($this->produtoInterno->sku . " - Fora de Gama \n");
-                    continue;
-                }
             }
             try {
                 print_r($this->produtoInterno->sku);
                 $product = $this -> productRepository -> get($this->produtoInterno->sku, true, null, true);
-                $this->imagesHelper->getImages($product->getSku(), $this->produtoInterno->image, $this->produtoInterno->imageEnergetica);
-                $this->imagesHelper->setImages($product, $logger, $this->produtoInterno->sku);
+                $this->produtoInterno->updateProductImages($product, $logger, $this->produtoInterno->sku, 
+                    $this->produtoInterno->image, $this->produtoInterno->imageEnergetica);
                 $this->productRepository->save($product);
+                if($this->produtoInterno->classeEnergetica){
+                    $this->produtoInterno->setClasseEnergetica($product);
+                }
                 print_r("\n");
             } catch (\Exception $exception) {
-                print_r($exception->getMessage());
+                print_r($exception->getMessage().PHP_EOL);
             }
         }
     }

@@ -196,8 +196,7 @@ class Sorefoz extends Command
                     }
                     $this->sqlHelper->sqlUpdatePrice($sku,$priceAttributeId[0]["attribute_id"],$price);
                     $this->produtoInterno->sku = $sku;
-                    $stock = $this->getStock($data[29]);    
-                    $this->produtoInterno->stock = $stock;
+                    $this->produtoInterno->stock = $this->getStock($data[29]);    
                     $this->produtoInterno->setStock($logger,"sorefoz");
                     print_r("updated - stock\n");
                 }else {
