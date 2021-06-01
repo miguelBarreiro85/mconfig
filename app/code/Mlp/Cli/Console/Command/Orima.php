@@ -108,7 +108,7 @@ class Orima extends Command
         print_r("Updating Sorefoz Categories" . "\n");
         //$this->getCsvFromFTP($logger);
         $row = 0;
-        foreach ($this -> loadCsv -> loadCsv('/Sorefoz/tot_jlcb_utf.csv', ";") as $data) {
+        foreach ($this -> loadCsv -> loadCsv('/Orima/Orima_utf.csv', ";") as $data) {
             $sku = trim($data[5]);
             $name = trim($data[7]);
             print_r($row++." - ".$sku." - \n");
