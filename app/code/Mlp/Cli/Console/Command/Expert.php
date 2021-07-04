@@ -103,7 +103,7 @@ class Expert extends Command
         }
         $addImages = $input->getOption(self::ADD_IMAGES);
         if ($addImages) {
-            $this->addImages();
+            $this->addImages($logger);
         }
         $updateCategories = $input->getOption(self::UPDATE_CATEGORIES);
         if ($updateCategories) {
@@ -421,14 +421,8 @@ class Expert extends Command
                 
             }
     }
-    private function addImages() 
+    private function addImages($logger) 
     {
-
-        $writer = new \Zend\Log\Writer\Stream($this->directory->getRoot().'/var/log/Expert.log');
-        $logger = new \Zend\Log\Logger();
-        $logger->addWriter($writer);
-
-        
         $row = 0;
         foreach ($this->loadCsv->loadCsv('/Expert/Expert.csv',";") as $data) {
             $row++;

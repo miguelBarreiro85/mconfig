@@ -5,13 +5,9 @@ namespace Mlp\Cli\Console\Command;
 
 use Exception;
 use Mlp\Cli\Helper\Orima\OrimaCategories;
-
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Filesystem\DirectoryList;
 use Symfony\Component\Console\Command\Command;
-use Mlp\Cli\Helper\imagesHelper as ImagesHelper;
 use Symfony\Component\Console\Input\InputOption;
-
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,6 +22,7 @@ class Orima extends Command
      */
     const ADD_PRODUCTS = 'add-products';
     const UPDATE_CATEGORIES = 'update-categories';
+    const UPDATE_IMAGES = 'update-images';
 
     private $directory;
     private $categoryManager;
@@ -73,6 +70,12 @@ class Orima extends Command
                     '-c',
                     InputOption::VALUE_NONE,
                     'Update Categories'
+                ),
+                new InputOption(
+                    self::UPDATE_IMAGES,
+                    '-i',
+                    InputOption::VALUE_NONE,
+                    'Update Images'
                 )
             ])->addArgument('categories', InputArgument::OPTIONAL, 'Categories?');
         parent::configure();
@@ -98,15 +101,52 @@ class Orima extends Command
             $this->updateProductCategories($logger);
             return true;
         }
+        $updateImages = $input->getOption((self::UPDATE_IMAGES));
+        if ($updateImages) {
+            $this->addImages($logger);
+        }
         else {
             throw new \InvalidArgumentException('Option is missing.');
+        }
+    }
+
+    protected function addImages($logger) 
+    {
+        $row = 0;
+        foreach ($this->loadCsv->loadCsv('/Orima/Orima_utf.csv',";") as $data) {
+            $row++;
+            print_r($row." - ");
+            try{
+                if (!$this->setOrimaData($data,$logger)){
+                    print_r("\n");
+                    continue;
+                };
+            }catch(\Exception $e){
+                $logger->info(Cat::ERROR_SET_PRODUCT_DATA.$row);
+                print_r("\n");
+                continue;
+            }
+            try {
+                print_r($this->produtoInterno->sku);
+                $product = $this -> productRepository -> get($this->produtoInterno->sku, true, null, true);
+                //Ver se o produto tem imagem senão tiver adicionar.
+                $this->produtoInterno->updateProductImages($product, $logger, $this->produtoInterno->sku, 
+                    $this->produtoInterno->image, $this->produtoInterno->imageEnergetica);
+                $this->productRepository->save($product);
+                if($this->produtoInterno->classeEnergetica){
+                    $this->produtoInterno->setClasseEnergetica($product);
+                }
+                print_r("\n");
+            } catch (\Exception $exception) {
+                print_r($exception->getMessage().PHP_EOL);
+            }
         }
     }
 
     protected function updateProductCategories($logger){
         //Se precisarmos de alterar as categorias basta mudar o fichero orimaCategories.php e executar este comando
         print_r("Updating Sorefoz Categories" . "\n");
-        //$this->getCsvFromFTP($logger);
+        $this->downloadCsv($logger);
         $row = 0;
         foreach ($this -> loadCsv -> loadCsv('/Orima/Orima_utf.csv', ";") as $data) {
             $sku = trim($data[5]);
@@ -131,7 +171,7 @@ class Orima extends Command
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
         $priceAttributeId = $this->sqlHelper->sqlGetAttributeId('price');
-        //$this->downloadCsv($logger);
+        $this->downloadCsv($logger);
         foreach ($this->loadCsv->loadCsv('/Orima/Orima_utf.csv',";") as $data) {
             $row++;
             $sku = trim($data[5]);
@@ -160,9 +200,13 @@ class Orima extends Command
                     print_r("\n");
                     continue;
                 }
-                $this->produtoInterno -> add_product($logger, $this->produtoInterno->sku);
-                print_r("\n");
-                continue;
+                try {
+                    $this->produtoInterno -> add_product($logger, $this->produtoInterno->sku);
+                    print_r("\n");
+                    continue;
+                }catch(\Exception $e){
+                    $logger->info(Cat::ERROR_SAVE_PRODUCT.$sku);
+                }
             }
         }
     }
@@ -191,8 +235,8 @@ class Orima extends Command
 
         
         $this->produtoInterno->sku = $data[5];
-        if (in_array(strlen($this->produtoInterno->sku),[11,12,13])) {
-            print_r("Wrong sku - ");
+        if (!in_array(strlen($this->produtoInterno->sku),[11,12,13])) {
+            print_r("Wrong sku - ".$this->produtoInterno->sku);
             $logger->info(Cat::ERROR_WRONG_SKU.$this->produtoInterno->sku);
             return 0;
         }
@@ -202,13 +246,8 @@ class Orima extends Command
         $this->produtoInterno->price = $this->produtoInterno->getPrice((float)$data[9]*1.23,$logger,$this->produtoInterno->sku);
         if($this->produtoInterno->price == 0){return  0;}
         $this->produtoInterno->stock = $this->getStock($data[6]);
-       
-        print_r(" - setting stock ");
-        $this->produtoInterno->setStock($logger,"orima");
-       
-       
-
-        
+    
+        $this->produtoInterno->setStock($logger,"orima");       
         $this->produtoInterno->name = $data[7];
         [$this->produtoInterno->gama,$this->produtoInterno->familia,
             $this->produtoInterno->subFamilia] = OrimaCategories::getCategoriesOrima(mb_strtoupper(trim($data[0]),'UTF-8'),
@@ -233,24 +272,6 @@ class Orima extends Command
         }else {
             return (int)$stock;
         }
-    }
-    private function setOrimaCategories($logger)
-    {
-        try {
-            [$mlpGama, $mlpFamilia, $mlpSubFamilia] = OrimaCategories::getCategoriesOrima(
-                $this->produtoInterno->gama,
-                $this->produtoInterno->familia,
-                $this->produtoInterno->subFamilia,
-                $logger,
-                $this->produtoInterno->sku,
-                $this->produtoInterno->name);
-            $this->produtoInterno->gama = $mlpGama;
-            $this->produtoInterno->familia = $mlpFamilia;
-            $this->produtoInterno->subFamilia = $mlpSubFamilia;
-        } catch (\Exception $e) {
-            $logger->info(Cat::ERROR_GET_CATEGORIAS.$this->produtoInterno->sku);
-        }
-        
     }
 
     private function downloadCsv($logger){

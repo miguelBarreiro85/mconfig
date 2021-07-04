@@ -265,7 +265,7 @@ class ProdutoInterno
     }
     public function setCategories(\Magento\Catalog\Model\Product $product, $logger, $pGama, $pFamilia, $pSubFamilia)
     {
-        $categories = array_filter([$pGama, $pFamilia, $pSubFamilia]);
+        $categories = array_filter([$pGama, $pFamilia, $pSubFamilia]); //remove as categorias que não existam
         $categoriesList = $this->categoryManager->getCategoriesArray();
         foreach($categories as $cat) {
             if (!array_key_exists($cat, $categoriesList)){
@@ -433,13 +433,14 @@ class ProdutoInterno
 
     public function updateProductImages($product, $logger, $imgName, $img, $etiqueta=false){
         try {
+            $baseMediaPath = $this->config->getBaseMediaPath();
             $mediaAttributeValues = $product->getMediaAttributeValues();
             if ($mediaAttributeValues){
-                if($etiqueta && strcmp($mediaAttributeValues["energy_image"],"no_selection") == 0){
+                if(!empty($etiqueta) && (strcmp($mediaAttributeValues["energy_image"],"no_selection") == 0 || !file_exists( $baseMediaPath."/".$mediaAttributeValues["energy_image"]))){
                     $this->imagesHelper->getImages($this->sku,null,$etiqueta);
                     $this->imagesHelper->setImageEtiqueta($product, $logger, $imgName . "_e");
                 }
-                if(strcmp($mediaAttributeValues["image"], "no_selection") == 0){
+                if(strcmp($mediaAttributeValues["image"], "no_selection") == 0 || !file_exists( $baseMediaPath."/".$mediaAttributeValues["image"]) ){
                     $this->imagesHelper->getImages($this->sku,$img,null);
                     $this->imagesHelper->setImage($product, $logger, $imgName);
                 }
