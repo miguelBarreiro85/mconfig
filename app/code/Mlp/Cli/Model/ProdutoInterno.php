@@ -200,21 +200,13 @@ class ProdutoInterno
             //adicionar o atributo eficiencia_energetica
             if (in_array($this->subFamilia, Cat::CATEGORIES_ENERGY_LABEL) || in_array($this->familia, Cat::CATEGORIES_ENERGY_LABEL)) {
                 $this->imagesHelper->setImageEtiqueta($product, $logger, $imgName . "_e");
-                $this->imagesHelper->setImage($product, $logger, $imgName);
-                $product = $this->productRepositoryInterface->save($product);
-                //Só podemos adicionar as categorias depois de guardar o produto
-                $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
-                if ($this->classeEnergetica){
-                    $this->setClasseEnergetica($product);
-                    
-                }else {
-                    $logger->info(Cat::WARN_CLASSE_ENERGETICA.$this->sku);
-                }
-            }else {
-                $this->imagesHelper->setImage($product, $logger, $imgName);
-                $product = $this->productRepositoryInterface->save($product);
-                $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
+                $this->classeEnergetica ?? $logger->info(Cat::WARN_CLASSE_ENERGETICA.$this->sku);
             }
+            $this->imagesHelper->setImage($product, $logger, $imgName);
+            $product = $this->productRepositoryInterface->save($product);
+            empty($this->classeEnergetica) ?? $this->setClasseEnergetica($product);
+            //Só podemos adicionar as categorias depois de guardar o produto
+            $this->setCategories($product, $logger, $this->gama, $this->familia, $this->subFamilia);
             print_r($product->getSku()." - ");
         } catch (\Exception $exception) {
             $logger->info(Cat::ERROR_SAVE_PRODUCT." - ".$this->sku.
@@ -431,16 +423,16 @@ class ProdutoInterno
         }        
     }
 
-    public function updateProductImages($product, $logger, $imgName, $img, $etiqueta=false){
+    public function updateProductImages($product, $logger, $imgName, $img, $imgEtiqueta=false){
         try {
-            $baseMediaPath = $this->config->getBaseMediaPath();
+            $baseMediaPath = $this->directory->getRoot()."/pub/media/catalog/product/";
             $mediaAttributeValues = $product->getMediaAttributeValues();
             if ($mediaAttributeValues){
-                if(!empty($etiqueta) && (strcmp($mediaAttributeValues["energy_image"],"no_selection") == 0 || !file_exists( $baseMediaPath."/".$mediaAttributeValues["energy_image"]))){
-                    $this->imagesHelper->getImages($this->sku,null,$etiqueta);
+                if(!empty($imgEtiqueta) && (strcmp($mediaAttributeValues["energy_image"],"no_selection") == 0 || !file_exists( $baseMediaPath.$mediaAttributeValues["energy_image"]))){
+                    $this->imagesHelper->getImages($this->sku,null,$imgEtiqueta);
                     $this->imagesHelper->setImageEtiqueta($product, $logger, $imgName . "_e");
                 }
-                if(strcmp($mediaAttributeValues["image"], "no_selection") == 0 || !file_exists( $baseMediaPath."/".$mediaAttributeValues["image"]) ){
+                if(strcmp($mediaAttributeValues["image"], "no_selection") == 0 || !file_exists( $baseMediaPath.$mediaAttributeValues["image"])){
                     $this->imagesHelper->getImages($this->sku,$img,null);
                     $this->imagesHelper->setImage($product, $logger, $imgName);
                 }

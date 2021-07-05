@@ -4,6 +4,8 @@
 namespace Mlp\Cli\Helper;
 
 class CategoriesConstants {
+    const MD5_SOREFOZ_NO_IMAGE = "6bc6b80e1e2cc5f3f06b7028427fa4a1";
+
     const WARN_SUBFAMILY_NF = "WARNING : SUBFAMILY NOT FOUND : ";
     const WARN_DIDNT_FOUND_PRODUCTS = "WARNING : DID NOT FOUND PRODUCT : ";
     const WARN_DELETING_PRODUCT = "WARNING : deLETING PRODUCT : ";

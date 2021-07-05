@@ -169,7 +169,7 @@ class Sorefoz extends Command
         $logger = new \Zend\Log\Logger();
         $logger -> addWriter($writer);
         print_r("Updating Sorefoz products" . "\n");
-        $this->getCsvFromFTP($logger);
+        //$this->getCsvFromFTP($logger);
         $row = 0;
 
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');

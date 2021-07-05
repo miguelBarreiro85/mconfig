@@ -147,7 +147,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        //$this->downloadCsv($logger);
+        $this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -288,7 +288,7 @@ class Expert extends Command
         $this->produtoInterno->weight = null;
         $this->produtoInterno->image = $data[13];
         $this->produtoInterno->classeEnergetica = $data[18];
-        $this->produtoInterno->imageEnergetica = $data[19];
+        $this->produtoInterno->imageEnergetica = strcmp(($data[19]),"https://experteletro.pt/modules/saeuenergy/uploads/labels/") == 0 ? "" : $data[19];
 
         
         
@@ -421,6 +421,7 @@ class Expert extends Command
                 
             }
     }
+    
     private function addImages($logger) 
     {
         $row = 0;
@@ -429,7 +430,7 @@ class Expert extends Command
             $sku = trim($data[1]);
             print_r($row." - ");
             $this->setData($data,$logger);
-            if (in_array(strlen($sku),[11,12,13])){
+            if (!in_array(strlen($sku),[11,12,13])){
                 print_r("invalid sku - \n");
                 continue;
             }

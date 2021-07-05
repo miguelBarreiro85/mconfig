@@ -51,6 +51,9 @@ class imagesHelper
                 if (curl_exec($ch)){
                     curl_close($ch);
                     fclose($fp);
+                    if (strcmp(hash_file("md5",$this->directory->getRoot()."/pub/media/catalog/product/" . $sku), "6bc6b80e1e2cc5f3f06b7028427fa4a1") == 0){
+                        unlink($this->directory->getRoot()."/pub/media/catalog/product/" . $sku);
+                    }
                 }else {
                     unlink($this->directory->getRoot()."/pub/media/catalog/product/" . $sku);
                 }
@@ -101,6 +104,11 @@ class imagesHelper
 
     }
 
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     * 
+     */
+      
     public function setImageEtiqueta($product, $logger, $ImgName){
         $baseMediaPath = $this->config->getBaseMediaPath(); 
         $newImgName = $this->getImageName($ImgName, $baseMediaPath);
