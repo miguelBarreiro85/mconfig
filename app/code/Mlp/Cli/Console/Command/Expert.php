@@ -121,7 +121,7 @@ class Expert extends Command
         $logger = new \Zend\Log\Logger();
         $logger -> addWriter($writer);
         print_r("Updating Expert Categories" . "\n");
-        //$this->getCsvFromFTP($logger);
+        $this->downloadCsv($logger);
         $row = 0;
         foreach ($this -> loadCsv -> loadCsv('/Expert/Expert.csv', ";") as $data) {
             $sku = trim($data[1]);
@@ -147,7 +147,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        //$this->downloadCsv($logger);
+        $this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
