@@ -184,7 +184,7 @@ class Expert extends Command
                         continue;
                     }
                     print_r("add product - ");
-                    $this->produtoInterno -> add_product($logger, $this->produtoInterno->sku);
+                    $this->produtoInterno->add_product($logger, $this->produtoInterno->sku);
                     print_r("\n");
                     
                 }
@@ -297,6 +297,7 @@ class Expert extends Command
             $this->produtoInterno->subFamilia] = ExpertCategories::setExpertCategories($data[2],$logger,
                                                             $this->produtoInterno->sku,$data[15],$this->produtoInterno->name);
         
+        $this->produtoInterno->setStock($logger,"expert");
         return 1;
     }
 
