@@ -147,7 +147,7 @@ class Expert extends Command
     }
     protected function updateProducts($logger, $categoriesFilter = null){
         print_r("Getting Csv\n");
-        $this->downloadCsv($logger);
+        //$this->downloadCsv($logger);
         print_r("Updating Expert products" . "\n");
         $row = 0;
         $statusAttributeId = $this->sqlHelper->sqlGetAttributeId('status');
@@ -219,7 +219,7 @@ class Expert extends Command
     }
 
     private function setStock($stock){
-        if (preg_match("/Disponivel/i",$stock) == 1){
+        if (preg_match("/Disponivel/",$stock) == 1){
             $this->produtoInterno->stock = 3;
             $this->produtoInterno->status = Status::STATUS_ENABLED;
         }else {
